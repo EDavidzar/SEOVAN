@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+    <xs:element name="import_schema">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="control"/>
+                <xs:element ref="sourceinformation"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="control">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="recordId"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+  
+    <xs:element name="sourceinformation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="analisys"/>
+                <xs:element ref="evaluation"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+  
+    <xs:element name="analisys">
+        <xs:complexType>
+            <xs:sequence>                      
+                <xs:element ref="Identification"/>
+                <xs:element ref="Typification"/>
+                <xs:element ref="Authorities"/>
+                <xs:element ref="ThematicClassification"/>
+                <xs:element ref="Contents"/>
+                <xs:element ref="ApplicationUtilities"/>
+                <xs:element ref="EvaluationScore"/>             
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Identification">
+        <xs:complexType>
+            <xs:sequence>         
+                <xs:element ref="MainName"/>
+                <xs:element ref="OtherNames"/>
+                <xs:element ref="URLAddress"/>
+                <xs:element ref="SyndicationChannel "/>
+                <xs:element ref="PublicationDate"/>
+                <xs:element ref="UpdateDate"/>
+                <xs:element ref="Rights"/>
+                <xs:element ref="Language"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="MainName">
+        <xs:complexType>
+            <xs:sequence>                      
+                <xs:element ref="TitleProper"/>
+                <xs:element ref="SubtitleOrOtherPartOfTitle"/>
+                <xs:element ref="FullFormOfName"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="OtherNames">
+        <xs:complexType>
+            <xs:sequence>                      
+                <xs:element ref="AlternativeTitleToTheMainTitle"/>
+                <xs:element ref="AlternativeSubtitleOrParallelTitle"/>
+                <xs:element ref="OtherAcceptedFormOfTheName"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="URLAddress">
+        <xs:complexType>
+            <xs:sequence>                      
+                <xs:element ref="DNSAndDomain"/>
+                <xs:element ref="FullURLAddress"/>
+                <xs:element ref="Permalink"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Typification">
+        <xs:complexType>
+            <xs:sequence>                      
+                <xs:element ref="AccordingToLevel"/>
+                <xs:element ref="AccordingToContent"/>
+                <xs:element ref="AccordingToOrigin"/>
+                <xs:element ref="AccordingToAccess"/>
+                <xs:element ref="AccordingToGeographicalCoverage"/>
+                <xs:element ref="AccordingToTemporalCoverage"/>
+                <xs:element ref="AccordingToSupportOrFormat"/>             
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Authorities">
+        <xs:complexType>
+            <xs:sequence>                      
+                <xs:element ref="PrimaryAuthority"/>
+                <xs:element ref="OtherAuthorities"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ThematicClassification">
+        <xs:complexType>
+            <xs:sequence>                      
+                <xs:element ref="GeneralClassification"/>
+                <xs:element ref="SpecialisedClassification"/>
+                <xs:element ref="DescriptorsKeywords"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Contents">
+        <xs:complexType>
+            <xs:sequence>                      
+                <xs:element ref="GeneralDescription"/>
+                <xs:element ref="ListOfContents"/>
+                <xs:element ref="SignificantExtracts"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ApplicationUtilities">
+        <xs:complexType>
+            <xs:sequence>                      
+                <xs:element ref="Text"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="EvaluationScore">
+        <xs:complexType>
+            <xs:sequence>                      
+                <xs:element ref="Score"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="evaluation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Authority"/>
+                <xs:element ref="Publication"/>
+                <xs:element ref="Objectivity"/>
+                <xs:element ref="Quality"/>
+                <xs:element ref="Actuality"/>
+                <xs:element ref="Relevance"/>
+                <xs:element ref="Web"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Authority">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="WhoIsTheAuthor"/>
+                <xs:element ref="AcknowledgedAuthor"/>
+                <xs:element ref="AuthorsAffiliation"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Publication">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="RecognisedPublisher"/>
+                <xs:element ref="QualityOfPublications"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Objectivity">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ClarityAndAccuracy"/>
+                <xs:element ref="NonCommercial"/>
+                <xs:element ref="Unbiased"/>
+                <xs:element ref="ValidatedInformation"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Quality">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="WellOrganisedInformation"/>
+                <xs:element ref="GraphsTablesPicturesIllustrationsDiagrams"/>
+                <xs:element ref="CitationIndexesImpactRankings"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Actuality">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="PublicationDates"/>
+                <xs:element ref="Updating"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Relevance">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="AcademicSource"/>
+                
+                <xs:element ref="CanBeTypified"/>
+               
+                <xs:element ref="NoveltyAndAddedValue"/>
+                
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Web">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Domain"/>              
+                <xs:element ref="AccessibilityAndUsability"/>                
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

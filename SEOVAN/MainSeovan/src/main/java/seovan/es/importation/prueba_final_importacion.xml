@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="ISO-8859-1"?> -->
+<import_schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="importxmlschema.xsd">>
+    <control>
+        <recordId>001</recordId>
+    </control>
+    <sourceinformation>
+        <analysis>
+            <Identification>
+                <MainName>
+                    <TitleProper>MEMENTO PRÁCTICO-Derecho de las nuevas tecnologías. 2020-2021</TitleProper>
+                    <SubtitleOrOtherPartOfTitle>
+                    </SubtitleOrOtherPartOfTitle>
+                    <FullFormOfName>
+                    </FullFormOfName>
+                </MainName>
+                <OtherNames>
+                    <AlternativeTitleToTheMainTitle>
+                    </AlternativeTitleToTheMainTitle>
+                    <AlternativeSubtitleOrParallelTitle>
+                    </AlternativeSubtitleOrParallelTitle>
+                    <OtherAcceptedFormOfTheName>
+                    </OtherAcceptedFormOfTheName>
+                </OtherNames>
+                <URLAddress>
+                    <DNSAndDomain>
+                    </DNSAndDomain>
+                    <FullURLAddress>
+                    </FullURLAddress>
+                    <Permalink>
+                        "https://search.ebscohost.com/login.aspx?direct=true&AuthType=sso&db=cat09079a&AN=cbu.oai.folio.org.fs00001047.9b4e871c.f3d2.4a1b.a60d.e6ca4bff25db&lang=es&site=eds-live&scope=site&custid=s1132340"
+                    </Permalink>
+                </URLAddress>
+                <SyndicationChannel>
+                </SyndicationChannel>
+                <PublicationDate>
+                    2019
+                </PublicationDate>               
+                <UpdateDate>
+                    2022
+                </UpdateDate>
+                <Rights>
+                    Los autores tienen todos los derechos y la editorial los de publicación
+                </Rights>
+                <Language>
+                    español                   
+                </Language>
+            </Identification>
+            <Typification>
+                <AccordingToLevel>
+                    Fuente primaria
+                </AccordingToLevel>
+                <AccordingToContent>
+                    libro
+                </AccordingToContent>
+                <AccordingToOrigin>
+                    Documental
+                </AccordingToOrigin>
+                <AccordingToAccess>
+                    De pago
+                </AccordingToAccess>
+                <AccordingToGeographicalCoverage>
+                    España
+                </AccordingToGeographicalCoverage>
+                <AccordingToTemporalCoverage>
+                    S.XXI
+                </AccordingToTemporalCoverage>
+                <AccordingToSupportOrFormat>
+                    Fuente de información impresa
+                </AccordingToSupportOrFormat>   
+            </Typification>
+            <Authorities>
+                <PrimaryAuthority>
+                    Ecija abogados
+                </PrimaryAuthority>
+                <OtherAuthorities>
+                    Francis Lefebvre
+                </OtherAuthorities>				
+            </Authorities>
+            <ThematicClassification>
+                <GeneralClassification>
+                    Ciberseguridad -- España
+                    Protección de datos personales -- España
+                    Relaciones laborales -- Efectos de las innovaciones tecnológicas -- España
+                    Internet en la administración pública -- España
+                    Consumidores -- Protección -- Efectos de las innovaciones tecnológicas
+                    Proveedores de servicios de internet -- Régimen jurídico -- España
+                    Contratación electrónica -- España
+                </GeneralClassification>
+                <SpecialisedClassification>
+                    CDU 342.9 Derecho administrativo, 347.7 Derecho mercantil. Derecho marítimo. Derecho de autor, 347.1 Derecho de las personas. 
+                    B. Derecho - Derecho Mercantil	DMER XXII 392
+                </SpecialisedClassification>
+                <DescriptorsKeywords>
+                    ciberseguridad,protección de datos personales, relaciones laborales, innovaciones tecnológicas, Internet, consumidores, proveedores de servicios de internet, régimen jurídico, contratación electrónica, España
+                </DescriptorsKeywords>
+            </ThematicClassification>
+            <Contents>
+                <GeneralDescription>
+                    Ofrece una visión global y aporta soluciones claras y concisas sobre los problemas legales generados por las nuevas tecnologías.                  
+                </GeneralDescription>
+                <ListOfContents>
+                    1. Internet de las Cosas: aparatos cotidianos interconectados, lo cual genera problemas desde la perspectiva de la privacidad de las personas (dado que estos aparatos reportan información sensible sobre hábitos de conducta) y de la seguridad de las conexiones.
+                    2. Blockchain: innovación tecnológica cuya finalidad es dotar de confianza y seguridad a las transacciones y contratos realizados por medios electrónicos (smartcontracts, tokenización de activos, criptomonedas), mediante una cadena (o bloques) de envíos electrónicos que permiten acreditar, sin intervención de terceros o fedatarios, la transacción realizada.
+                    3. Legaltech: se aborda el uso de las nuevas tecnologías al servicio del sector legal, y las implicaciones que ello tiene.
+                    4. E-sports: se trata de un sector en continuo desarrollo, con un gran potencial de crecimiento (como son los videojuegos, los gamers y las competiciones a nivel internacional), que se encuentra actualmente en un marco de indefinición, dado que, pese a algunas similitudes, no encuentran fácil encuadre dentro de los deportes tradicionales, que sí disponen de regulación y organismos de tutela específicos.
+                    5. Startups: se analizan las particularidades de este tipo de empresas caracterizadas por la innovación tecnológica y su fuerte desarrollo, lo cual requiere de novedosos mecanismos de financiación al margen de la tradicional financiación bancaria, con la irrupción de nuevos actores, como los business angels.
+                    6. Robótica: uno de los sectores tecnológicos que mayores dudas legales plantea es el de los robots y los sistemas de inteligencia artificial, capaces de crear máquinas dotadas de autonomía y “vida propia” (p.e., un vehículo autónomo), lo cual plantea problemas no solo desde el punto de vista legal (p.e., la responsabilidad por los datos que causan), sino de la ética (p.e., cómo debe actuar una máquina en caso de conflicto entre dos circunstancias dignas de protección).
+                    7. El uso de las tecnologías al servicio de la moda (“Fashion Law”) o de la salud (“E-health”) son otras de las novedosas cuestiones que se tratan en esta edición del Memento de Nuevas Tecnologías.
+                </ListOfContents>
+                <SignificantExtracts>
+                    Ofrece una visión global y aporta soluciones claras y concisas sobre los problemas legales generados por las nuevas tecnologías.
+                    En él se aborda el Blockchain, los smartcontracts, la robótica y la inteligencia artificial -machine learning-, el big data, la tecnología 5G, etc.
+                    En esta nueva edición se analizan las novedades jurisprudenciales y los recientes cambios legislativos, muy intensos en protección de datos y servicios de pagos.
+                    Estudia aspectos jurídicos como los ciberdelitos e implicaciones penales, la prueba y la firma electrónica, los procedimientos para la resolución de conflictos, etc.
+                    También aborda sus implicaciones en el ámbito laboral y la fiscalidad que rodea a esta materia.
+                </SignificantExtracts>
+            </Contents>
+            <ApplicationUtilities>
+                <Text>
+                    Un memento práctico para que los profesionales del derecho realicen su trabajo con mayor seguridad.                   
+                </Text>
+            </ApplicationUtilities>
+            <EvaluationScore>   
+                <Score>
+                    61
+                </Score>            
+            </EvaluationScore>
+        </analysis>
+        <evaluation>
+            <Authority>
+                <WhoIsTheAuthor>
+                   5
+                </WhoIsTheAuthor>
+                <AcknowledgedAuthor>
+                   7
+                </AcknowledgedAuthor>
+                <AuthorsAffiliation>
+                   5
+                </AuthorsAffiliation>
+            </Authority>
+            <Publication>
+                <RecognisedPublisher>   
+                    5              
+                </RecognisedPublisher>
+                <QualityOfPublications>
+                   -1
+                </QualityOfPublications>
+            </Publication>
+            <Objectivity>
+                <ClarityAndAccuracy>
+                   5
+                </ClarityAndAccuracy>
+                <NonCommercial>
+                   5
+                </NonCommercial>
+                <Unbiased>
+                   -1
+                </Unbiased>
+                <ValidatedInformation>
+                   -1
+                </ValidatedInformation>
+            </Objectivity>        		
+            <Quality>
+                <WellOrganisedInformation>
+                   10
+                </WellOrganisedInformation>
+                <GraphsTablesPicturesIllustrationsDiagrams>
+                   -1
+                </GraphsTablesPicturesIllustrationsDiagrams>
+                <CitationIndexesImpactRankings>
+                   -1
+                </CitationIndexesImpactRankings>                            
+            </Quality>
+            <Actuality>
+                <PublicationDates>
+                   5
+                </PublicationDates>
+                <Updating>
+                   -1
+                </Updating>
+                        
+            </Actuality>
+            <Relevance>
+                <AcademicSource>
+                   4
+                </AcademicSource>
+                <CanBeTypified>
+                   5
+                </CanBeTypified>
+                <NoveltyAndAddedValue>
+                   5
+                </NoveltyAndAddedValue>
+            </Relevance>
+            <Web>
+                <Domain>
+                   -1
+                </Domain>
+                <AccessibilityAndUsability>
+                   -1
+                </AccessibilityAndUsability>
+            </Web>        
+        </evaluation>
+    </sourceinformation>
+</import_schema>

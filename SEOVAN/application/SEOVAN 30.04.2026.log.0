@@ -1,0 +1,185 @@
+abr 30, 2026 9:42:38 A. M. seovan.es.generalmods.PrincipalWindowTopComponent componentOpened
+INFORMACIÓN: SEOVAN 3.5b beta (c) Emilio David Diaus Lopez 2023-2026
+abr 30, 2026 9:43:00 A. M. org.netbeans.core.startup.TopLogging$AWTHandler uncaughtException
+GRAVE: null
+java.lang.NullPointerException: Cannot invoke "java.io.File.getAbsolutePath()" because the return value of "javax.swing.JFileChooser.getSelectedFile()" is null
+	at seovan.es.generalmods.PrincipalWindowTopComponent.ExportXMLDocument(PrincipalWindowTopComponent.java:709)
+	at seovan.es.actions.ExportAction.actionPerformed(ExportAction.java:56)
+	at org.openide.awt.AlwaysEnabledAction$1.run(AlwaysEnabledAction.java:174)
+	at org.openide.util.actions.ActionInvoker$1.run(ActionInvoker.java:70)
+	at org.openide.util.actions.ActionInvoker.doPerformAction(ActionInvoker.java:91)
+	at org.openide.util.actions.ActionInvoker.invokeAction(ActionInvoker.java:74)
+	at org.openide.awt.AlwaysEnabledAction.actionPerformed(AlwaysEnabledAction.java:177)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
+	at java.desktop/java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:300)
+	at java.desktop/java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:299)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6626)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3389)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6391)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:5001)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4833)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4833)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
+	at org.netbeans.core.TimableEventQueue.dispatchEvent(TimableEventQueue.java:136)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+
+abr 30, 2026 9:43:06 A. M. beleris.es.finalinformationmanager.MainErrorManager AcceptInformation
+INFORMACIÓN: ¿Está seguro de que quiere salir del programa?
+abr 30, 2026 9:43:06 A. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Access denied for user ''@'localhost' to database 'sourcesevalprotocol'. Estado 42000
+abr 30, 2026 9:43:08 A. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'localhost' to database 'sourcesevalprotocol'
+abr 30, 2026 9:43:08 A. M. org.netbeans.core.startup.TopLogging$AWTHandler uncaughtException
+GRAVE: null
+java.lang.ExceptionInInitializerError
+	at seovan.es.generalmods.PrincipalWindowTopComponent.ExitProgram(PrincipalWindowTopComponent.java:451)
+	at seovan.es.generalmods.PrincipalWindowTopComponent.jExitProgramActionPerformed(PrincipalWindowTopComponent.java:446)
+	at seovan.es.generalmods.PrincipalWindowTopComponent$1.actionPerformed(PrincipalWindowTopComponent.java:202)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
+	at java.desktop/java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:299)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6626)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3389)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6391)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:5001)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4833)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4833)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
+	at org.netbeans.core.TimableEventQueue.dispatchEvent(TimableEventQueue.java:136)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+Caused by: java.lang.NullPointerException: Cannot invoke "java.sql.SQLException.getErrorCode()" because "ex" is null
+	at beleris.es.finaldbmanager.FDBMan.ShowSQLExceptionError(FDBMan.java:2959)
+	at beleris.es.finaldbmanager.FDBMan.MySQL_CloseConn(FDBMan.java:1867)
+	at beleris.es.finaldbmanager.FDBMan.SetupConnection(FDBMan.java:1858)
+	at beleris.es.finaldbmanager.FDBMan.MySql_DSPoolInitSimple(FDBMan.java:1805)
+	at beleris.es.finaldbmanager.FDBMan.<init>(FDBMan.java:79)
+	at seovan.es.generalmods.ProgramInstaller.ReadConfiguration(ProgramInstaller.java:69)
+	at seovan.es.generalmods.ProgramInstaller.<init>(ProgramInstaller.java:36)
+	at seovan.es.generalmods.ProgramInstaller.<clinit>(ProgramInstaller.java:28)
+	... 40 more
+
+abr 30, 2026 10:01:17 A. M. seovan.es.generalmods.PrincipalWindowTopComponent componentOpened
+INFORMACIÓN: SEOVAN 3.5b beta (c) Emilio David Diaus Lopez 2023-2026
+abr 30, 2026 10:01:55 A. M. beleris.es.finalinformationmanager.MainErrorManager AcceptInformation
+INFORMACIÓN: ¿Está seguro de que quiere salir del programa?
+abr 30, 2026 10:01:55 A. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Access denied for user ''@'localhost' to database 'sourcesevalprotocol'. Estado 42000
+abr 30, 2026 10:01:56 A. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'localhost' to database 'sourcesevalprotocol'
+abr 30, 2026 10:01:56 A. M. org.netbeans.core.startup.TopLogging$AWTHandler uncaughtException
+GRAVE: null
+java.lang.ExceptionInInitializerError
+	at seovan.es.generalmods.PrincipalWindowTopComponent.ExitProgram(PrincipalWindowTopComponent.java:451)
+	at seovan.es.generalmods.PrincipalWindowTopComponent.jExitProgramActionPerformed(PrincipalWindowTopComponent.java:446)
+	at seovan.es.generalmods.PrincipalWindowTopComponent$1.actionPerformed(PrincipalWindowTopComponent.java:202)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
+	at java.desktop/java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:299)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6626)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3389)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6391)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:5001)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4833)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4833)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
+	at org.netbeans.core.TimableEventQueue.dispatchEvent(TimableEventQueue.java:136)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+Caused by: java.lang.NullPointerException: Cannot invoke "java.sql.SQLException.getErrorCode()" because "ex" is null
+	at beleris.es.finaldbmanager.FDBMan.ShowSQLExceptionError(FDBMan.java:2959)
+	at beleris.es.finaldbmanager.FDBMan.MySQL_CloseConn(FDBMan.java:1867)
+	at beleris.es.finaldbmanager.FDBMan.SetupConnection(FDBMan.java:1858)
+	at beleris.es.finaldbmanager.FDBMan.MySql_DSPoolInitSimple(FDBMan.java:1805)
+	at beleris.es.finaldbmanager.FDBMan.<init>(FDBMan.java:79)
+	at seovan.es.generalmods.ProgramInstaller.ReadConfiguration(ProgramInstaller.java:69)
+	at seovan.es.generalmods.ProgramInstaller.<init>(ProgramInstaller.java:36)
+	at seovan.es.generalmods.ProgramInstaller.<clinit>(ProgramInstaller.java:28)
+	... 40 more
+
+abr 30, 2026 10:23:19 A. M. seovan.es.generalmods.PrincipalWindowTopComponent componentOpened
+INFORMACIÓN: SEOVAN 3.5b beta (c) Emilio David Diaus Lopez 2023-2026
+abr 30, 2026 10:28:03 A. M. seovan.es.generalmods.PrincipalWindowTopComponent componentOpened
+INFORMACIÓN: SEOVAN 3.5b beta (c) Emilio David Diaus Lopez 2023-2026
+abr 30, 2026 10:28:35 A. M. seovan.es.generalmods.PrincipalWindowTopComponent componentOpened
+INFORMACIÓN: SEOVAN 3.5b beta (c) Emilio David Diaus Lopez 2023-2026
+abr 30, 2026 10:29:29 A. M. seovan.es.generalmods.PrincipalWindowTopComponent componentOpened
+INFORMACIÓN: SEOVAN 3.5b beta (c) Emilio David Diaus Lopez 2023-2026
+abr 30, 2026 10:52:41 A. M. seovan.es.generalmods.PrincipalWindowTopComponent componentOpened
+INFORMACIÓN: SEOVAN 3.5b beta (c) Emilio David Diaus Lopez 2023-2026
+abr 30, 2026 10:55:02 A. M. seovan.es.generalmods.PrincipalWindowTopComponent componentOpened
+INFORMACIÓN: SEOVAN 3.5b beta (c) Emilio David Diaus Lopez 2023-2026
