@@ -2287,8 +2287,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
         replacedSTR = replacedSTR.replace("[Domain]", jEvalWebDominionValue.getText());
         replacedSTR = replacedSTR.replace("[AccessibilityAndUsability]", jEvalWebAccessUpdateValue.getText());
 
-        tmpXMLTemplate = replacedSTR;
-        return tmpXMLTemplate;
+        return replacedSTR;
     }
 
 }

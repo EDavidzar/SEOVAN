@@ -729,27 +729,33 @@ public final class PrincipalWindowTopComponent extends TopComponent {
      *
      */
     public void UpdateXMLTemplate() {
+        String uptemplate = XMLTemplate;
+        String XMLAnalPart = "";
+        String XMLEvalPart = "";
+        String XMLIndexHeaderChanged = "";
+        String FullDoc = "";
         IndexDataTotal = getRecordsCount();
+
         for (int tmpitem = 1; tmpitem <= IndexDataTotal; tmpitem++) {
             JSAP.LoadDBDatatoPanel(tmpitem);
             JSEP.LoadDBDatatoPanel(tmpitem);
-            String uptemplate = XMLTemplate;
             String fieldtochange = String.format("%04d", tmpitem);
-            XMLTemplate = uptemplate.replace("[recid]", fieldtochange);
-            XMLTemplate += JSAP.ExportAnalisysPanelData(XMLTemplate);
-            XMLTemplate += JSEP.ExportEvalPanelData(XMLTemplate);
+            XMLIndexHeaderChanged = uptemplate.replace("[recid]", fieldtochange);
+            XMLAnalPart = JSAP.ExportAnalisysPanelData(XMLIndexHeaderChanged);
+            XMLEvalPart = JSEP.ExportEvalPanelData(XMLAnalPart);
+            FullDoc += XMLEvalPart;
         }
-        String tmpXMLTemplate = XMLHeader + XMLTemplate + XMLEnd;
+        String tmpXMLTemplate = XMLHeader + FullDoc + XMLEnd;
         XMLTemplate = tmpXMLTemplate;
     }
 
-   String SetFaultExtension(String tmpPath, String tmpExtension) {
-        tmpPath=tmpPath.toLowerCase();
+    String CheckandCorrectExtension(String tmpPath, String tmpExtension) {
+        tmpPath = tmpPath.toLowerCase();
         int idx = tmpPath.lastIndexOf('.');
         if (idx == -1 || idx == 0) {
-            tmpPath=tmpPath+"."+tmpExtension;
+            tmpPath = tmpPath + "." + tmpExtension;
         }
-       return tmpPath;
+        return tmpPath;
     }
 
     /**
@@ -768,17 +774,18 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         SelectFile.GetFileChooser().setDialogType(SAVE_DIALOG);
         SelectFile.setLocationRelativeTo(f);
         SelectFile.setVisible(true);
-
+       // UpdateXMLTemplate();
         JFileChooser FCH = SelectFile.GetFileChooser();
         String tmpfilepath = FCH.getSelectedFile().getAbsolutePath();
         File myfile = null;
-        filepath=SetFaultExtension(tmpfilepath, "xml");
+        filepath = CheckandCorrectExtension(tmpfilepath, "xml");
         myfile = new File(filepath);
         try {
             FileUtils.writeStringToFile(myfile, XMLTemplate, "UTF-8");
         } catch (IOException ex) {
             ShowDError(" Error al crear fichero XML" + ex.getLocalizedMessage());
         }
+        XMLTemplate = "";
     }
 
     /**
@@ -800,7 +807,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
 
         JFileChooser FCH = SelectFile.GetFileChooser();
         String tmpfilepath = FCH.getSelectedFile().getAbsolutePath();
-        filepath=SetFaultExtension(tmpfilepath, "pdf");
+        filepath = CheckandCorrectExtension(tmpfilepath, "pdf");
         SoevanPDFManager sfm = new SoevanPDFManager(filepath);
         sfm.CreatePDFDocuments();
     }

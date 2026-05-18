@@ -2423,8 +2423,7 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
         replacedSTR = replacedSTR.replace("[DescriptorsKeywords]", getjClassTemDescriptors().getText());
         replacedSTR = replacedSTR.replace("[ApplicationUtilitiesText]", getjAppUtil().getText());
         replacedSTR = replacedSTR.replace("[Score]", getjEvalScore().getText());
-        tmpXMLTemplate = replacedSTR;
-        return tmpXMLTemplate;
+        return replacedSTR;
     }
 
 }
