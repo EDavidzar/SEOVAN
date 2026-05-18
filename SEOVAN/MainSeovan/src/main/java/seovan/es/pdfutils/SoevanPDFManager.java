@@ -195,6 +195,7 @@ public class SoevanPDFManager {
         DBMSEV = new FDBMan("jdbc:mysql://localhost:3306/sourcesevalprotocol", PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
         PdfWriter writer = null;
         ThePath=FilePath;
+        
         document = new Document();
         try {
             writer = PdfWriter.getInstance(document, new FileOutputStream(FilePath));
@@ -656,24 +657,24 @@ public class SoevanPDFManager {
         RowRight.clear();
         RowLeft.add("Seg\u00fan el nivel");
         RowRight.add(ListSourcelevel_ent.get(Integer.parseInt(TIP.get(1).get(TMPirowidx))-1));
-        ListSourcelevel_ent.clear();
+        //ListSourcelevel_ent.clear();
         RowLeft.add("Seg\u00fan el contenido");
         RowRight.add(ListSourcecontents_ent.get(Integer.parseInt(TIP.get(2).get(TMPirowidx))-1));
-        ListSourcecontents_ent.clear();
+        //ListSourcecontents_ent.clear();
         RowLeft.add("Seg\u00fan el origen");
         RowRight.add(ListSourceOriginTable_ent.get(Integer.parseInt(TIP.get(3).get(TMPirowidx))-1));
-        ListSourcecontents_ent.clear();
+        //ListSourcecontents_ent.clear();
         RowLeft.add("Seg\u00fan el acceso");
         RowRight.add(ListAccessTable_ent.get(Integer.parseInt(TIP.get(4).get(TMPirowidx))-1));
-        ListAccessTable_ent.clear();
+        //ListAccessTable_ent.clear();
         RowLeft.add("Seg\u00fan la cobertura geogr\u00e1fica");
         RowRight.add(ListGeoCoverTable_ent.get(Integer.parseInt(TIP.get(5).get(TMPirowidx))-1));
-        ListGeoCoverTable_ent.clear();
+        //ListGeoCoverTable_ent.clear();
         RowLeft.add("Seg\u00fan la cobertura temporal");
         RowRight.add(TIP.get(6).get(TMPirowidx));
         RowLeft.add("Seg\u00fan el soporte o medio");
         RowRight.add(ListFormatMediumTable_ent.get(Integer.parseInt(TIP.get(7).get(TMPirowidx))-1));
-        ListFormatMediumTable_ent.clear();
+        //ListFormatMediumTable_ent.clear();
         addRows(table, RowLeft, RowRight);
         TIP.clear();
         RowLeft.clear();

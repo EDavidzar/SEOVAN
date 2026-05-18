@@ -83,7 +83,6 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     //ProgramInstaller Instalador = new ProgramInstaller();
 
     // HelpUtils HelpManager = new HelpUtils();
-
     /**
      *
      */
@@ -730,7 +729,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
      *
      */
     public void UpdateXMLTemplate() {
-        IndexDataTotal = getRecordsCount();  
+        IndexDataTotal = getRecordsCount();
         for (int tmpitem = 1; tmpitem <= IndexDataTotal; tmpitem++) {
             JSAP.LoadDBDatatoPanel(tmpitem);
             JSEP.LoadDBDatatoPanel(tmpitem);
@@ -742,6 +741,15 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         }
         String tmpXMLTemplate = XMLHeader + XMLTemplate + XMLEnd;
         XMLTemplate = tmpXMLTemplate;
+    }
+
+   String SetFaultExtension(String tmpPath, String tmpExtension) {
+        tmpPath=tmpPath.toLowerCase();
+        int idx = tmpPath.lastIndexOf('.');
+        if (idx == -1 || idx == 0) {
+            tmpPath=tmpPath+"."+tmpExtension;
+        }
+       return tmpPath;
     }
 
     /**
@@ -762,8 +770,9 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         SelectFile.setVisible(true);
 
         JFileChooser FCH = SelectFile.GetFileChooser();
-        filepath = FCH.getSelectedFile().getAbsolutePath();
+        String tmpfilepath = FCH.getSelectedFile().getAbsolutePath();
         File myfile = null;
+        filepath=SetFaultExtension(tmpfilepath, "xml");
         myfile = new File(filepath);
         try {
             FileUtils.writeStringToFile(myfile, XMLTemplate, "UTF-8");
@@ -790,8 +799,8 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         SelectFile.setVisible(true);
 
         JFileChooser FCH = SelectFile.GetFileChooser();
-        filepath = FCH.getSelectedFile().getAbsolutePath();
-
+        String tmpfilepath = FCH.getSelectedFile().getAbsolutePath();
+        filepath=SetFaultExtension(tmpfilepath, "pdf");
         SoevanPDFManager sfm = new SoevanPDFManager(filepath);
         sfm.CreatePDFDocuments();
     }
