@@ -1,5 +1,5 @@
 # SEOVAN
-PROGRAMA DE AYUDA PARA EL ANÁLISIS, DESCRIPCIÓN Y EVALUACIÓN DE FUENTES DE INFORMACIÓN SPECIALIZADAS
+PROGRAMA DE AYUDA PARA EL ANÁLISIS, DESCRIPCIÓN Y EVALUACIÓN DE FUENTES DE INFORMACIÓN ESPECIALIZADAS
 
 Programa basado en el sistema de análisis, identificación y descripción de fuentes especializadas del profesor Blazquez Ochando
 Fuentes de información en Humanidades, Ciencias Sociales, Ciencia y Tecnología
