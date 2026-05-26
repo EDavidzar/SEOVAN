@@ -16,7 +16,7 @@ Se utiliza un servidor de base de datos MYSQL/MARIADB en los que se introducen l
 
 Ha sido desarrollado en el lenguaje de programación Java y se puede ejecutar en cualquier sistema/entorno operativo en el que se pueda instalar, esté instalado y configurado  Java Runtime Environment (JRE). versión mínima 17.0 de Java Runtime Environment (JRE).
 
-Using Program (https://github.com/EDavidzar/SEOVAN/blob/main/WebPage/PrincipalWindowTopComponent.html).
+Using Program https://github.com/EDavidzar/SEOVAN/blob/main/WebPage/PrincipalWindowTopComponent.html.
 
 
 
