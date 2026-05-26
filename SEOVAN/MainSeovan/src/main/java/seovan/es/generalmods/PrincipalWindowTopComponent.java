@@ -12,6 +12,7 @@ import static beleris.es.finalinformationmanager.MainErrorManager.AcceptInformat
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDInfo;
 import static beleris.es.finalinformationmanager.MainErrorManager.mconfyes;
+import beleris.es.finalutils.FileManagerGenerator;
 import java.awt.Dimension;
 import java.awt.Frame;
 import static java.awt.Frame.MAXIMIZED_BOTH;
@@ -567,13 +568,18 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         DBToUse = PConfig.getDatabaseManagerinUse();
         ShowDataItem(IndexItemSource);
     }
+    
 
     /**
      *
      */
     public void SelectandImportDocument() {
+        String filepath = "xml-export-template.xml";
         Frame f = WindowManager.getDefault().getMainWindow();
         DSelectXMLDlg SelectFileDlg = new DSelectXMLDlg(f, true);
+        int ExportXML = DSelectXMLDlg.getExportXML();
+        SelectFileDlg.setXmlorpdf(ExportXML);
+        SelectFileDlg.Configure_filters();
         SelectFileDlg.setTitle("Seleccione el fichero a importar");
         SelectFileDlg.GetFileChooser().setToolTipText("Seleccione el fichero a importar");
         SelectFileDlg.GetFileChooser().setDialogType(OPEN_DIALOG);
@@ -581,8 +587,12 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         SelectFileDlg.setVisible(true);
         JFileChooser FCH = SelectFileDlg.GetFileChooser();
         ImportDocumentPath = FCH.getSelectedFile().getAbsolutePath();
-        XMLDI = new XMLDataImport(ImportDocumentPath);
-
+        FileManagerGenerator FMG=new FileManagerGenerator();
+        if (FMG.FileExists(ImportDocumentPath)) {
+             XMLDI = new XMLDataImport(ImportDocumentPath);
+        } else{
+             ShowDError(" No puedo acceder al fichero, error al cargar fichero XML");
+        }
     }
 
     /**
@@ -720,7 +730,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         try {
             XMLTemplate = FileUtils.readFileToString(myfile, "UTF-8");
         } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
+           ShowDError(" Error al cargar plantilla XML" + ex.getLocalizedMessage());
         }
 
     }
@@ -774,7 +784,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         SelectFile.GetFileChooser().setDialogType(SAVE_DIALOG);
         SelectFile.setLocationRelativeTo(f);
         SelectFile.setVisible(true);
-       // UpdateXMLTemplate();
+        // UpdateXMLTemplate();
         JFileChooser FCH = SelectFile.GetFileChooser();
         String tmpfilepath = FCH.getSelectedFile().getAbsolutePath();
         File myfile = null;
