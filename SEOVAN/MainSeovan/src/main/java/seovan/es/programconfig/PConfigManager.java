@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 /**
  *
- * @author Emilio David Diaus López 2023-2025
+ * @author Emilio David Diaus López 2023-2026
  */
 public class PConfigManager implements Serializable {
 

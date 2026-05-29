@@ -45,7 +45,7 @@ import static seovan.es.programconfig.PConfigManager.PConfig;
 
 /**
  *
- * @author Emilio David Diaus López 2023-2025
+ * @author Emilio David Diaus López 2023-2026
  */
 /**
  * Top component which displays something.
@@ -551,7 +551,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     private XMLDataImport XMLDI = null;
     String XMLTemplate = "";
     String ProgramPath = "";
-    String sTheTitle = "SEOVAN 4.0b beta (c) Emilio David Diaus Lopez 2023-2026";
+    String sTheTitle = "SEOVAN 5.0b beta (c) Emilio David Diaus Lopez 2023-2026";
     String XMLHeader = """
                        <?xml version='1.0' encoding='UTF-8' ?>
                        <!-- was: <?xml version="1.0" encoding="ISO-8859-1"?> -->

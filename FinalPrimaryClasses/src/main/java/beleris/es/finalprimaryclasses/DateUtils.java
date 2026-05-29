@@ -1,5 +1,5 @@
 /*
- @author Emilio David Diaus López 2008-2025
+ @author Emilio David Diaus López 2008-2026
  * *
  * *
  */
@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author Emilio David Diaus López 2008-2025
+ * @author Emilio David Diaus López 2008-2026
  */
 public class DateUtils {
 

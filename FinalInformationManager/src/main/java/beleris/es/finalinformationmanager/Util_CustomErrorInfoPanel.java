@@ -1,5 +1,5 @@
 /*
- @author Emilio David Diaus López 2008-2025
+ @author Emilio David Diaus López 2008-2026
  * *
  * *
  */
@@ -7,7 +7,7 @@ package beleris.es.finalinformationmanager;
 
 /**
  *
- * @author Emilio David Diaus López 2008-2025
+ * @author Emilio David Diaus López 2008-2026
  */
 public class Util_CustomErrorInfoPanel extends javax.swing.JPanel {
 

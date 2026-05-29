@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author Emilio David Diaus López 2023-2025
+ * @author Emilio David Diaus López 2023-2026
  */
 public class XMLDataImport implements Serializable {
 

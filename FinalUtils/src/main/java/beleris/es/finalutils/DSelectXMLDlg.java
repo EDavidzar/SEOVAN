@@ -9,7 +9,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author Emilio David Diaus López 2008-2025
+ * @author Emilio David Diaus López 2008-2026
  */
 public class DSelectXMLDlg extends javax.swing.JDialog {
 

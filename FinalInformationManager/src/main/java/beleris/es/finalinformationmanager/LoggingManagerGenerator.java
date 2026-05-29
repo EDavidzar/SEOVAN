@@ -1,5 +1,5 @@
 /*
- @author Emilio David Diaus López 2008-2025
+ @author Emilio David Diaus López 2008-2026
  * *
  * *
  */
@@ -16,7 +16,7 @@ import java.util.logging.SimpleFormatter;
 
 /**
  *
- * @author Emilio David Diaus López 2008-2025
+ * @author Emilio David Diaus López 2008-2026
  */
 public class LoggingManagerGenerator {
 

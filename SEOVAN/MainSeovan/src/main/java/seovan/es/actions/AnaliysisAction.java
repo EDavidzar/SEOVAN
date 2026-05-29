@@ -18,7 +18,7 @@ import seovan.es.generalmods.PrincipalWindowTopComponent;
 
 /**
  *
- * @author Emilio David Diaus López 2023-2025
+ * @author Emilio David Diaus López 2023-2026
  */
 
 @ActionID(

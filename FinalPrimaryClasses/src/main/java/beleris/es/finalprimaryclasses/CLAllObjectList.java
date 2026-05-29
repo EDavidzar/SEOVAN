@@ -9,7 +9,7 @@ import java.util.Collection;
 
 /**
  *
- * @author Emilio David Diaus López 2008-2025
+ * @author Emilio David Diaus López 2008-2026
  * @param <E>
  */
 public class CLAllObjectList<E> extends ArrayList<E> {

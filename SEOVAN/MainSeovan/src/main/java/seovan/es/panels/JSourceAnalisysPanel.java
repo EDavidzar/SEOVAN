@@ -19,7 +19,7 @@ import static seovan.es.programconfig.PConfigManager.PConfig;
 
 /**
  *
- * @author Emilio David Diaus López 2023-2025
+ * @author Emilio David Diaus López 2023-2026
  */
 public class JSourceAnalisysPanel extends javax.swing.JPanel {
 
