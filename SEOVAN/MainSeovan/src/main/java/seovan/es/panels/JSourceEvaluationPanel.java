@@ -2170,7 +2170,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
             Node first = tmpDoc.getElementsByTagName("import_schema").item(0);
             NodeList nodeList = first.getChildNodes();
             int n = nodeList.getLength();
-            Node current = null, child = null;
+            Node current = null;
             boolean error = false;
             for (int i = 0; i < n; i++) {
                 current = nodeList.item(i);

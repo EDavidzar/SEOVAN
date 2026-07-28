@@ -574,7 +574,6 @@ public final class PrincipalWindowTopComponent extends TopComponent {
      *
      */
     public void SelectandImportDocument() {
-        String filepath = "xml-export-template.xml";
         Frame f = WindowManager.getDefault().getMainWindow();
         DSelectXMLDlg SelectFileDlg = new DSelectXMLDlg(f, true);
         int ExportXML = DSelectXMLDlg.getExportXML();
@@ -814,7 +813,6 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         SelectFile.GetFileChooser().setDialogType(SAVE_DIALOG);
         SelectFile.setLocationRelativeTo(f);
         SelectFile.setVisible(true);
-
         JFileChooser FCH = SelectFile.GetFileChooser();
         String tmpfilepath = FCH.getSelectedFile().getAbsolutePath();
         filepath = CheckandCorrectExtension(tmpfilepath, "pdf");

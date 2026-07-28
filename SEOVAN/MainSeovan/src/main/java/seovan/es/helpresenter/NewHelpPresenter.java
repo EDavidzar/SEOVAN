@@ -31,17 +31,7 @@ public class NewHelpPresenter extends javax.swing.JDialog {
     /**
      *
      */
-    public static int mconfyes = 1,
-
-    /**
-     *
-     */
-    confno = 2,
-
-    /**
-     *
-     */
-    confcancel = 3;
+    public static int mconfyes = 1,confno = 2,confcancel = 3;
     static String sYES = " Aceptar ", sNO = " No ", sCANCEL = " Cancelar ";
 
     /**

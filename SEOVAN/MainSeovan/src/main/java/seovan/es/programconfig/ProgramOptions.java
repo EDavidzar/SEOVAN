@@ -18,6 +18,7 @@ public class ProgramOptions extends javax.swing.JDialog {
 
     /**
      * Creates new form ProgramOptions
+     *
      * @param parent
      * @param modal
      */
@@ -317,17 +318,14 @@ public class ProgramOptions extends javax.swing.JDialog {
         final int CX = KeyEvent.VK_X + KeyEvent.CTRL_DOWN_MASK;
         int tkc = evt.getKeyCode();
         switch (tkc) {
-            case CV: {
+            case CV ->  {
                 pastepass();
-                break;
             }
-            case CC: {
+            case CC ->  {
                 copypass();
-                break;
             }
-            case CX: {
+            case CX ->  {
                 cutpass();
-                break;
             }
 
         }

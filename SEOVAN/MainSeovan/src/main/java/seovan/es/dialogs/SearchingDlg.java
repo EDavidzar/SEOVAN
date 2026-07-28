@@ -34,8 +34,6 @@ public class SearchingDlg extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SearchingDlg.class.getName());
     private FDBMan DBMSAP;
-    private FDBMan DBMSEV;
-    int idxitem = 0;
     private int searcheditem = 0;
     private boolean encontrado=false;
 
@@ -58,7 +56,6 @@ public class SearchingDlg extends javax.swing.JDialog {
     public SearchingDlg(java.awt.Frame parent, boolean modal, int tmpidxitem) {
         super(parent, modal);
         initComponents();
-        idxitem = tmpidxitem;
     }
 
     /**
@@ -180,7 +177,7 @@ public class SearchingDlg extends javax.swing.JDialog {
         CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("elements_record");
         CLAllObjectList<CLAllObjectList<String>> Records_List = DBMSAP.LoadList_Table("desidaniespsources", "elements_record", ColumnsName);
         int IndexDataTotal = Records_List.get(0).size();
-        DBMSEV = new FDBMan("jdbc:mysql://localhost:3306/sourcesevalprotocol", PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
+        new FDBMan("jdbc:mysql://localhost:3306/sourcesevalprotocol", PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
         CLAllObjectList<String> ListSourcelevel_ent = DBMSAP.LoadList("list_sourcelevel", "sourcelevelitem");
         CLAllObjectList<String> ListSourceOriginTable_ent = DBMSAP.LoadList("list_source_origin_table", "originitem");
         CLAllObjectList<String> ListGeoCoverTable_ent = DBMSAP.LoadList("list_geo_cover_table", "geographicvoveritem");

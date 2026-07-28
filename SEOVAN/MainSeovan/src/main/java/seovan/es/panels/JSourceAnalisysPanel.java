@@ -1323,7 +1323,7 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
      */
     public void DBDeleteAnalRecord(int itmpIndexItemSource) {
         String elements_autorithies, elements_contents, elements_evaluation, elements_identification,
-                elements_sourceapp, elements_classte, elements_tipification, elements_record;
+                elements_sourceapp, elements_classte, elements_tipification;
 
         CLAllObjectList<String> InParameters = new CLAllObjectList<>();
         CLAllObjectList<String> OutParameters = new CLAllObjectList<>();
@@ -1338,7 +1338,7 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
         elements_sourceapp = OutParameters.get(4);
         elements_classte = OutParameters.get(5);
         elements_tipification = OutParameters.get(6);
-        elements_record = OutParameters.get(7);
+        OutParameters.get(7);
 
         InParameters.add("elements_autorithies");
         InParameters.add("elements_contents");
@@ -1825,14 +1825,14 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
                 //NodeList NLSC = GetChilDNodeRecursed(NLID, "SyndicationChannel");
                 String SyndicationChannel = tmpXMLDI.GetResultFromRecurseDeeperNode(NLID, "SyndicationChannel");
                 String PublicationDate = tmpXMLDI.GetResultFromRecurseDeeperNode(NLID, "PublicationDate");
-                String UpdateDate = tmpXMLDI.GetResultFromRecurseDeeperNode(NLID, "UpdateDate");
-                String Rights = tmpXMLDI.GetResultFromRecurseDeeperNode(NLID, "Rights");
-                String Language = tmpXMLDI.GetResultFromRecurseDeeperNode(NLID, "Language");
+                String tmpUpdateDate = tmpXMLDI.GetResultFromRecurseDeeperNode(NLID, "UpdateDate");
+                String tmpRights = tmpXMLDI.GetResultFromRecurseDeeperNode(NLID, "Rights");
+                String tmpLanguage = tmpXMLDI.GetResultFromRecurseDeeperNode(NLID, "Language");
                 getjIdentjSyndChannel().setText(SyndicationChannel);
                 getjIdentPublishDate().setText(PublicationDate);
-                getjIIdentUpdateDate().setText(UpdateDate);
-                getjIdentRigths().setText(Rights);
-                getjIdentSourceLang().setText(Language);
+                getjIIdentUpdateDate().setText(tmpUpdateDate);
+                getjIdentRigths().setText(tmpRights);
+                getjIdentSourceLang().setText(tmpLanguage);
 
                 NodeList NLTY = tmpXMLDI.GetChilDNodeRecursed(NLAN, "Typification");
                 String AccordingToLevel = tmpXMLDI.GetResultFromRecurseDeeperNode(NLTY, "AccordingToLevel");
@@ -1927,9 +1927,6 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
         return theindex;
     }
 
-    /**
-     * @return the dpjIdentSubtitleorOtherTitlePart
-     */
     /**
      * @return the dpjIdentSubtitleorOtherTitlePart
      */

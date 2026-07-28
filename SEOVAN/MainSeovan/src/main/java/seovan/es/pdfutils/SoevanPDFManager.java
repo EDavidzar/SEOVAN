@@ -176,7 +176,6 @@ public class SoevanPDFManager {
      *
      */
     protected PdfPTable evaltable;
-    private boolean error;
     String ThePath="";
 
     /**
@@ -1052,7 +1051,6 @@ public class SoevanPDFManager {
                 rt.exec(commandwin);
 
             } catch (IOException ex) {
-                error = true;
                 ShowDError(SoevanPDFManager.class.getName() + " " + ex.getLocalizedMessage());
             }
         } else {
@@ -1062,7 +1060,6 @@ public class SoevanPDFManager {
                 try {
                     Desktop.getDesktop().open(theUMFile);
                 } catch (IOException ex) {
-                    error = true;
                     ShowDError(SoevanPDFManager.class.getName() + " " + ex.getLocalizedMessage());
                 }
             }
