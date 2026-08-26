@@ -187,19 +187,20 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         setMinimumSize(new java.awt.Dimension(1618, 825));
         setLayout(new java.awt.GridBagLayout());
 
-        JActionButtonsPanel.setMaximumSize(new java.awt.Dimension(1500, 50));
-        JActionButtonsPanel.setMinimumSize(new java.awt.Dimension(1500, 50));
+        JActionButtonsPanel.setMaximumSize(new java.awt.Dimension(1550, 50));
+        JActionButtonsPanel.setMinimumSize(new java.awt.Dimension(1550, 50));
         JActionButtonsPanel.setOpaque(false);
-        JActionButtonsPanel.setPreferredSize(new java.awt.Dimension(1500, 50));
+        JActionButtonsPanel.setPreferredSize(new java.awt.Dimension(1550, 50));
         JActionButtonsPanel.setLayout(new java.awt.GridBagLayout());
 
+        jExitProgram.setBackground(new java.awt.Color(18, 75, 104));
         jExitProgram.setIcon(new javax.swing.ImageIcon(getClass().getResource("/seovan/es/generalmods/iconos botones seovan-s.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jExitProgram, org.openide.util.NbBundle.getMessage(PrincipalWindowTopComponent.class, "PrincipalWindowTopComponent.jExitProgram.text")); // NOI18N
         jExitProgram.setToolTipText(org.openide.util.NbBundle.getMessage(PrincipalWindowTopComponent.class, "PrincipalWindowTopComponent.jExitProgram.toolTipText")); // NOI18N
         jExitProgram.setActionCommand(org.openide.util.NbBundle.getMessage(PrincipalWindowTopComponent.class, "PrincipalWindowTopComponent.jExitProgram.actionCommand")); // NOI18N
-        jExitProgram.setMaximumSize(new java.awt.Dimension(300, 50));
-        jExitProgram.setMinimumSize(new java.awt.Dimension(300, 50));
-        jExitProgram.setPreferredSize(new java.awt.Dimension(300, 50));
+        jExitProgram.setMaximumSize(new java.awt.Dimension(516, 50));
+        jExitProgram.setMinimumSize(new java.awt.Dimension(516, 50));
+        jExitProgram.setPreferredSize(new java.awt.Dimension(516, 50));
         jExitProgram.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/seovan/es/generalmods/iconos botones seovan-s-i.png"))); // NOI18N
         jExitProgram.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,17 +208,20 @@ public final class PrincipalWindowTopComponent extends TopComponent {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         JActionButtonsPanel.add(jExitProgram, gridBagConstraints);
 
+        jAnalButton.setBackground(new java.awt.Color(18, 75, 104));
         jAnalButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/seovan/es/generalmods/iconos botones seovan-a.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jAnalButton, org.openide.util.NbBundle.getMessage(PrincipalWindowTopComponent.class, "PrincipalWindowTopComponent.jAnalButton.text")); // NOI18N
         jAnalButton.setToolTipText(org.openide.util.NbBundle.getMessage(PrincipalWindowTopComponent.class, "PrincipalWindowTopComponent.jAnalButton.toolTipText")); // NOI18N
         jAnalButton.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jAnalButton.setMaximumSize(new java.awt.Dimension(300, 50));
-        jAnalButton.setMinimumSize(new java.awt.Dimension(300, 50));
-        jAnalButton.setPreferredSize(new java.awt.Dimension(300, 50));
+        jAnalButton.setMaximumSize(new java.awt.Dimension(516, 50));
+        jAnalButton.setMinimumSize(new java.awt.Dimension(516, 50));
+        jAnalButton.setPreferredSize(new java.awt.Dimension(516, 50));
         jAnalButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/seovan/es/generalmods/iconos botones seovan-a-i.png"))); // NOI18N
         jAnalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,14 +231,17 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         JActionButtonsPanel.add(jAnalButton, gridBagConstraints);
 
+        jEvalButton.setBackground(new java.awt.Color(18, 75, 104));
         jEvalButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/seovan/es/generalmods/iconos botones seovan-e.png"))); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jEvalButton, org.openide.util.NbBundle.getMessage(PrincipalWindowTopComponent.class, "PrincipalWindowTopComponent.jEvalButton.text")); // NOI18N
         jEvalButton.setToolTipText(org.openide.util.NbBundle.getMessage(PrincipalWindowTopComponent.class, "PrincipalWindowTopComponent.jEvalButton.toolTipText")); // NOI18N
-        jEvalButton.setMaximumSize(new java.awt.Dimension(300, 50));
-        jEvalButton.setMinimumSize(new java.awt.Dimension(300, 50));
-        jEvalButton.setPreferredSize(new java.awt.Dimension(300, 50));
+        jEvalButton.setMaximumSize(new java.awt.Dimension(516, 50));
+        jEvalButton.setMinimumSize(new java.awt.Dimension(516, 50));
+        jEvalButton.setPreferredSize(new java.awt.Dimension(516, 50));
         jEvalButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/seovan/es/generalmods/iconos botones seovan-e-i.png"))); // NOI18N
         jEvalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -244,6 +251,8 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         JActionButtonsPanel.add(jEvalButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();

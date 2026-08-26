@@ -69,48 +69,42 @@ public class SearchingDlg extends javax.swing.JDialog {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jSearchPhrase = new javax.swing.JTextField();
         JSearchButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jSearchPhrase = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jSearchPhrase1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jSearchPhrase2 = new javax.swing.JTextField();
+        jSearchPhrase3 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox7 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
+        jCheckBox8 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.title")); // NOI18N
         setAlwaysOnTop(true);
         setLocationByPlatform(true);
         setMaximumSize(new java.awt.Dimension(1920, 1080));
+        setMinimumSize(new java.awt.Dimension(1100, 710));
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(1100, 710));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 5, true), org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jPanel1.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("sansserif", 0, 14))); // NOI18N
-        jPanel1.setMaximumSize(new java.awt.Dimension(1920, 1080));
-        jPanel1.setMinimumSize(new java.awt.Dimension(800, 600));
-        jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1000, 700));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1000, 700));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 700));
         jPanel1.setLayout(new java.awt.GridBagLayout());
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jLabel1.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.ipady = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        jPanel1.add(jLabel1, gridBagConstraints);
-
-        jSearchPhrase.setText(org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jSearchPhrase.text")); // NOI18N
-        jSearchPhrase.setMaximumSize(new java.awt.Dimension(600, 50));
-        jSearchPhrase.setMinimumSize(new java.awt.Dimension(600, 50));
-        jSearchPhrase.setPreferredSize(new java.awt.Dimension(600, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.ipady = 5;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        jPanel1.add(jSearchPhrase, gridBagConstraints);
 
         org.openide.awt.Mnemonics.setLocalizedText(JSearchButton, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.JSearchButton.text")); // NOI18N
         JSearchButton.setMaximumSize(new java.awt.Dimension(300, 50));
@@ -141,6 +135,161 @@ public class SearchingDlg extends javax.swing.JDialog {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel1.add(jButton1, gridBagConstraints);
+
+        jPanel2.setMaximumSize(new java.awt.Dimension(800, 400));
+        jPanel2.setMinimumSize(new java.awt.Dimension(800, 400));
+        jPanel2.setPreferredSize(new java.awt.Dimension(800, 400));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jLabel1.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel2.add(jLabel1, gridBagConstraints);
+
+        jSearchPhrase.setText(org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jSearchPhrase.text")); // NOI18N
+        jSearchPhrase.setMaximumSize(new java.awt.Dimension(600, 30));
+        jSearchPhrase.setMinimumSize(new java.awt.Dimension(600, 30));
+        jSearchPhrase.setPreferredSize(new java.awt.Dimension(600, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel2.add(jSearchPhrase, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jLabel2.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel2.add(jLabel2, gridBagConstraints);
+
+        jSearchPhrase1.setText(org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jSearchPhrase1.text")); // NOI18N
+        jSearchPhrase1.setMaximumSize(new java.awt.Dimension(600, 30));
+        jSearchPhrase1.setMinimumSize(new java.awt.Dimension(600, 30));
+        jSearchPhrase1.setPreferredSize(new java.awt.Dimension(600, 30));
+        jSearchPhrase1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jSearchPhrase1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel2.add(jSearchPhrase1, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jLabel3.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel2.add(jLabel3, gridBagConstraints);
+
+        jSearchPhrase2.setText(org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jSearchPhrase2.text")); // NOI18N
+        jSearchPhrase2.setMaximumSize(new java.awt.Dimension(600, 30));
+        jSearchPhrase2.setMinimumSize(new java.awt.Dimension(600, 30));
+        jSearchPhrase2.setPreferredSize(new java.awt.Dimension(600, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel2.add(jSearchPhrase2, gridBagConstraints);
+
+        jSearchPhrase3.setText(org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jSearchPhrase3.text")); // NOI18N
+        jSearchPhrase3.setMaximumSize(new java.awt.Dimension(600, 30));
+        jSearchPhrase3.setMinimumSize(new java.awt.Dimension(600, 30));
+        jSearchPhrase3.setPreferredSize(new java.awt.Dimension(600, 30));
+        jSearchPhrase3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jSearchPhrase3ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel2.add(jSearchPhrase3, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jLabel4.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel2.add(jLabel4, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox1, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jCheckBox1.text")); // NOI18N
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jCheckBox1, new java.awt.GridBagConstraints());
+
+        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox3, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jCheckBox3.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        jPanel2.add(jCheckBox3, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox5, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jCheckBox5.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        jPanel2.add(jCheckBox5, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox7, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jCheckBox7.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        jPanel2.add(jCheckBox7, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox2, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jCheckBox2.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(jCheckBox2, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox4, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jCheckBox4.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        jPanel2.add(jCheckBox4, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox6, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jCheckBox6.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        jPanel2.add(jCheckBox6, gridBagConstraints);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox8, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jCheckBox8.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        jPanel2.add(jCheckBox8, gridBagConstraints);
+
+        jPanel1.add(jPanel2, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -177,7 +326,7 @@ public class SearchingDlg extends javax.swing.JDialog {
         CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("elements_record");
         CLAllObjectList<CLAllObjectList<String>> Records_List = DBMSAP.LoadList_Table("desidaniespsources", "elements_record", ColumnsName);
         int IndexDataTotal = Records_List.get(0).size();
-        new FDBMan("jdbc:mysql://localhost:3306/sourcesevalprotocol", PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
+        DBMSAP=new FDBMan("jdbc:mysql://localhost:3306/sourcesevalprotocol", PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
         CLAllObjectList<String> ListSourcelevel_ent = DBMSAP.LoadList("list_sourcelevel", "sourcelevelitem");
         CLAllObjectList<String> ListSourceOriginTable_ent = DBMSAP.LoadList("list_source_origin_table", "originitem");
         CLAllObjectList<String> ListGeoCoverTable_ent = DBMSAP.LoadList("list_geo_cover_table", "geographicvoveritem");
@@ -233,6 +382,18 @@ public class SearchingDlg extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jSearchPhrase1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchPhrase1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSearchPhrase1ActionPerformed
+
+    private void jSearchPhrase3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchPhrase3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSearchPhrase3ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -273,9 +434,24 @@ public class SearchingDlg extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JSearchButton;
     private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jCheckBox7;
+    private javax.swing.JCheckBox jCheckBox8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jSearchPhrase;
+    private javax.swing.JTextField jSearchPhrase1;
+    private javax.swing.JTextField jSearchPhrase2;
+    private javax.swing.JTextField jSearchPhrase3;
     // End of variables declaration//GEN-END:variables
 
     /**
