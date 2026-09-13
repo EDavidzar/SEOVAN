@@ -622,32 +622,32 @@ public final class PrincipalWindowTopComponent extends TopComponent {
      *
      */
     public void SelectEvaluationPanel() {
-        jInnerSurfacePanel.removeAll();
+        getjInnerSurfacePanel().removeAll();
         // JScrollPane JSP = new JScrollPane(JSEP);
         //JSP.setBounds(1, 1, 1500, 2500);
         // JSP.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
         //  JSP.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
-        jInnerSurfacePanel.setBounds(0, 0, 1500, 4550);
-        jInnerSurfacePanel.setMaximumSize(new Dimension(1500, 2550));
-        jInnerSurfacePanel.repaint();
-        jInnerSurfacePanel.add(JSEP);
-        jInnerSurfacePanel.repaint();
+        getjInnerSurfacePanel().setBounds(0, 0, 1500, 4550);
+        getjInnerSurfacePanel().setMaximumSize(new Dimension(1500, 2550));
+        getjInnerSurfacePanel().repaint();
+        getjInnerSurfacePanel().add(JSEP);
+        getjInnerSurfacePanel().repaint();
     }
 
     /**
      *
      */
     public void SelectAnalisysPanel() {
-        jInnerSurfacePanel.removeAll();
+        getjInnerSurfacePanel().removeAll();
         //JScrollPane JSP = new JScrollPane(JSAP);
         //JSP.setBounds(1, 1, 1500, 2500);
         // JSP.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
         //JSP.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
-        jInnerSurfacePanel.setBounds(0, 0, 1500, 2550);
-        jInnerSurfacePanel.setMaximumSize(new Dimension(1500, 2550));
-        jInnerSurfacePanel.repaint();
-        jInnerSurfacePanel.add(JSAP);
-        jInnerSurfacePanel.repaint();
+        getjInnerSurfacePanel().setBounds(0, 0, 1500, 2550);
+        getjInnerSurfacePanel().setMaximumSize(new Dimension(1500, 2550));
+        getjInnerSurfacePanel().repaint();
+        getjInnerSurfacePanel().add(JSAP);
+        getjInnerSurfacePanel().repaint();
     }
 
     /**
@@ -865,6 +865,20 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         } else {
             ShowDError("Cadena no encontrada");
         }
+    }
+
+    /**
+     * @return the jInnerSurfacePanel
+     */
+    public javax.swing.JPanel getjInnerSurfacePanel() {
+        return jInnerSurfacePanel;
+    }
+
+    /**
+     * @param jInnerSurfacePanel the jInnerSurfacePanel to set
+     */
+    public void setjInnerSurfacePanel(javax.swing.JPanel jInnerSurfacePanel) {
+        this.jInnerSurfacePanel = jInnerSurfacePanel;
     }
 
 }
