@@ -1,5 +1,5 @@
 /*
- @author Emilio David Diaus López 2008-2021
+ @author Emilio David Diaus López 2008-2026
  * *
  * *
  */
@@ -13,7 +13,7 @@ import org.openide.windows.WindowManager;
 
 /**
  *
- * @author Emilio David Diaus López 2008-2021
+ * @author Emilio David Diaus López 2008-2026
  */
 //"Ventana de Acci\u00f3n Principal"
 public class SearchPanelActions {

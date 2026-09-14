@@ -93,6 +93,7 @@ public final class SearchWindowTopComponent extends TopComponent {
         jLeftEditorPane.setText(org.openide.util.NbBundle.getMessage(SearchWindowTopComponent.class, "SearchWindowTopComponent.jLeftEditorPane.text")); // NOI18N
         jLeftEditorPane.setMaximumSize(new java.awt.Dimension(200, 825));
         jLeftEditorPane.setMinimumSize(new java.awt.Dimension(200, 825));
+        jLeftEditorPane.setPreferredSize(new java.awt.Dimension(200, 825));
         jLeftScrollPane.setViewportView(jLeftEditorPane);
 
         javax.swing.GroupLayout jLeftPanelLayout = new javax.swing.GroupLayout(jLeftPanel);
