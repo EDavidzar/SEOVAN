@@ -17,7 +17,7 @@ public class SearchingDlg extends javax.swing.JDialog {
 
     private static final long serialVersionUID = -5128974329527233716L;
 
-    CLAllObjectList<Integer> ListofsearchedItems = new CLAllObjectList<>();
+    CLAllObjectList<Integer> PrincipalListofsearchedItems = new CLAllObjectList<>();
 
     /**
      * @return the encontrado
@@ -97,8 +97,6 @@ public class SearchingDlg extends javax.swing.JDialog {
         JRBOR3 = new javax.swing.JRadioButton();
         jRBAND4 = new javax.swing.JRadioButton();
         JRBOR4 = new javax.swing.JRadioButton();
-        jRBAND5 = new javax.swing.JRadioButton();
-        JRBOR5 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.title")); // NOI18N
@@ -183,11 +181,6 @@ public class SearchingDlg extends javax.swing.JDialog {
         jSearchUpdateDate.setMaximumSize(new java.awt.Dimension(600, 30));
         jSearchUpdateDate.setMinimumSize(new java.awt.Dimension(600, 30));
         jSearchUpdateDate.setPreferredSize(new java.awt.Dimension(600, 30));
-        jSearchUpdateDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jSearchUpdateDateActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -218,11 +211,6 @@ public class SearchingDlg extends javax.swing.JDialog {
         jSearchLanguage.setMaximumSize(new java.awt.Dimension(600, 30));
         jSearchLanguage.setMinimumSize(new java.awt.Dimension(600, 30));
         jSearchLanguage.setPreferredSize(new java.awt.Dimension(600, 30));
-        jSearchLanguage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jSearchLanguageActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
@@ -250,11 +238,6 @@ public class SearchingDlg extends javax.swing.JDialog {
         jSearchNumber.setMaximumSize(new java.awt.Dimension(600, 30));
         jSearchNumber.setMinimumSize(new java.awt.Dimension(600, 30));
         jSearchNumber.setPreferredSize(new java.awt.Dimension(600, 30));
-        jSearchNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jSearchNumberActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 9;
@@ -329,22 +312,6 @@ public class SearchingDlg extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(JRBOR4, gridBagConstraints);
 
-        JBGANDORINFO5.add(jRBAND5);
-        org.openide.awt.Mnemonics.setLocalizedText(jRBAND5, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.jRBAND5.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        jPanel2.add(jRBAND5, gridBagConstraints);
-
-        JBGANDORINFO5.add(JRBOR5);
-        JRBOR5.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(JRBOR5, org.openide.util.NbBundle.getMessage(SearchingDlg.class, "SearchingDlg.JRBOR5.text")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 9;
-        jPanel2.add(JRBOR5, gridBagConstraints);
-
         jPanel1.add(jPanel2, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -375,8 +342,8 @@ public class SearchingDlg extends javax.swing.JDialog {
         return result;
     }
 
-    int GlobalSearch(int searcheditem, String Phrase) {
-        CLAllObjectList<Integer> SavedListofsearchedItems = new CLAllObjectList<>();
+    CLAllObjectList<Integer> GlobalSearch(int searcheditem, String Phrase) {
+        CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
         DBMSAP = new FDBMan("jdbc:mysql://localhost:3306/desidaniespsources", PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
         CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("elements_record");
         CLAllObjectList<CLAllObjectList<String>> Records_List = DBMSAP.LoadList_Table("desidaniespsources", "elements_record", ColumnsName);
@@ -398,110 +365,125 @@ public class SearchingDlg extends javax.swing.JDialog {
             searcheditem = Searching(TIP, Phrase, IndexDataTotal);
             TIP.clear();
         }
-
-        if (JRBOR1.isEnabled() && searcheditem != -1) {
-            ListofsearchedItems.add(searcheditem);
-        }
+        tmpSavedListofsearchedItems.add(searcheditem);
         if (searcheditem == -1) {
             ColumnsName = DBMSAP.GetColumnsName("authorities");
             CLAllObjectList<CLAllObjectList<String>> AUTHOR = DBMSAP.LoadList_Table("desidaniespsources", "authorities", ColumnsName);
             searcheditem = Searching(AUTHOR, Phrase, IndexDataTotal);
             AUTHOR.clear();
         }
-
+        tmpSavedListofsearchedItems.add(searcheditem);
         if (searcheditem == -1) {
             ColumnsName = DBMSAP.GetColumnsName("temclass");
             CLAllObjectList<CLAllObjectList<String>> TEMCLASS = DBMSAP.LoadList_Table("desidaniespsources", "temclass", ColumnsName);
             searcheditem = Searching(TEMCLASS, Phrase, IndexDataTotal);
             TEMCLASS.clear();
         }
-
+        tmpSavedListofsearchedItems.add(searcheditem);
         if (searcheditem == -1) {
             ColumnsName = DBMSAP.GetColumnsName("contents");
             CLAllObjectList<CLAllObjectList<String>> CONTENT = DBMSAP.LoadList_Table("desidaniespsources", "contents", ColumnsName);
             searcheditem = Searching(CONTENT, Phrase, IndexDataTotal);
             CONTENT.clear();
         }
-
+        tmpSavedListofsearchedItems.add(searcheditem);
         if (searcheditem == -1) {
             ColumnsName = DBMSAP.GetColumnsName("sourceapplication");
             CLAllObjectList<CLAllObjectList<String>> APLICUTIL = DBMSAP.LoadList_Table("desidaniespsources", "sourceapplication", ColumnsName);
             searcheditem = Searching(APLICUTIL, Phrase, IndexDataTotal);
             APLICUTIL.clear();
         }
-        if (JRBOR1.isEnabled() && searcheditem != -1) {
-            ListofsearchedItems.add(searcheditem);
-        }
+        tmpSavedListofsearchedItems.add(searcheditem);
         if (searcheditem == -1) {
             ColumnsName = DBMSAP.GetColumnsName("evaluation");
             CLAllObjectList<CLAllObjectList<String>> EVAL = DBMSAP.LoadList_Table("desidaniespsources", "evaluation", ColumnsName);
             searcheditem = Searching(EVAL, Phrase, IndexDataTotal);
             EVAL.clear();
         }
-        if (jRBAND1.isEnabled() && searcheditem != -1) {
-            SavedListofsearchedItems.add(searcheditem);
-        }
-        if (JRBOR1.isEnabled() && searcheditem != -1) {
-            ListofsearchedItems.add(searcheditem);
-        }
-        if (searcheditem == -1) {
-            searcheditem = Searching(IDENT, jSearchUpdateDate.getText(), IndexDataTotal);
+        tmpSavedListofsearchedItems.add(searcheditem);
 
-        }
-        if (JRBOR2.isEnabled() && searcheditem != -1) {
-            ListofsearchedItems.add(searcheditem);
-
-        }
-        if (searcheditem == -1) {
-            searcheditem = Searching(IDENT, jSearchPublicDate.getText(), IndexDataTotal);
-
-        }
-        if (JRBOR3.isEnabled() && searcheditem != -1) {
-
-            ListofsearchedItems.add(searcheditem);
-        }
-        if (searcheditem == -1) {
-            searcheditem = Searching(IDENT, jSearchLanguage.getText(), IndexDataTotal);
-
-        }
-        if (JRBOR4.isEnabled() && searcheditem != -1) {
-
-            ListofsearchedItems.add(searcheditem);
-        }
-        if (searcheditem == -1) {
-            searcheditem = Searching(IDENT, jSearchNumber.getText(), IndexDataTotal);
-
-        }
-        if (JRBOR5.isEnabled() && searcheditem != -1) {
-
-            ListofsearchedItems.add(searcheditem);
-        }
-        return searcheditem;
+        return tmpSavedListofsearchedItems;
     }
 
     private void JSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSearchButtonActionPerformed
-        int searcheditem = -1;
+
         //CLAllObjectList<String> ColumnsName = new CLAllObjectList<>();
-        searcheditem = GlobalSearch(searcheditem, jSearchTitleSubCNF.getText());
-        ListofsearchedItems.add(searcheditem);
+        CLAllObjectList<Integer> GlobalSearchresult = GlobalSearch(searcheditem, jSearchTitleSubCNF.getText());
+
+        PrincipalListofsearchedItems.addAll(GlobalSearchresult);
+
+        CLAllObjectList<Integer> SearchActualDateresult = SearchActualDate(jSearchUpdateDate.getText());
+        if (JRBOR1.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchActualDateresult);
+        }
+        if (jRBAND1.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchActualDateresult);
+        }
+        CLAllObjectList<Integer> SearchPublicDateresult = SearchPublicDate(jSearchPublicDate.getText());
+        if (JRBOR2.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
+        }
+        if (jRBAND1.isEnabled() && jRBAND2.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
+            PrincipalListofsearchedItems.addAll(SearchActualDateresult);
+        }
+        CLAllObjectList<Integer> SearchLanguageresult = SearchLanguage(jSearchLanguage.getText());
+        if (JRBOR3.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchLanguageresult);
+        }
+        if (jRBAND3.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchLanguageresult);
+        }
+        if (jRBAND1.isEnabled() && jRBAND2.isEnabled() && jRBAND3.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
+            PrincipalListofsearchedItems.addAll(SearchActualDateresult);
+            PrincipalListofsearchedItems.addAll(SearchLanguageresult);
+        }
+        CLAllObjectList<Integer> SearchNumberresult = SearchNumber(jSearchNumber.getText());
+        if (JRBOR4.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchNumberresult);
+        }
+        if (jRBAND4.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchNumberresult);
+        }
+        if (jRBAND1.isEnabled() && jRBAND2.isEnabled() && jRBAND3.isEnabled() && jRBAND4.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
+            PrincipalListofsearchedItems.addAll(SearchActualDateresult);
+            PrincipalListofsearchedItems.addAll(SearchLanguageresult);
+            PrincipalListofsearchedItems.addAll(SearchNumberresult);
+        }
+        if (jRBAND2.isEnabled() && jRBAND3.isEnabled()) {
+
+            PrincipalListofsearchedItems.addAll(SearchActualDateresult);
+            PrincipalListofsearchedItems.addAll(SearchLanguageresult);
+
+        }
+        if (jRBAND2.isEnabled() && jRBAND4.isEnabled()) {
+           
+            PrincipalListofsearchedItems.addAll(SearchActualDateresult);
+           
+            PrincipalListofsearchedItems.addAll(SearchNumberresult);
+        }
+        if (jRBAND3.isEnabled() && jRBAND4.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchLanguageresult);
+            PrincipalListofsearchedItems.addAll(SearchNumberresult);
+        }
+        if (jRBAND1.isEnabled() && jRBAND3.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
+
+            PrincipalListofsearchedItems.addAll(SearchLanguageresult);
+
+        }
+        if (jRBAND1.isEnabled() && jRBAND4.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);          
+            PrincipalListofsearchedItems.addAll(SearchNumberresult);
+        }
         dispose();
     }//GEN-LAST:event_JSearchButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jSearchUpdateDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchUpdateDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSearchUpdateDateActionPerformed
-
-    private void jSearchLanguageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchLanguageActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSearchLanguageActionPerformed
-
-    private void jSearchNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchNumberActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSearchNumberActionPerformed
 
     /**
      * @param args the command line arguments
@@ -550,7 +532,6 @@ public class SearchingDlg extends javax.swing.JDialog {
     private javax.swing.JRadioButton JRBOR2;
     private javax.swing.JRadioButton JRBOR3;
     private javax.swing.JRadioButton JRBOR4;
-    private javax.swing.JRadioButton JRBOR5;
     private javax.swing.JButton JSearchButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -564,7 +545,6 @@ public class SearchingDlg extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRBAND2;
     private javax.swing.JRadioButton jRBAND3;
     private javax.swing.JRadioButton jRBAND4;
-    private javax.swing.JRadioButton jRBAND5;
     private javax.swing.JTextField jSearchLanguage;
     private javax.swing.JTextField jSearchNumber;
     private javax.swing.JTextField jSearchPublicDate;
@@ -584,5 +564,25 @@ public class SearchingDlg extends javax.swing.JDialog {
      */
     public void setSearcheditem(int searcheditem) {
         this.searcheditem = searcheditem;
+    }
+
+    private CLAllObjectList<Integer> SearchActualDate(String texttoseach) {
+        CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
+        return tmpSavedListofsearchedItems;
+    }
+
+    private CLAllObjectList<Integer> SearchLanguage(String texttoseach) {
+        CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
+        return tmpSavedListofsearchedItems;
+    }
+
+    private CLAllObjectList<Integer> SearchNumber(String texttoseach) {
+        CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
+        return tmpSavedListofsearchedItems;
+    }
+
+    private CLAllObjectList<Integer> SearchPublicDate(String texttoseac) {
+        CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
+        return tmpSavedListofsearchedItems;
     }
 }
