@@ -6,6 +6,12 @@ package seovan.es.dialogs;
 
 import beleris.es.finaldbmanager.FDBMan;
 import beleris.es.finalprimaryclasses.CLAllObjectList;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
+import static seovan.es.generalmods.SearchPanelActions.OpenSearchWindow;
+import seovan.es.generalmods.SearchWindowTopComponent;
 import seovan.es.programconfig.PConfigManager;
 import static seovan.es.programconfig.PConfigManager.PConfig;
 
@@ -446,6 +452,26 @@ public class SearchingDlg extends javax.swing.JDialog {
         if (jRBAND4.isEnabled()) {
             PrincipalListofsearchedItems.addAll(SearchNumberresult);
         }
+        if (jRBAND1.isEnabled() && jRBAND2.isEnabled() && jRBAND3.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
+            PrincipalListofsearchedItems.addAll(SearchActualDateresult);
+            PrincipalListofsearchedItems.addAll(SearchLanguageresult);
+        }
+        if (jRBAND1.isEnabled() && jRBAND2.isEnabled() && jRBAND4.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
+            PrincipalListofsearchedItems.addAll(SearchActualDateresult);
+            PrincipalListofsearchedItems.addAll(SearchNumberresult);
+        }
+        if (jRBAND1.isEnabled() && jRBAND3.isEnabled() && jRBAND4.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
+            PrincipalListofsearchedItems.addAll(SearchLanguageresult);
+            PrincipalListofsearchedItems.addAll(SearchNumberresult);
+        }
+        if (jRBAND2.isEnabled() && jRBAND3.isEnabled() && jRBAND4.isEnabled()) {
+            PrincipalListofsearchedItems.addAll(SearchActualDateresult);
+            PrincipalListofsearchedItems.addAll(SearchLanguageresult);
+            PrincipalListofsearchedItems.addAll(SearchNumberresult);
+        }
         if (jRBAND1.isEnabled() && jRBAND2.isEnabled() && jRBAND3.isEnabled() && jRBAND4.isEnabled()) {
             PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
             PrincipalListofsearchedItems.addAll(SearchActualDateresult);
@@ -459,9 +485,9 @@ public class SearchingDlg extends javax.swing.JDialog {
 
         }
         if (jRBAND2.isEnabled() && jRBAND4.isEnabled()) {
-           
+
             PrincipalListofsearchedItems.addAll(SearchActualDateresult);
-           
+
             PrincipalListofsearchedItems.addAll(SearchNumberresult);
         }
         if (jRBAND3.isEnabled() && jRBAND4.isEnabled()) {
@@ -475,9 +501,11 @@ public class SearchingDlg extends javax.swing.JDialog {
 
         }
         if (jRBAND1.isEnabled() && jRBAND4.isEnabled()) {
-            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);          
+            PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
             PrincipalListofsearchedItems.addAll(SearchNumberresult);
         }
+        InsertListinPanel(PrincipalListofsearchedItems);
+        OpenSearchWindow();
         dispose();
     }//GEN-LAST:event_JSearchButtonActionPerformed
 
@@ -584,5 +612,17 @@ public class SearchingDlg extends javax.swing.JDialog {
     private CLAllObjectList<Integer> SearchPublicDate(String texttoseac) {
         CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
         return tmpSavedListofsearchedItems;
+    }
+
+    private void InsertListinPanel(CLAllObjectList<Integer> tmplistofsearcheditems) {
+        SearchWindowTopComponent vatc = (SearchWindowTopComponent) WindowManager.getDefault().findTopComponent("SearchWindlwTopComponent");
+        if (vatc != null) {
+            if ("Ventana de Búsqueda".equals(vatc.getName())) {
+                 String[] tmpIntegertoString = tmplistofsearcheditems.stream().map(String::valueOf).toArray(String[]::new);
+                if (!vatc.isOpened()) {
+                    vatc.getItemsList().setListData(tmpIntegertoString);
+                }
+            }
+        }
     }
 }

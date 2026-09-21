@@ -56,8 +56,8 @@ public final class SearchWindowTopComponent extends TopComponent {
         jSplitPane1 = new javax.swing.JSplitPane();
         jRightPanel = new javax.swing.JPanel();
         jLeftPanel = new javax.swing.JPanel();
-        jLeftScrollPane = new javax.swing.JScrollPane();
-        jLeftEditorPane = new javax.swing.JEditorPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ItemsList = new javax.swing.JList<>();
 
         setToolTipText(org.openide.util.NbBundle.getMessage(SearchWindowTopComponent.class, "SearchWindowTopComponent.toolTipText")); // NOI18N
         setMaximumSize(new java.awt.Dimension(1618, 825));
@@ -86,31 +86,26 @@ public final class SearchWindowTopComponent extends TopComponent {
 
         jSplitPane1.setRightComponent(jRightPanel);
 
-        jLeftPanel.setMaximumSize(new java.awt.Dimension(100, 825));
-        jLeftPanel.setMinimumSize(new java.awt.Dimension(100, 825));
-        jLeftPanel.setPreferredSize(new java.awt.Dimension(100, 825));
+        jLeftPanel.setMaximumSize(new java.awt.Dimension(200, 825));
+        jLeftPanel.setMinimumSize(new java.awt.Dimension(200, 825));
+        jLeftPanel.setPreferredSize(new java.awt.Dimension(200, 825));
+        jLeftPanel.setLayout(new java.awt.GridBagLayout());
 
-        jLeftEditorPane.setText(org.openide.util.NbBundle.getMessage(SearchWindowTopComponent.class, "SearchWindowTopComponent.jLeftEditorPane.text")); // NOI18N
-        jLeftEditorPane.setMaximumSize(new java.awt.Dimension(200, 825));
-        jLeftEditorPane.setMinimumSize(new java.awt.Dimension(200, 825));
-        jLeftEditorPane.setPreferredSize(new java.awt.Dimension(200, 825));
-        jLeftScrollPane.setViewportView(jLeftEditorPane);
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(200, 825));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(200, 825));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(200, 825));
 
-        javax.swing.GroupLayout jLeftPanelLayout = new javax.swing.GroupLayout(jLeftPanel);
-        jLeftPanel.setLayout(jLeftPanelLayout);
-        jLeftPanelLayout.setHorizontalGroup(
-            jLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLeftPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLeftScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
-        );
-        jLeftPanelLayout.setVerticalGroup(
-            jLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLeftPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLeftScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE))
-        );
+        ItemsList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        ItemsList.setMaximumSize(new java.awt.Dimension(200, 825));
+        ItemsList.setMinimumSize(new java.awt.Dimension(200, 825));
+        ItemsList.setPreferredSize(new java.awt.Dimension(200, 825));
+        jScrollPane1.setViewportView(ItemsList);
+
+        jLeftPanel.add(jScrollPane1, new java.awt.GridBagConstraints());
 
         jSplitPane1.setLeftComponent(jLeftPanel);
 
@@ -133,10 +128,10 @@ public final class SearchWindowTopComponent extends TopComponent {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JEditorPane jLeftEditorPane;
+    private javax.swing.JList<String> ItemsList;
     private javax.swing.JPanel jLeftPanel;
-    private javax.swing.JScrollPane jLeftScrollPane;
     private javax.swing.JPanel jRightPanel;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
     // End of variables declaration//GEN-END:variables
     @Override
@@ -173,5 +168,19 @@ public final class SearchWindowTopComponent extends TopComponent {
      */
     public void setjRightPanel(javax.swing.JPanel jRightPanel) {
         this.jRightPanel = jRightPanel;
+    }
+
+    /**
+     * @return the ItemsList
+     */
+    public javax.swing.JList<String> getItemsList() {
+        return ItemsList;
+    }
+
+    /**
+     * @param ItemsList the ItemsList to set
+     */
+    public void setItemsList(javax.swing.JList<String> ItemsList) {
+        this.ItemsList = ItemsList;
     }
 }
