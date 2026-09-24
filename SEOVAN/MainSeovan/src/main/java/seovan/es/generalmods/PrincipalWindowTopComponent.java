@@ -577,7 +577,6 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         DBToUse = PConfig.getDatabaseManagerinUse();
         ShowDataItem(IndexItemSource);
     }
-    
 
     /**
      *
@@ -595,11 +594,11 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         SelectFileDlg.setVisible(true);
         JFileChooser FCH = SelectFileDlg.GetFileChooser();
         ImportDocumentPath = FCH.getSelectedFile().getAbsolutePath();
-        FileManagerGenerator FMG=new FileManagerGenerator();
+        FileManagerGenerator FMG = new FileManagerGenerator();
         if (FMG.FileExists(ImportDocumentPath)) {
-             XMLDI = new XMLDataImport(ImportDocumentPath);
-        } else{
-             ShowDError(" No puedo acceder al fichero, error al cargar fichero XML");
+            XMLDI = new XMLDataImport(ImportDocumentPath);
+        } else {
+            ShowDError(" No puedo acceder al fichero, error al cargar fichero XML");
         }
     }
 
@@ -738,7 +737,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         try {
             XMLTemplate = FileUtils.readFileToString(myfile, "UTF-8");
         } catch (IOException ex) {
-           ShowDError(" Error al cargar plantilla XML" + ex.getLocalizedMessage());
+            ShowDError(" Error al cargar plantilla XML" + ex.getLocalizedMessage());
         }
 
     }
@@ -860,10 +859,12 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         sdlg.setLocationRelativeTo(f);
         sdlg.setVisible(true);
         if (sdlg.getSearcheditem() != -1 && sdlg.isEncontrado()) {
-            ShowDInfo("Cadena encontrada en el registro: " + Integer.toString(sdlg.getSearcheditem()));
+            ShowDInfo("Cadena encontrada");             
             IndexItemSource = sdlg.getSearcheditem();
         } else {
-            ShowDError("Cadena no encontrada");
+            if (!sdlg.isCancelado()) {
+                ShowDError("Cadena no encontrada");
+            }
         }
     }
 

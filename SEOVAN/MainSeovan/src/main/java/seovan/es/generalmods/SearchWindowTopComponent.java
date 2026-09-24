@@ -18,7 +18,7 @@ import org.openide.util.NbBundle.Messages;
         autostore = false
 )
 @TopComponent.Description(
-        preferredID = "SearchWindlwTopComponent",
+        preferredID = "SearchWindowTopComponent",
         //iconBase="SET/PATH/TO/ICON/HERE",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
@@ -27,12 +27,12 @@ import org.openide.util.NbBundle.Messages;
 @ActionReference(path = "Menu/Window" /*, position = 333 */)
 @TopComponent.OpenActionRegistration(
         displayName = "#CTL_SearchWindlwAction",
-        preferredID = "SearchWindlwTopComponent"
+        preferredID = "SearchWindowTopComponent"
 )
 @Messages({
-    "CTL_SearchWindlwAction=SearchWindlw",
-    "CTL_SearchWindlwTopComponent=SearchWindlw Window",
-    "HINT_SearchWindlwTopComponent=This is a SearchWindlw window"
+    "CTL_SearchWindlwAction=SearchWindow",
+    "CTL_SearchWindlwTopComponent=SearchWindow Window",
+    "HINT_SearchWindlwTopComponent=This is a SearchWindow window"
 })
 public final class SearchWindowTopComponent extends TopComponent {
 
@@ -72,6 +72,7 @@ public final class SearchWindowTopComponent extends TopComponent {
 
         jRightPanel.setMaximumSize(new java.awt.Dimension(1413, 825));
         jRightPanel.setMinimumSize(new java.awt.Dimension(1413, 825));
+        jRightPanel.setName("Ventana de Búsqueda"); // NOI18N
 
         javax.swing.GroupLayout jRightPanelLayout = new javax.swing.GroupLayout(jRightPanel);
         jRightPanel.setLayout(jRightPanelLayout);

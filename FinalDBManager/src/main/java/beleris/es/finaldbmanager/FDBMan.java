@@ -2956,14 +2956,18 @@ public class FDBMan {
      */
     public void ShowSQLExceptionError(SQLException ex, String sError) {
         setbError(true);
-        ierrCode = ex.getErrorCode();
-        serrSQLMessage = ex.getLocalizedMessage();
-        serrSQLState = ex.getSQLState();
-        // rsCResSet = null;
-        LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{serrSQLMessage, serrSQLState});
+        if (ex != null) {
+            ierrCode = ex.getErrorCode();
+            serrSQLMessage = ex.getLocalizedMessage();
+            serrSQLState = ex.getSQLState();
+            // rsCResSet =null;
+            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{serrSQLMessage, serrSQLState});
+        } else {
+            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{"Error de base de datos:", sError});
+            serrSQLMessage = sError;
+        }
         ShowDError(sError + "." + serrSQLMessage);
     }
-
     private void MySQL_CreateTable(String sTmpDBTable) {
         try {
             var sSQLite_Statement = "CREATE TABLE IF NOT EXISTS " + sTmpDBTable + "("
@@ -3032,7 +3036,7 @@ public class FDBMan {
         //int Count = getLastRow(sTmpDBTableName);
         //MySQL_SelectAllRecords(sTmpDBTableName);
         int colnumber = Columns.size();
-   
+
         for (int col = 0; col < colnumber; col++) {
             CLAllObjectList<String> MiColl = new CLAllObjectList<>();
             TheTable.add(MiColl);

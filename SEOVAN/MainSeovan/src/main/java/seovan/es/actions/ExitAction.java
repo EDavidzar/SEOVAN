@@ -42,11 +42,13 @@ public final class ExitAction implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        Instalador.WriteConfiguration();
+        if (Instalador != null) {
+            Instalador.WriteConfiguration();
+        }
         int ntf = AcceptInformation("¿Está seguro de que quiere salir del programa?");
         if (ntf == mconfyes) {
-            Instalador.WriteConfiguration();
+
             LifecycleManager.getDefault().exit();
-        }     
+        }
     }
 }

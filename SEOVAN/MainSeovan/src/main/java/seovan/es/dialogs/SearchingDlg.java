@@ -8,6 +8,7 @@ import beleris.es.finaldbmanager.FDBMan;
 import beleris.es.finalprimaryclasses.CLAllObjectList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.DefaultListModel;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import static seovan.es.generalmods.SearchPanelActions.OpenSearchWindow;
@@ -43,6 +44,7 @@ public class SearchingDlg extends javax.swing.JDialog {
     private FDBMan DBMSAP;
     private int searcheditem = 0;
     private boolean encontrado = false;
+    private boolean cancelado = false;
 
     /**
      *
@@ -331,9 +333,9 @@ public class SearchingDlg extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    int Searching(CLAllObjectList<CLAllObjectList<String>> LIST, String PSearchPhrase, int tmpIndexDataTotal) {
+    int Searching(CLAllObjectList<CLAllObjectList<String>> LIST, String PSearchPhrase, int TotalItems) {
         int result = -1;
-        for (int tmpitems = 1; tmpitems <= tmpIndexDataTotal; tmpitems++) {
+        for (int tmpitems = 0; tmpitems < TotalItems - 1; tmpitems++) {
             int irows = LIST.get(tmpitems).size();
             for (int si = 0; si < irows; si++) {
                 String SearchPhrase = LIST.get(tmpitems).get(si);
@@ -350,63 +352,60 @@ public class SearchingDlg extends javax.swing.JDialog {
 
     CLAllObjectList<Integer> GlobalSearch(int searcheditem, String Phrase) {
         CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
-        DBMSAP = new FDBMan("jdbc:mysql://localhost:3306/desidaniespsources", PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
-        CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("elements_record");
-        CLAllObjectList<CLAllObjectList<String>> Records_List = DBMSAP.LoadList_Table("desidaniespsources", "elements_record", ColumnsName);
-        int IndexDataTotal = Records_List.get(0).size();
-        DBMSAP = new FDBMan("jdbc:mysql://localhost:3306/sourcesevalprotocol", PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
-        CLAllObjectList<String> ListSourcelevel_ent = DBMSAP.LoadList("list_sourcelevel", "sourcelevelitem");
-        CLAllObjectList<String> ListSourceOriginTable_ent = DBMSAP.LoadList("list_source_origin_table", "originitem");
-        CLAllObjectList<String> ListGeoCoverTable_ent = DBMSAP.LoadList("list_geo_cover_table", "geographicvoveritem");
-        CLAllObjectList<String> ListFormatMediumTable_ent = DBMSAP.LoadList("list_format_medium_table", "format_mediumitem");
-        CLAllObjectList<String> ListSourcecontents_ent = DBMSAP.LoadList("list_sourcecontents", "sourcecontentsitem");
-        CLAllObjectList<String> ListAccessTable_ent = DBMSAP.LoadList("list_access_table", "access_item"); // TODO add your handling code here:
-        ColumnsName = DBMSAP.GetColumnsName("identification");
+        int IndexDataTotal = GetIndexDataTotal();
+        CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("identification");
         CLAllObjectList<CLAllObjectList<String>> IDENT = DBMSAP.LoadList_Table("desidaniespsources", "identification", ColumnsName);
         searcheditem = Searching(IDENT, Phrase, IndexDataTotal);
         //IDENT.clear();
-        if (searcheditem == -1) {
-            ColumnsName = DBMSAP.GetColumnsName("tipification");
-            CLAllObjectList<CLAllObjectList<String>> TIP = DBMSAP.LoadList_Table("desidaniespsources", "tipification", ColumnsName);
-            searcheditem = Searching(TIP, Phrase, IndexDataTotal);
-            TIP.clear();
+
+        ColumnsName = DBMSAP.GetColumnsName("tipification");
+        CLAllObjectList<CLAllObjectList<String>> TIP = DBMSAP.LoadList_Table("desidaniespsources", "tipification", ColumnsName);
+        searcheditem = Searching(TIP, Phrase, IndexDataTotal);
+        TIP.clear();
+        if (searcheditem != -1) {
+            tmpSavedListofsearchedItems.add(searcheditem);
         }
-        tmpSavedListofsearchedItems.add(searcheditem);
-        if (searcheditem == -1) {
-            ColumnsName = DBMSAP.GetColumnsName("authorities");
-            CLAllObjectList<CLAllObjectList<String>> AUTHOR = DBMSAP.LoadList_Table("desidaniespsources", "authorities", ColumnsName);
-            searcheditem = Searching(AUTHOR, Phrase, IndexDataTotal);
-            AUTHOR.clear();
+
+        ColumnsName = DBMSAP.GetColumnsName("authorities");
+        CLAllObjectList<CLAllObjectList<String>> AUTHOR = DBMSAP.LoadList_Table("desidaniespsources", "authorities", ColumnsName);
+        searcheditem = Searching(AUTHOR, Phrase, IndexDataTotal);
+        AUTHOR.clear();
+
+        if (searcheditem != -1) {
+            tmpSavedListofsearchedItems.add(searcheditem);
         }
-        tmpSavedListofsearchedItems.add(searcheditem);
-        if (searcheditem == -1) {
-            ColumnsName = DBMSAP.GetColumnsName("temclass");
-            CLAllObjectList<CLAllObjectList<String>> TEMCLASS = DBMSAP.LoadList_Table("desidaniespsources", "temclass", ColumnsName);
-            searcheditem = Searching(TEMCLASS, Phrase, IndexDataTotal);
-            TEMCLASS.clear();
+
+        ColumnsName = DBMSAP.GetColumnsName("temclass");
+        CLAllObjectList<CLAllObjectList<String>> TEMCLASS = DBMSAP.LoadList_Table("desidaniespsources", "temclass", ColumnsName);
+        searcheditem = Searching(TEMCLASS, Phrase, IndexDataTotal);
+        TEMCLASS.clear();
+        if (searcheditem != -1) {
+            tmpSavedListofsearchedItems.add(searcheditem);
         }
-        tmpSavedListofsearchedItems.add(searcheditem);
-        if (searcheditem == -1) {
-            ColumnsName = DBMSAP.GetColumnsName("contents");
-            CLAllObjectList<CLAllObjectList<String>> CONTENT = DBMSAP.LoadList_Table("desidaniespsources", "contents", ColumnsName);
-            searcheditem = Searching(CONTENT, Phrase, IndexDataTotal);
-            CONTENT.clear();
+        ColumnsName = DBMSAP.GetColumnsName("contents");
+        CLAllObjectList<CLAllObjectList<String>> CONTENT = DBMSAP.LoadList_Table("desidaniespsources", "contents", ColumnsName);
+        searcheditem = Searching(CONTENT, Phrase, IndexDataTotal);
+        CONTENT.clear();
+        if (searcheditem != -1) {
+            tmpSavedListofsearchedItems.add(searcheditem);
         }
-        tmpSavedListofsearchedItems.add(searcheditem);
-        if (searcheditem == -1) {
-            ColumnsName = DBMSAP.GetColumnsName("sourceapplication");
-            CLAllObjectList<CLAllObjectList<String>> APLICUTIL = DBMSAP.LoadList_Table("desidaniespsources", "sourceapplication", ColumnsName);
-            searcheditem = Searching(APLICUTIL, Phrase, IndexDataTotal);
-            APLICUTIL.clear();
+        ColumnsName = DBMSAP.GetColumnsName("sourceapplication");
+        CLAllObjectList<CLAllObjectList<String>> APLICUTIL = DBMSAP.LoadList_Table("desidaniespsources", "sourceapplication", ColumnsName);
+        searcheditem = Searching(APLICUTIL, Phrase, IndexDataTotal);
+        APLICUTIL.clear();
+
+        if (searcheditem != -1) {
+            tmpSavedListofsearchedItems.add(searcheditem);
         }
-        tmpSavedListofsearchedItems.add(searcheditem);
-        if (searcheditem == -1) {
-            ColumnsName = DBMSAP.GetColumnsName("evaluation");
-            CLAllObjectList<CLAllObjectList<String>> EVAL = DBMSAP.LoadList_Table("desidaniespsources", "evaluation", ColumnsName);
-            searcheditem = Searching(EVAL, Phrase, IndexDataTotal);
-            EVAL.clear();
+
+        ColumnsName = DBMSAP.GetColumnsName("evaluation");
+        CLAllObjectList<CLAllObjectList<String>> EVAL = DBMSAP.LoadList_Table("desidaniespsources", "evaluation", ColumnsName);
+        searcheditem = Searching(EVAL, Phrase, IndexDataTotal - 1);
+        EVAL.clear();
+
+        if (searcheditem != -1) {
+            tmpSavedListofsearchedItems.add(searcheditem);
         }
-        tmpSavedListofsearchedItems.add(searcheditem);
 
         return tmpSavedListofsearchedItems;
     }
@@ -414,10 +413,11 @@ public class SearchingDlg extends javax.swing.JDialog {
     private void JSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSearchButtonActionPerformed
 
         //CLAllObjectList<String> ColumnsName = new CLAllObjectList<>();
-        CLAllObjectList<Integer> GlobalSearchresult = GlobalSearch(searcheditem, jSearchTitleSubCNF.getText());
+        if (!"".equals(jSearchTitleSubCNF.getText())) {
+            CLAllObjectList<Integer> GlobalSearchresult = GlobalSearch(searcheditem, jSearchTitleSubCNF.getText());
 
-        PrincipalListofsearchedItems.addAll(GlobalSearchresult);
-
+            PrincipalListofsearchedItems.addAll(GlobalSearchresult);
+        }
         CLAllObjectList<Integer> SearchActualDateresult = SearchActualDate(jSearchUpdateDate.getText());
         if (JRBOR1.isEnabled()) {
             PrincipalListofsearchedItems.addAll(SearchActualDateresult);
@@ -504,12 +504,13 @@ public class SearchingDlg extends javax.swing.JDialog {
             PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
             PrincipalListofsearchedItems.addAll(SearchNumberresult);
         }
-        InsertListinPanel(PrincipalListofsearchedItems);
         OpenSearchWindow();
+        InsertListinPanel(PrincipalListofsearchedItems);
         dispose();
     }//GEN-LAST:event_JSearchButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        setCancelado(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -594,35 +595,84 @@ public class SearchingDlg extends javax.swing.JDialog {
         this.searcheditem = searcheditem;
     }
 
-    private CLAllObjectList<Integer> SearchActualDate(String texttoseach) {
+    int GetIndexDataTotal() {
+        DBMSAP = new FDBMan("jdbc:mysql://localhost:3306/desidaniespsources", PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
+        CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("elements_record");
+        CLAllObjectList<CLAllObjectList<String>> Records_List = DBMSAP.LoadList_Table("desidaniespsources", "elements_record", ColumnsName);
+        int IndexDataTotal = Records_List.get(0).size();
+        return IndexDataTotal;
+    }
+
+    private CLAllObjectList<Integer> SearchActualDate(String Phrase) {
+        int IndexDataTotal = GetIndexDataTotal();
+        CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("identification");
+        CLAllObjectList<CLAllObjectList<String>> IDENT = DBMSAP.LoadList_Table("desidaniespsources", "identification", ColumnsName);
+
+        searcheditem = Searching(IDENT, Phrase, IndexDataTotal);
         CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
         return tmpSavedListofsearchedItems;
     }
 
-    private CLAllObjectList<Integer> SearchLanguage(String texttoseach) {
+    private CLAllObjectList<Integer> SearchLanguage(String Phrase) {
+        int IndexDataTotal = GetIndexDataTotal();
+        CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("identification");
+        CLAllObjectList<CLAllObjectList<String>> IDENT = DBMSAP.LoadList_Table("desidaniespsources", "identification", ColumnsName);
+        searcheditem = Searching(IDENT, Phrase, IndexDataTotal);
+        ColumnsName = DBMSAP.GetColumnsName("identification");
         CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
         return tmpSavedListofsearchedItems;
     }
 
-    private CLAllObjectList<Integer> SearchNumber(String texttoseach) {
+    private CLAllObjectList<Integer> SearchNumber(String Phrase) {
+        int IndexDataTotal = GetIndexDataTotal();
+        CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("identification");
+        CLAllObjectList<CLAllObjectList<String>> IDENT = DBMSAP.LoadList_Table("desidaniespsources", "identification", ColumnsName);
+        searcheditem = Searching(IDENT, Phrase, IndexDataTotal);
         CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
         return tmpSavedListofsearchedItems;
     }
 
-    private CLAllObjectList<Integer> SearchPublicDate(String texttoseac) {
+    private CLAllObjectList<Integer> SearchPublicDate(String Phrase) {
+        int IndexDataTotal = GetIndexDataTotal();
+        CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("identification");
+        CLAllObjectList<CLAllObjectList<String>> IDENT = DBMSAP.LoadList_Table("desidaniespsources", "identification", ColumnsName);
+        searcheditem = Searching(IDENT, Phrase, IndexDataTotal);
         CLAllObjectList<Integer> tmpSavedListofsearchedItems = new CLAllObjectList<>();
         return tmpSavedListofsearchedItems;
     }
 
     private void InsertListinPanel(CLAllObjectList<Integer> tmplistofsearcheditems) {
-        SearchWindowTopComponent vatc = (SearchWindowTopComponent) WindowManager.getDefault().findTopComponent("SearchWindlwTopComponent");
+        SearchWindowTopComponent vatc = (SearchWindowTopComponent) WindowManager.getDefault().findTopComponent("SearchWindowTopComponent");
         if (vatc != null) {
-            if ("Ventana de Búsqueda".equals(vatc.getName())) {
-                 String[] tmpIntegertoString = tmplistofsearcheditems.stream().map(String::valueOf).toArray(String[]::new);
-                if (!vatc.isOpened()) {
-                    vatc.getItemsList().setListData(tmpIntegertoString);
+            if ("SearchWindow Window".equals(vatc.getName())) {
+                if (vatc.isOpened()) {
+                    String[] tmpIntegertoString = tmplistofsearcheditems.stream().map(String::valueOf).toArray(String[]::new);
+                    /*   DefaultListModel<String> modeloActual =  (DefaultListModel<String>) vatc.getItemsList().getModel();
+                    modeloActual.clear(); // Borra lo que venía por defecto
+                    for (String elemento : tmpIntegertoString) {
+                        modeloActual.addElement(elemento);
+                         }*/
+                    DefaultListModel<String> TheNewModel = new DefaultListModel<>();
+                    for (String elemento : tmpIntegertoString) {
+                        TheNewModel.addElement(elemento);
+                    }
+                    vatc.getItemsList().setModel(TheNewModel);
                 }
             }
         }
+    }
+
+    /**
+     * @return the cancelado
+     */
+    public boolean isCancelado() {
+        return cancelado;
+    }
+
+    /**
+     * @param cancelado the cancelado to set
+     */
+    public void setCancelado(boolean cancelado) {
+        this.cancelado = cancelado;
     }
 }
