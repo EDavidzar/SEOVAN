@@ -31,8 +31,8 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
      * @param tmpiDabataasetoUse
      */
     public JSourceEvaluationPanel(int tmpiIndexItemSource, int tmpiIndexDataTotal,int tmpiDabataasetoUse) {
-        DBMSEP = new FDBMan("jdbc:mysql://localhost:3306/sourcesevalprotocol",PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(),tmpiDabataasetoUse);
-        DBMSAP = new FDBMan("jdbc:mysql://localhost:3306/desidaniespsources", PConfig.getConfPassDB(), "desidaniespsources",PConfig.getConfUserDB(),tmpiDabataasetoUse);
+        DBMSEP = new FDBMan(PConfig.DataBaseEvalUrlConn,PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(),tmpiDabataasetoUse);
+        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources",PConfig.getConfUserDB(),tmpiDabataasetoUse);
         initComponents();
         LoadEvaluationData(tmpiIndexItemSource);
     }

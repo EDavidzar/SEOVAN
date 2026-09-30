@@ -162,17 +162,17 @@ java.lang.IndexOutOfBoundsException: Index 3 out of bounds for length 3
 sept 24, 2026 4:39:45 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDInfo
 INFORMACIÓN: Cadena encontrada
 sept 24, 2026 4:39:47 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
-GRAVE: Access denied for user ''@'localhost' to database 'sourcesevalprotocol'. Estado 42000
+GRAVE: Access denied for user ''@'127.0.0.1' to database 'sourcesevalprotocol'. Estado 42000
 sept 24, 2026 4:39:55 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
-ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'localhost' to database 'sourcesevalprotocol'
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'127.0.0.1' to database 'sourcesevalprotocol'
 sept 24, 2026 4:39:55 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
 GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
 sept 24, 2026 4:39:59 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
 ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:
 sept 24, 2026 4:39:59 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
-GRAVE: Access denied for user ''@'localhost' to database 'desidaniespsources'. Estado 42000
+GRAVE: Access denied for user ''@'127.0.0.1' to database 'desidaniespsources'. Estado 42000
 sept 24, 2026 4:40:01 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
-ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'localhost' to database 'desidaniespsources'
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'127.0.0.1' to database 'desidaniespsources'
 sept 24, 2026 4:40:01 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
 GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
 sept 24, 2026 4:40:02 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
@@ -334,17 +334,17 @@ java.lang.IndexOutOfBoundsException: Index 2 out of bounds for length 2
 sept 24, 2026 4:47:49 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDInfo
 INFORMACIÓN: Cadena encontrada
 sept 24, 2026 4:47:51 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
-GRAVE: Access denied for user ''@'localhost' to database 'sourcesevalprotocol'. Estado 42000
+GRAVE: Access denied for user ''@'127.0.0.1' to database 'sourcesevalprotocol'. Estado 42000
 sept 24, 2026 4:47:52 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
-ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'localhost' to database 'sourcesevalprotocol'
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'127.0.0.1' to database 'sourcesevalprotocol'
 sept 24, 2026 4:47:52 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
 GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
 sept 24, 2026 4:47:53 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
 ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:
 sept 24, 2026 4:47:53 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
-GRAVE: Access denied for user ''@'localhost' to database 'desidaniespsources'. Estado 42000
+GRAVE: Access denied for user ''@'127.0.0.1' to database 'desidaniespsources'. Estado 42000
 sept 24, 2026 4:47:53 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
-ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'localhost' to database 'desidaniespsources'
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'127.0.0.1' to database 'desidaniespsources'
 sept 24, 2026 4:47:53 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
 GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
 sept 24, 2026 4:47:54 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError

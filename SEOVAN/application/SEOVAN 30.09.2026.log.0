@@ -251,3 +251,99 @@ sept 30, 2026 10:38:48 A. M. seovan.es.generalmods.PrincipalWindowTopComponent 
 INFORMACIÓN: SEOVAN 5.0b beta (c) Emilio David Diaus Lopez 2023-2026
 sept 30, 2026 10:38:58 A. M. beleris.es.finalinformationmanager.MainErrorManager ShowDInfo
 INFORMACIÓN: Cadena encontrada
+sept 30, 2026 3:55:33 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Estado 08S01
+sept 30, 2026 3:55:44 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+sept 30, 2026 3:55:44 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
+sept 30, 2026 3:55:45 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:
+sept 30, 2026 3:55:47 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Estado 08S01
+sept 30, 2026 3:55:49 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+sept 30, 2026 3:55:49 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
+sept 30, 2026 3:55:49 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:
+sept 30, 2026 3:59:02 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Estado 08S01
+sept 30, 2026 3:59:14 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+sept 30, 2026 3:59:14 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
+sept 30, 2026 3:59:17 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:
+sept 30, 2026 3:59:20 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Estado 08S01
+sept 30, 2026 3:59:21 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+sept 30, 2026 3:59:21 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
+sept 30, 2026 3:59:22 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:
+sept 30, 2026 4:01:23 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Estado 08S01
+sept 30, 2026 4:01:49 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+sept 30, 2026 4:01:49 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
+sept 30, 2026 4:01:49 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:
+sept 30, 2026 4:05:29 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Estado 08S01
+sept 30, 2026 4:08:48 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Estado 08S01
+sept 30, 2026 4:08:51 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+sept 30, 2026 4:08:51 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
+sept 30, 2026 4:08:52 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:
+sept 30, 2026 4:12:35 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Estado 08S01
+sept 30, 2026 4:12:38 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+sept 30, 2026 4:12:38 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
+sept 30, 2026 4:12:38 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:
+sept 30, 2026 4:27:44 P. M. seovan.es.generalmods.PrincipalWindowTopComponent componentOpened
+INFORMACIÓN: SEOVAN 5.0b beta (c) Emilio David Diaus Lopez 2023-2026
+sept 30, 2026 4:28:04 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDInfo
+INFORMACIÓN: Cadena encontrada
+sept 30, 2026 4:30:57 P. M. seovan.es.generalmods.PrincipalWindowTopComponent componentOpened
+INFORMACIÓN: SEOVAN 5.0b beta (c) Emilio David Diaus Lopez 2023-2026
+sept 30, 2026 4:31:13 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDInfo
+INFORMACIÓN: Cadena encontrada

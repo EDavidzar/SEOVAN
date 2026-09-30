@@ -22,12 +22,12 @@ public class AddPanelToSC {
 
     public void AddPaneltoTopCom(JPanel JPA) {
 
-        SearchWindowTopComponent ftc = null;
+        SearchSpaceTopComponent ftc = null;
         Set<TopComponent> openTopComponents = getDefault().getRegistry().getOpened();
 
         for (TopComponent stc : openTopComponents) {
-            if ("Pestaña Principal".equals(stc.getName())) {
-                ftc = (SearchWindowTopComponent) stc;
+            if ("Pestaña de búsqueda".equals(stc.getName())) {
+                ftc = (SearchSpaceTopComponent) stc;
                 ftc.getjRightPanel().invalidate();
                 ftc.getjRightPanel().removeAll();
                 ftc.getjRightPanel().add(JPA);

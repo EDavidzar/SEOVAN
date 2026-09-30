@@ -22,7 +22,8 @@ public class PConfigManager implements Serializable {
     private String ProgramXMLTemplatePath = "";
     private boolean installed = false;
     private int DatabaseManagerinUse = DB_MYSQL_Selected;
-
+    public String DataBaseAnalysisUrlConn="jdbc:mysql://127.0.0.1:3306/desidaniespsources?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    public String DataBaseEvalUrlConn="jdbc:mysql://127.0.0.1:3306/sourcesevalprotocol?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     /**
      *
      */

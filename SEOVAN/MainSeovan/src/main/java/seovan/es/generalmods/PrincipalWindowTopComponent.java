@@ -93,7 +93,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         UIManager.put("ProgressBar.arc", 999);
         UIManager.put("TextComponent.arc", 999);
         UIManager.put("Component.arrowType", "triangle");
-//        DBMSAP = new DBManager20("jdbc:mysql://localhost:3306/desidaniespsources", PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB());
+//        DBMSAP = new DBManager20(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB());
         initComponents();
         System.setProperty("program.name", "SEOVAN");
         LoggingManagerGenerator LMG = new LoggingManagerGenerator();
@@ -110,7 +110,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         if (PConfig.ProgramConfigured()) {
             Instalador.ReadConfiguration();
         }*/
-        DBMSAP = new FDBMan("jdbc:mysql://localhost:3306/desidaniespsources", PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
+        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
 
         IndexDataTotal = getRecordsCount();
         JSAP = new JSourceAnalisysPanel(IndexItemSource, IndexDataTotal, getDBSystemToUse());

@@ -36,9 +36,9 @@ public class SearchPanelActions {
 
     static public void OpenSearchWindow(int IndexDataTotal) {
         // Set<TopComponent> openTopComponents = WindowManager.getDefault().getRegistry().getOpened();
-        SearchWindowTopComponent vatc = (SearchWindowTopComponent) WindowManager.getDefault().findTopComponent("SearchWindowTopComponent");
+        SearchSpaceTopComponent vatc = (SearchSpaceTopComponent) WindowManager.getDefault().findTopComponent("SearchSpaceTopComponent");
         if (vatc != null) {
-            if ("SearchWindow Window".equals(vatc.getName())) {
+            if ("Pestaña de búsqueda".equals(vatc.getName())) {
 
                 if (!vatc.isOpened()) {
                     vatc.setVisible(true);
@@ -51,9 +51,9 @@ public class SearchPanelActions {
     }
 
     static public void ActivateSearchWindow() {
-        TopComponent vatc = WindowManager.getDefault().findTopComponent("SearchWindowTopComponent");
+        TopComponent vatc = WindowManager.getDefault().findTopComponent("SearchSpaceTopComponent");
         if (vatc != null) {
-            if ("Ventana de Búsqueda".equals(vatc.getName())) {
+            if ("Pestaña de búsqueda".equals(vatc.getName())) {
                 if (vatc.isOpened()) {
                     vatc.requestActive();
                    // vatc.setVisible(true);

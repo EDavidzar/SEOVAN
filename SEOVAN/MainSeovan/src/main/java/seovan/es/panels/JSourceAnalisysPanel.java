@@ -34,7 +34,7 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
      *
      */
     public JSourceAnalisysPanel() {
-        DBMSAP = new FDBMan("jdbc:mysql://localhost:3306/desidaniespsources", PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
+        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
         initComponents();
     }
 
@@ -45,7 +45,7 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
      * @param iDabataasetoUse
      */
     public JSourceAnalisysPanel(int iIndexItemSource, int iIndexDataTotal, int iDabataasetoUse) {
-        DBMSAP = new FDBMan("jdbc:mysql://localhost:3306/desidaniespsources", PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), iDabataasetoUse);
+        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), iDabataasetoUse);
         initComponents();
         IndexItemSource = iIndexItemSource;
         IndexDataTotal = iIndexDataTotal;

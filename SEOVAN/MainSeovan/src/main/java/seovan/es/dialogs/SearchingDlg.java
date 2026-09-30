@@ -10,7 +10,7 @@ import java.util.HashSet;
 import javax.swing.DefaultListModel;
 import org.openide.windows.WindowManager;
 import static seovan.es.generalmods.SearchPanelActions.OpenSearchWindow;
-import seovan.es.generalmods.SearchWindowTopComponent;
+import seovan.es.generalmods.SearchSpaceTopComponent;
 import seovan.es.programconfig.PConfigManager;
 import static seovan.es.programconfig.PConfigManager.PConfig;
 
@@ -599,7 +599,7 @@ public class SearchingDlg extends javax.swing.JDialog {
     }
 
     int GetIndexDataTotal() {
-        DBMSAP = new FDBMan("jdbc:mysql://localhost:3306/desidaniespsources", PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
+        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
         CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("elements_record");
         CLAllObjectList<CLAllObjectList<String>> Records_List = DBMSAP.LoadList_Table("desidaniespsources", "elements_record", ColumnsName);
         int IndexDataTotal = Records_List.get(0).size();
@@ -645,9 +645,9 @@ public class SearchingDlg extends javax.swing.JDialog {
     }
 
     private void InsertListinPanel(CLAllObjectList<Integer> tmplistofsearcheditems) {
-        SearchWindowTopComponent vatc = (SearchWindowTopComponent) WindowManager.getDefault().findTopComponent("SearchWindowTopComponent");
+        SearchSpaceTopComponent vatc = (SearchSpaceTopComponent) WindowManager.getDefault().findTopComponent("SearchSpaceTopComponent");
         if (vatc != null) {
-            if ("SearchWindow Window".equals(vatc.getName())) {
+            if ("Pestaña de búsqueda".equals(vatc.getName())) {
                 if (vatc.isOpened()) {
                     String[] tmpIntegertoString = tmplistofsearcheditems.stream().map(String::valueOf).toArray(String[]::new);
                     /*   DefaultListModel<String> modeloActual =  (DefaultListModel<String>) vatc.getItemsList().getModel();

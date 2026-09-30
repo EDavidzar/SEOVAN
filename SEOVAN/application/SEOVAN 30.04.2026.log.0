@@ -52,9 +52,9 @@ java.lang.NullPointerException: Cannot invoke "java.io.File.getAbsolutePath()" b
 abr 30, 2026 9:43:06 A. M. beleris.es.finalinformationmanager.MainErrorManager AcceptInformation
 INFORMACIÓN: ¿Está seguro de que quiere salir del programa?
 abr 30, 2026 9:43:06 A. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
-GRAVE: Access denied for user ''@'localhost' to database 'sourcesevalprotocol'. Estado 42000
+GRAVE: Access denied for user ''@'127.0.0.1' to database 'sourcesevalprotocol'. Estado 42000
 abr 30, 2026 9:43:08 A. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
-ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'localhost' to database 'sourcesevalprotocol'
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'127.0.0.1' to database 'sourcesevalprotocol'
 abr 30, 2026 9:43:08 A. M. org.netbeans.core.startup.TopLogging$AWTHandler uncaughtException
 GRAVE: null
 java.lang.ExceptionInInitializerError
@@ -114,9 +114,9 @@ INFORMACIÓN: SEOVAN 3.5b beta (c) Emilio David Diaus Lopez 2023-2026
 abr 30, 2026 10:01:55 A. M. beleris.es.finalinformationmanager.MainErrorManager AcceptInformation
 INFORMACIÓN: ¿Está seguro de que quiere salir del programa?
 abr 30, 2026 10:01:55 A. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
-GRAVE: Access denied for user ''@'localhost' to database 'sourcesevalprotocol'. Estado 42000
+GRAVE: Access denied for user ''@'127.0.0.1' to database 'sourcesevalprotocol'. Estado 42000
 abr 30, 2026 10:01:56 A. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
-ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'localhost' to database 'sourcesevalprotocol'
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'127.0.0.1' to database 'sourcesevalprotocol'
 abr 30, 2026 10:01:56 A. M. org.netbeans.core.startup.TopLogging$AWTHandler uncaughtException
 GRAVE: null
 java.lang.ExceptionInInitializerError

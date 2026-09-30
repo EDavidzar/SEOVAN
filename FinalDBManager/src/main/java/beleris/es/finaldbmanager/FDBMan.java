@@ -48,11 +48,11 @@ public class FDBMan {
     private String serrSQLMessage;
     private String serrSQLState;
     private ResultSet rsCResSet;
-    private String sMySQL_DefaultServerNConn = "localhost";
+    private String sMySQL_DefaultServerNConn = "127.0.0.1";
     private int iMySQL_PortNConn = 3306;
     private MysqlConnectionPoolDataSource mcpdsPoolDataSource;
-    private final String MySQL_ServerName = "jdbc:mysql://localhost:3306";
-    private final String PostgreSQL_ServerName = "jdbc:postgresql://localhost";
+    private final String MySQL_ServerName = "jdbc:mysql://127.0.0.1:3306";
+    private final String PostgreSQL_ServerName = "jdbc:postgresql://127.0.0.1";
     private final String SQLite_ServerName = "jdbc:sqlite:";
     private PreparedStatement stsSQL_Statement;
     String sDBUser = "";

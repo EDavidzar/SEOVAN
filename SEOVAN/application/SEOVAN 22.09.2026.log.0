@@ -114,9 +114,9 @@ ADVERTENCIA: Cadena no encontrada
 sept 22, 2026 4:06:50 P. M. beleris.es.finalinformationmanager.MainErrorManager AcceptInformation
 INFORMACIÓN: ¿Está seguro de que quiere salir del programa?
 sept 22, 2026 4:06:50 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
-GRAVE: Access denied for user ''@'localhost' to database 'sourcesevalprotocol'. Estado 42000
+GRAVE: Access denied for user ''@'127.0.0.1' to database 'sourcesevalprotocol'. Estado 42000
 sept 22, 2026 4:06:51 P. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
-ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'localhost' to database 'sourcesevalprotocol'
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Access denied for user ''@'127.0.0.1' to database 'sourcesevalprotocol'
 sept 22, 2026 4:06:51 P. M. org.netbeans.core.startup.TopLogging$AWTHandler uncaughtException
 GRAVE: null
 java.lang.ExceptionInInitializerError
