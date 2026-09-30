@@ -4,11 +4,16 @@
  */
 package seovan.es.generalmods;
 
+import java.awt.Dimension;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
+import org.openide.windows.WindowManager;
+import seovan.es.panels.JSourceAnalisysPanel;
+import seovan.es.programconfig.PConfigManager;
+import static seovan.es.programconfig.PConfigManager.PConfig;
 
 /**
  * Top component which displays something.
@@ -36,12 +41,15 @@ import org.openide.util.NbBundle.Messages;
 })
 public final class SearchWindowTopComponent extends TopComponent {
 
+    private int IndexDataTotal = 0;
+
     public SearchWindowTopComponent() {
         initComponents();
         setName(Bundle.CTL_SearchWindlwTopComponent());
         setToolTipText(Bundle.HINT_SearchWindlwTopComponent());
         putClientProperty(TopComponent.PROP_DRAGGING_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_UNDOCKING_DISABLED, Boolean.TRUE);
+        
 
     }
 
@@ -73,18 +81,7 @@ public final class SearchWindowTopComponent extends TopComponent {
         jRightPanel.setMaximumSize(new java.awt.Dimension(1413, 825));
         jRightPanel.setMinimumSize(new java.awt.Dimension(1413, 825));
         jRightPanel.setName("Ventana de Búsqueda"); // NOI18N
-
-        javax.swing.GroupLayout jRightPanelLayout = new javax.swing.GroupLayout(jRightPanel);
-        jRightPanel.setLayout(jRightPanelLayout);
-        jRightPanelLayout.setHorizontalGroup(
-            jRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1413, Short.MAX_VALUE)
-        );
-        jRightPanelLayout.setVerticalGroup(
-            jRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 825, Short.MAX_VALUE)
-        );
-
+        jRightPanel.setLayout(new java.awt.GridBagLayout());
         jSplitPane1.setRightComponent(jRightPanel);
 
         jLeftPanel.setMaximumSize(new java.awt.Dimension(200, 825));
@@ -101,9 +98,15 @@ public final class SearchWindowTopComponent extends TopComponent {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        ItemsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ItemsList.setMaximumSize(new java.awt.Dimension(200, 825));
         ItemsList.setMinimumSize(new java.awt.Dimension(200, 825));
         ItemsList.setPreferredSize(new java.awt.Dimension(200, 825));
+        ItemsList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ItemsListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(ItemsList);
 
         jLeftPanel.add(jScrollPane1, new java.awt.GridBagConstraints());
@@ -127,6 +130,25 @@ public final class SearchWindowTopComponent extends TopComponent {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ItemsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ItemsListMouseClicked
+        // TODO add your handling code here:
+        int IndexToOpen = ItemsList.getSelectedIndex()+1;
+        int IndexDataTotal= getIndexDataTotal();
+        JSourceAnalisysPanel JSAP = new JSourceAnalisysPanel(IndexToOpen,IndexDataTotal, PConfigManager.PConfig.getDatabaseManagerinUse());
+        //JScrollPane JSP = new JScrollPane(JSAP);
+        //JSP.setBounds(1, 1, 1500, 2500);
+        // JSP.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        //JSP.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+        jRightPanel.removeAll();
+        jRightPanel.setBounds(0, 0, 1500, 2550);
+        jRightPanel.setMaximumSize(new Dimension(1500, 2550));
+        jRightPanel.repaint();
+        jRightPanel.add(JSAP);
+        jRightPanel.repaint();
+
+
+    }//GEN-LAST:event_ItemsListMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> ItemsList;
@@ -183,5 +205,19 @@ public final class SearchWindowTopComponent extends TopComponent {
      */
     public void setItemsList(javax.swing.JList<String> ItemsList) {
         this.ItemsList = ItemsList;
+    }
+
+    /**
+     * @return the IndexDataTotal
+     */
+    public int getIndexDataTotal() {
+        return IndexDataTotal;
+    }
+
+    /**
+     * @param IndexDataTotal the IndexDataTotal to set
+     */
+    public void setIndexDataTotal(int IndexDataTotal) {
+        this.IndexDataTotal = IndexDataTotal;
     }
 }

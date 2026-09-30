@@ -6,10 +6,8 @@ package seovan.es.dialogs;
 
 import beleris.es.finaldbmanager.FDBMan;
 import beleris.es.finalprimaryclasses.CLAllObjectList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.HashSet;
 import javax.swing.DefaultListModel;
-import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import static seovan.es.generalmods.SearchPanelActions.OpenSearchWindow;
 import seovan.es.generalmods.SearchWindowTopComponent;
@@ -357,7 +355,9 @@ public class SearchingDlg extends javax.swing.JDialog {
         CLAllObjectList<CLAllObjectList<String>> IDENT = DBMSAP.LoadList_Table("desidaniespsources", "identification", ColumnsName);
         searcheditem = Searching(IDENT, Phrase, IndexDataTotal);
         //IDENT.clear();
-
+        if (searcheditem != -1) {
+            tmpSavedListofsearchedItems.add(searcheditem);
+        }
         ColumnsName = DBMSAP.GetColumnsName("tipification");
         CLAllObjectList<CLAllObjectList<String>> TIP = DBMSAP.LoadList_Table("desidaniespsources", "tipification", ColumnsName);
         searcheditem = Searching(TIP, Phrase, IndexDataTotal);
@@ -411,7 +411,7 @@ public class SearchingDlg extends javax.swing.JDialog {
     }
 
     private void JSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSearchButtonActionPerformed
-
+        int IndexDataTotal = GetIndexDataTotal();
         //CLAllObjectList<String> ColumnsName = new CLAllObjectList<>();
         if (!"".equals(jSearchTitleSubCNF.getText())) {
             CLAllObjectList<Integer> GlobalSearchresult = GlobalSearch(searcheditem, jSearchTitleSubCNF.getText());
@@ -504,7 +504,10 @@ public class SearchingDlg extends javax.swing.JDialog {
             PrincipalListofsearchedItems.addAll(SearchPublicDateresult);
             PrincipalListofsearchedItems.addAll(SearchNumberresult);
         }
-        OpenSearchWindow();
+        HashSet<Integer> set = new HashSet<>(PrincipalListofsearchedItems);
+        PrincipalListofsearchedItems.clear();
+        PrincipalListofsearchedItems.addAll(set);
+        OpenSearchWindow(IndexDataTotal);
         InsertListinPanel(PrincipalListofsearchedItems);
         dispose();
     }//GEN-LAST:event_JSearchButtonActionPerformed

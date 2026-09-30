@@ -34,7 +34,7 @@ public class SearchPanelActions {
 
     }
 
-    static public void OpenSearchWindow() {
+    static public void OpenSearchWindow(int IndexDataTotal) {
         // Set<TopComponent> openTopComponents = WindowManager.getDefault().getRegistry().getOpened();
         SearchWindowTopComponent vatc = (SearchWindowTopComponent) WindowManager.getDefault().findTopComponent("SearchWindowTopComponent");
         if (vatc != null) {
@@ -42,6 +42,7 @@ public class SearchPanelActions {
 
                 if (!vatc.isOpened()) {
                     vatc.setVisible(true);
+                    vatc.setIndexDataTotal(IndexDataTotal);
                     vatc.open();
                     vatc.requestActive();
                 }
