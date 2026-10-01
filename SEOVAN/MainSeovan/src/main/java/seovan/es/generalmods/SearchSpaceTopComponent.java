@@ -60,6 +60,8 @@ public final class SearchSpaceTopComponent extends TopComponent {
 
         jSplitPane1 = new javax.swing.JSplitPane();
         jRightPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jInnerRightPanel = new javax.swing.JPanel();
         jLeftPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ItemsList = new javax.swing.JList<>();
@@ -75,6 +77,18 @@ public final class SearchSpaceTopComponent extends TopComponent {
         jRightPanel.setMinimumSize(new java.awt.Dimension(1413, 825));
         jRightPanel.setName("Ventana de Búsqueda"); // NOI18N
         jRightPanel.setLayout(new java.awt.GridBagLayout());
+
+        jScrollPane2.setMaximumSize(new java.awt.Dimension(1413, 825));
+        jScrollPane2.setMinimumSize(new java.awt.Dimension(1413, 825));
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(1413, 825));
+
+        jInnerRightPanel.setMaximumSize(new java.awt.Dimension(1535, 4500));
+        jInnerRightPanel.setMinimumSize(new java.awt.Dimension(1535, 4500));
+        jInnerRightPanel.setLayout(new java.awt.GridBagLayout());
+        jScrollPane2.setViewportView(jInnerRightPanel);
+
+        jRightPanel.add(jScrollPane2, new java.awt.GridBagConstraints());
+
         jSplitPane1.setRightComponent(jRightPanel);
 
         jLeftPanel.setMaximumSize(new java.awt.Dimension(200, 825));
@@ -131,20 +145,22 @@ public final class SearchSpaceTopComponent extends TopComponent {
         //JSP.setBounds(1, 1, 1500, 2500);
         // JSP.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
         //JSP.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
-        jRightPanel.removeAll();
-        jRightPanel.setBounds(0, 0, 1500, 2550);
-        jRightPanel.setMaximumSize(new Dimension(1500, 2550));
-        jRightPanel.repaint();
-        jRightPanel.add(JSAP);
-        jRightPanel.repaint();
+        jInnerRightPanel.removeAll();
+        jInnerRightPanel.setBounds(0, 0, 1500, 2550);
+        jInnerRightPanel.setMaximumSize(new Dimension(1500, 2550));
+        jInnerRightPanel.repaint();
+        jInnerRightPanel.add(JSAP);
+        jInnerRightPanel.repaint();
 
     }//GEN-LAST:event_ItemsListMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> ItemsList;
+    private javax.swing.JPanel jInnerRightPanel;
     private javax.swing.JPanel jLeftPanel;
     private javax.swing.JPanel jRightPanel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
     // End of variables declaration//GEN-END:variables
     @Override
