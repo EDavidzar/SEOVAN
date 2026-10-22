@@ -29,7 +29,7 @@ public final class ProgramInstaller {
     /**
      *
      */
-    static public ProgramInstaller Instalador = new ProgramInstaller();
+    static public ProgramInstaller Instalador = null;
 
     /**
      *
@@ -38,12 +38,12 @@ public final class ProgramInstaller {
         if (FMG == null) {
             FMG = new FileManagerGenerator();
         }
-           CheckConfiguration();
+        CheckConfiguration();
         if (FMG.FileSize(ConfigPath + File.separator + "seovan.cfg") > 0) {
             ReadConfiguration();
         } else {
         }
-        PConfig.setDatabaseManagerinUse(FDBMan.DB_MYSQL_Selected);
+//        PConfig.setDatabaseManagerinUse(FDBMan.DB_MYSQL_Selected);
     }
 
     /**
@@ -77,11 +77,17 @@ public final class ProgramInstaller {
     public void ReadConfiguration() {
         FMG = new FileManagerGenerator(FMG.getIfmRead(), ConfigPath + File.separator + "seovan.cfg");
         int itmpDBConf = FMG.ReadInt();
-        PConfig.setDatabaseManagerinUse(itmpDBConf);
+        if (!FMG.isError()) {
+            PConfig.setDatabaseManagerinUse(itmpDBConf);
+        }
         String dbUser = FMG.ReadString();
         String dbPass = FMG.ReadString();
-        PConfig.setConfUserDB(dbUser);
-        PConfig.setConfPassDB(dbPass);
+        if (dbUser != null) {
+            PConfig.setConfUserDB(dbUser);
+        }
+        if (dbPass != null) {
+            PConfig.setConfPassDB(dbPass);
+        }
         DBMSEP = new FDBMan(PConfig.DataBaseEvalUrlConn, PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
         DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
         //FMG.WriteString(Integer.toString(PConfig.getDatabaseManagerinUse()));
@@ -137,7 +143,7 @@ public final class ProgramInstaller {
                 + "CREATE TABLE `list_access_table` (\n"
                 + "  `idlist_access_table` int NOT NULL AUTO_INCREMENT,\n"
                 + "  `access_item` varchar(45) NOT NULL,\n"
-                + "  PRIMARY KEY (`idlist_access_table`)\n"
+           ProgramInstaller     + "  PRIMARY KEY (`idlist_access_table`)\n"
                 + ") ;\n"
                 + "\n"
                 + "LOCK TABLES `list_access_table` WRITE;\n"
@@ -283,7 +289,7 @@ public final class ProgramInstaller {
                 + "  `publications_quality` int NOT NULL DEFAULT '5',\n"
                 + "  PRIMARY KEY (`id_publication`)\n"
                 + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n"
-                + "CREATE TABLE `quality` (\n"
+              ProgramInstaller  + "CREATE TABLE `quality` (\n"
                 + "  `id_quality` int NOT NULL AUTO_INCREMENT,\n"
                 + "  `orginfo` int NOT NULL DEFAULT '10',\n"
                 + "  `tablesgraphics` int NOT NULL DEFAULT '5',\n"

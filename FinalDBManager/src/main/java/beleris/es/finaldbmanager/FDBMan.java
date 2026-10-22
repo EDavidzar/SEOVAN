@@ -403,13 +403,13 @@ public class FDBMan {
      */
     public void MySQL_CreateDB(String stmpDBTable) {
 
-        String sSQLite_Statement = "CREATE DATABASE  IF NOT EXISTS `" + stmpDBTable + "`;";
+        String sMySQL_PrePStatement = "CREATE DATABASE  IF NOT EXISTS `" + stmpDBTable + "`;";
 
         boolean bRes = false;
         setbError(false);
 
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sSQLite_Statement);
+            stsSQL_Statement = cnConn.prepareStatement(sMySQL_PrePStatement);
 
             bRes = stsSQL_Statement.execute();
 
@@ -428,13 +428,13 @@ public class FDBMan {
      */
     public void PostgreSQL_CreateDB(String stmpDBTable) {
 
-        String sSQLite_Statement = "CREATE DATABASE  IF NOT EXISTS `" + stmpDBTable + "`;";
+        String sProgressSQLPrePStatement = "CREATE DATABASE  IF NOT EXISTS `" + stmpDBTable + "`;";
 
         boolean bRes = false;
         setbError(false);
 
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sSQLite_Statement);
+            stsSQL_Statement = cnConn.prepareStatement(sProgressSQLPrePStatement);
 
             bRes = stsSQL_Statement.execute();
 
@@ -452,14 +452,14 @@ public class FDBMan {
      * @param sTmpDBTable
      */
     public void SQLite_CreateDB(String sTmpDBTable) {
-
-        String sSQLite_Statement = "CREATE DATABASE  IF NOT EXISTS `" + sTmpDBTable + "`;";
+/*
+        String sMySQL_PrePStatement = "CREATE DATABASE  IF NOT EXISTS `" + sTmpDBTable + "`;";
 
         boolean bRes = false;
         setbError(false);
 
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sSQLite_Statement);
+            stsSQL_Statement = cnConn.prepareStatement(sMySQL_PrePStatement);
 
             bRes = stsSQL_Statement.execute();
 
@@ -469,7 +469,7 @@ public class FDBMan {
             bRes = false;
             SQLite_CloseConn();
 
-        }
+        }*/
     }
 
     /**
@@ -682,9 +682,9 @@ public class FDBMan {
             mlIterador = DBParameters.listIterator();
             while (mlIterador.hasNext()) {
                 CL_DBCV Elemento = mlIterador.next();
-                sMySQL_Statement += Elemento.getsTableDBField() + "=?";
+                sPostgreSQL_Statement += Elemento.getsTableDBField() + "=?";
                 if (mlIterador.hasNext()) {
-                    sMySQL_Statement += " AND ";
+                    sPostgreSQL_Statement += " AND ";
                 }
             }*/
         sMySQL_Statement += " ;";
@@ -718,31 +718,31 @@ public class FDBMan {
      */
     public void PostgreSQL_UpdateTable(String sTempDBTable, CLAllObjectList<CL_DBCV> DBParameters, String sIndex, String siIndexItem) {
 
-        String sMySQL_Statement = "UPDATE " + this.sDBName + "." + sTempDBTable + " SET ";
+        String sPostgreSQL_Statement = "UPDATE " + this.sDBName + "." + sTempDBTable + " SET ";
         ListIterator<CL_DBCV> mlIterador = DBParameters.listIterator();
         while (mlIterador.hasNext()) {
             CL_DBCV Elemento = mlIterador.next();
-            sMySQL_Statement += Elemento.getsTableDBField() + "=?";
+            sPostgreSQL_Statement += Elemento.getsTableDBField() + "=?";
             if (mlIterador.hasNext()) {
-                sMySQL_Statement += ",";
+                sPostgreSQL_Statement += ",";
             }
         }
-        sMySQL_Statement += " WHERE " + this.sDBName + "." + sTempDBTable + "." + sIndex + " = " + siIndexItem;
+        sPostgreSQL_Statement += " WHERE " + this.sDBName + "." + sTempDBTable + "." + sIndex + " = " + siIndexItem;
         /*   if (DBParameters != null) {
             mlIterador = DBParameters.listIterator();
             while (mlIterador.hasNext()) {
                 CL_DBCV Elemento = mlIterador.next();
-                sMySQL_Statement += Elemento.getsTableDBField() + "=?";
+                sPostgreSQL_Statement += Elemento.getsTableDBField() + "=?";
                 if (mlIterador.hasNext()) {
-                    sMySQL_Statement += " AND ";
+                    sPostgreSQL_Statement += " AND ";
                 }
             }*/
-        sMySQL_Statement += " ;";
+        sPostgreSQL_Statement += " ;";
         int iindex = 1;
         mlIterador = DBParameters.listIterator();
 
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sMySQL_Statement);
+            stsSQL_Statement = cnConn.prepareStatement(sPostgreSQL_Statement);
             while (mlIterador.hasNext()) {
                 CL_DBCV Elemento = mlIterador.next();
                 stsSQL_Statement.setString(iindex, Elemento.getsValue());
@@ -866,12 +866,12 @@ public class FDBMan {
      */
     public void PostgreSQL_DeleteDataTable(String sTempDBTable, CL_DBCV Campo) {
 
-        String sMySQL_Statement = "DELETE FROM " + sTempDBTable + " WHERE " + Campo.getsTableDBField() + " = ?;";
+        String sPostgreSQL_Statement = "DELETE FROM " + sTempDBTable + " WHERE " + Campo.getsTableDBField() + " = ?;";
         //idfi_lista_control_acceso = ?";
         int iRes = 0;
         setbError(false);
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sMySQL_Statement);
+            stsSQL_Statement = cnConn.prepareStatement(sPostgreSQL_Statement);
             stsSQL_Statement.setString(1, Campo.getsValue());
 
             iRes = stsSQL_Statement.executeUpdate();
@@ -892,11 +892,11 @@ public class FDBMan {
      */
     public void PostgreSQL_DeleteDataTable(String sTempDBTable) {
 
-        String sMySQL_Statement = "DELETE FROM " + sTempDBTable + ";";
+        String sPostgreSQL_Statement = "DELETE FROM " + sTempDBTable + ";";
         int iRes = 0;
         setbError(false);
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sMySQL_Statement);
+            stsSQL_Statement = cnConn.prepareStatement(sPostgreSQL_Statement);
             iRes = stsSQL_Statement.executeUpdate();
             // setiInsertedLastRow(iRes);
 
@@ -1079,33 +1079,33 @@ public class FDBMan {
     public void PostgreSQL_InsertDatainDB(String sTempDBTable, CLDBColumnsList CL) {
 
         //int indextotal=CL.getElements().size();
-        String sMySQL_Statement = "INSERT INTO " + sDBName + "." + sTempDBTable + "  (";
+        String sPostgreSQL_Statement = "INSERT INTO " + sDBName + "." + sTempDBTable + "  (";
         ListIterator<CL_DBColumns> mlColIterador = CL.getElements().listIterator();
         while (mlColIterador.hasNext()) {
             CL_DBColumns Elemento = mlColIterador.next();
-            sMySQL_Statement += "\'" + Elemento.getAlsColumns() + "\'";
+            sPostgreSQL_Statement += "\'" + Elemento.getAlsColumns() + "\'";
             if (mlColIterador.hasNext()) {
-                sMySQL_Statement += ",";
+                sPostgreSQL_Statement += ",";
             }
         }
-        sMySQL_Statement += ") VALUES (";
+        sPostgreSQL_Statement += ") VALUES (";
         int itindex = CL.getElements().size();
         for (int iidx = 0; iidx < itindex; iidx++) {
             CL_DBColumns Elemento = CL.getElements().get(iidx);
             int ifidx2 = Elemento.getElementList().size();
             for (int iidx2 = 0; iidx2 < ifidx2; iidx2++) {
-                sMySQL_Statement += "?";
+                sPostgreSQL_Statement += "?";
                 if (iidx2 < ifidx2) {
-                    sMySQL_Statement += ",";
+                    sPostgreSQL_Statement += ",";
                 }
             }
-            sMySQL_Statement += ")";
+            sPostgreSQL_Statement += ")";
         }
-        sMySQL_Statement += ";";
+        sPostgreSQL_Statement += ";";
         setbError(false);
         int iRes;
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sMySQL_Statement);
+            stsSQL_Statement = cnConn.prepareStatement(sPostgreSQL_Statement);
             itindex = CL.getElements().size();
             // stsSQL_Statement.setString(1, AntiSQLInjection(sTempDBTable));
             for (int iidx = 0; iidx < itindex; iidx++) {
@@ -1244,29 +1244,29 @@ public class FDBMan {
     public void PostgreSQL_InsertDatainDB(String sTmpDBTable, CLAllObjectList<CL_DBCV> InsertFields) {
 
         ListIterator<CL_DBCV> mlColIterador = InsertFields.listIterator();
-        String sMySQL_Statement = "INSERT INTO " + sDBName + "." + sTmpDBTable + "  (";
+        String sPostgreSQL_Statement = "INSERT INTO " + sDBName + "." + sTmpDBTable + "  (";
 
         while (mlColIterador.hasNext()) {
             CL_DBCV sElemento = mlColIterador.next();
-            sMySQL_Statement += "\'" + sElemento + "\'";
+            sPostgreSQL_Statement += "\'" + sElemento + "\'";
             if (mlColIterador.hasNext()) {
-                sMySQL_Statement += ",";
+                sPostgreSQL_Statement += ",";
             }
         }
-        sMySQL_Statement += ") VALUES (";
+        sPostgreSQL_Statement += ") VALUES (";
         ListIterator<CL_DBCV> mlIterador = InsertFields.listIterator();
         while (mlIterador.hasNext()) {
             CL_DBCV Elemento = mlIterador.next();
-            sMySQL_Statement += "?,?)";
+            sPostgreSQL_Statement += "?,?)";
             if (mlIterador.hasNext()) {
-                sMySQL_Statement += ",(";
+                sPostgreSQL_Statement += ",(";
             }
         }
-        sMySQL_Statement += ";";
+        sPostgreSQL_Statement += ";";
         setbError(false);
         int iRes;
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sMySQL_Statement);
+            stsSQL_Statement = cnConn.prepareStatement(sPostgreSQL_Statement);
             int itindex = 1;
             // stsSQL_Statement.setString(1, AntiSQLInjection(sTmpDBTable));
             mlIterador = InsertFields.listIterator();
@@ -1297,29 +1297,29 @@ public class FDBMan {
 
         ListIterator<CL_DBCV> mlIterador = null;
         ListIterator<String> mlColIterador = ColumnsName.listIterator();
-        String sMySQL_Statement = "INSERT INTO " + sDBName + "." + sTmpDBTable + "  (";
+        String sPostgreSQL_Statement = "INSERT INTO " + sDBName + "." + sTmpDBTable + "  (";
 
         while (mlColIterador.hasNext()) {
             String sElemento = mlColIterador.next();
-            sMySQL_Statement += "\'" + sElemento + "\'";
+            sPostgreSQL_Statement += "\'" + sElemento + "\'";
             if (mlColIterador.hasNext()) {
-                sMySQL_Statement += ",";
+                sPostgreSQL_Statement += ",";
             }
         }
-        sMySQL_Statement += ") VALUES (";
+        sPostgreSQL_Statement += ") VALUES (";
         mlIterador = InsertFields.listIterator();
         while (mlIterador.hasNext()) {
             CL_DBCV Elemento = mlIterador.next();
-            sMySQL_Statement += "?,?";
+            sPostgreSQL_Statement += "?,?";
             if (mlIterador.hasNext()) {
-                sMySQL_Statement += ",";
+                sPostgreSQL_Statement += ",";
             }
         }
-        sMySQL_Statement += ");";
+        sPostgreSQL_Statement += ");";
         setbError(false);
         int iRes;
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sMySQL_Statement);
+            stsSQL_Statement = cnConn.prepareStatement(sPostgreSQL_Statement);
             int itindex = 1;
             int icolindex = 1;
             icolindex = ColumnsName.size();
@@ -1549,11 +1549,11 @@ public class FDBMan {
      */
     public void PostgreSQL_TruncateTable(String sTmpDBTable) {
 
-        var sMySQL_Statement = "TRUNCATE TABLE" + sTmpDBTable + ";";
+        var sPostgreSQL_Statement = "TRUNCATE TABLE" + sTmpDBTable + ";";
         int iRes = 0;
         setbError(false);
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sMySQL_Statement);
+            stsSQL_Statement = cnConn.prepareStatement(sPostgreSQL_Statement);
             iRes = stsSQL_Statement.executeUpdate();
             // setiInsertedLastRow(iRes);
 
@@ -1595,7 +1595,7 @@ public class FDBMan {
      */
     public void SQLite_TruncateTable(String sTmpDBTable) {
         try {
-            var sSQLite_Statement = "TRUNCATE TABLE" + sTmpDBTable + ";";
+            var sSQLite_Statement = "DELETE TABLE IF EXISTS "+ sTmpDBTable + ";";
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
             var stmt = cnConn.createStatement();
             // create a new table
@@ -1604,6 +1604,7 @@ public class FDBMan {
             ShowSQLExceptionError(ex, " Error al borrar los datos de la tabla:" + sTmpDBTable);
         }
 
+       
     }
 
     /**
@@ -2769,9 +2770,9 @@ public class FDBMan {
             mlIterador = DBParameters.listIterator();
             while (mlIterador.hasNext()) {
                 CL_DBCV Elemento = mlIterador.next();
-                sMySQL_Statement += Elemento.getsTableDBField() + "=?";
+                sPostgreSQL_Statement += Elemento.getsTableDBField() + "=?";
                 if (mlIterador.hasNext()) {
-                    sMySQL_Statement += " AND ";
+                    sPostgreSQL_Statement += " AND ";
                 }
             }*/
         sMySQL_Statement += " ;";
@@ -2832,9 +2833,9 @@ public class FDBMan {
             mlIterador = DBParameters.listIterator();
             while (mlIterador.hasNext()) {
                 CL_DBCV Elemento = mlIterador.next();
-                sMySQL_Statement += Elemento.getsTableDBField() + "=?";
+                sPostgreSQL_Statement += Elemento.getsTableDBField() + "=?";
                 if (mlIterador.hasNext()) {
-                    sMySQL_Statement += " AND ";
+                    sPostgreSQL_Statement += " AND ";
                 }
             }*/
         sMySQL_Statement += " ;";
@@ -2895,9 +2896,9 @@ public class FDBMan {
             mlIterador = DBParameters.listIterator();
             while (mlIterador.hasNext()) {
                 CL_DBCV Elemento = mlIterador.next();
-                sMySQL_Statement += Elemento.getsTableDBField() + "=?";
+                sPostgreSQL_Statement += Elemento.getsTableDBField() + "=?";
                 if (mlIterador.hasNext()) {
-                    sMySQL_Statement += " AND ";
+                    sPostgreSQL_Statement += " AND ";
                 }
             }*/
         sSQLite_Statement += " ;";
@@ -2971,7 +2972,7 @@ public class FDBMan {
     private void MySQL_CreateTable(String sTmpDBTable) {
         try {
             var sSQLite_Statement = "CREATE TABLE IF NOT EXISTS " + sTmpDBTable + "("
-                    + "	id " + sTmpDBTable + " INTEGER PRIMARY KEY;";
+                    + "	id" + sTmpDBTable + ") INTEGER PRIMARY KEY;";
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
             var stmt = cnConn.createStatement();
             // create a new table
@@ -2983,12 +2984,12 @@ public class FDBMan {
 
     private void PostgreSQL_CreateTable(String sTmpDBTable) {
         try {
-            var sSQLite_Statement = "CREATE TABLE IF NOT EXISTS " + sTmpDBTable + "("
-                    + "	id " + sTmpDBTable + " INTEGER PRIMARY KEY;";
+            var PostgreSQL_Statement = "CREATE TABLE IF NOT EXISTS (" + sTmpDBTable + ")"
+                    + "	id" + sTmpDBTable + ") INTEGER PRIMARY KEY;";
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
             var stmt = cnConn.createStatement();
             // create a new table
-            stmt.execute(sSQLite_Statement);
+            stmt.execute(PostgreSQL_Statement);
         } catch (SQLException ex) {
             ShowSQLExceptionError(ex, " Error al crear tabla sin campos:" + sTmpDBTable);
         }
@@ -2996,11 +2997,12 @@ public class FDBMan {
 
     private void SQLite_CreateTable(String sTmpDBTable) {
         try {
-            var sSQLite_Statement = "CREATE TABLE IF NOT EXISTS " + sTmpDBTable + "("
-                    + "	id " + sTmpDBTable + " INTEGER PRIMARY KEY;";
+            var sSQLite_Statement = "CREATE TABLE IF NOT EXISTS (" + sTmpDBTable + ")"
+                    + "	id" + sTmpDBTable + " INTEGER PRIMARY KEY;";
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
             var stmt = cnConn.createStatement();
             // create a new table
+            
             stmt.execute(sSQLite_Statement);
         } catch (SQLException ex) {
             ShowSQLExceptionError(ex, " Error al crear tabla sin campos:" + sTmpDBTable);

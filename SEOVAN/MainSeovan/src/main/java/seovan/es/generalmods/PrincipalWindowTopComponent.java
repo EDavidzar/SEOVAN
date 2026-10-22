@@ -12,6 +12,7 @@ import static beleris.es.finalinformationmanager.MainErrorManager.AcceptInformat
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDInfo;
 import static beleris.es.finalinformationmanager.MainErrorManager.mconfyes;
+import static seovan.es.generalmods.ProgramInstaller.Instalador;
 import beleris.es.finalutils.FileManagerGenerator;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -35,7 +36,7 @@ import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import seovan.es.dialogs.SearchingDlg;
-import static seovan.es.generalmods.ProgramInstaller.Instalador;
+
 import seovan.es.importation.XMLDataImport;
 import seovan.es.panels.JSourceAnalisysPanel;
 import seovan.es.panels.JSourceEvaluationPanel;
@@ -150,6 +151,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         // ToolbarPool.getDefault().findToolbar("Help").addSeparator(new Dimension(20, 20));
         //ToolbarPool.getDefault().findToolbar("Windows").addSeparator(new Dimension(20, 20));
         HU.setHelpConfig("Ayuda sensible al contexto", "PrincipalWindowTopComponent", "PrincipalWindowTopComponent.html");
+
     }
 
     /**
@@ -458,10 +460,14 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     private void jExitProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jExitProgramActionPerformed
         ExitProgram();
     }//GEN-LAST:event_jExitProgramActionPerformed
-    void ExitProgram() {
+    public void ExitProgram() {
         int ntf = AcceptInformation("¿Está seguro de que quiere salir del programa?");
         if (ntf == mconfyes) {
-            Instalador.WriteConfiguration();
+            if (Instalador == null) {
+            } else {
+                Instalador.WriteConfiguration();
+            }
+            DBMSAP.Close();
             LifecycleManager.getDefault().exit();
         }
     }
@@ -525,8 +531,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     }//GEN-LAST:event_jLastRegActionPerformed
 
     private void jBExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExitActionPerformed
-        DBMSAP.Close();
-        LifecycleManager.getDefault().exit();
+        ExitProgram();
     }//GEN-LAST:event_jBExitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -575,6 +580,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
 
         LoggingManagerGenerator.getGlobalLogger().info(sTheTitle);
         DBToUse = PConfig.getDatabaseManagerinUse();
+        Instalador = new ProgramInstaller();
         ShowDataItem(IndexItemSource);
     }
 
@@ -859,7 +865,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         sdlg.setLocationRelativeTo(f);
         sdlg.setVisible(true);
         if (sdlg.getSearcheditem() != -1 && sdlg.isEncontrado()) {
-            ShowDInfo("Cadena encontrada");             
+            ShowDInfo("Cadena encontrada");
             IndexItemSource = sdlg.getSearcheditem();
         } else {
             if (!sdlg.isCancelado()) {

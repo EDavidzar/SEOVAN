@@ -42,12 +42,13 @@ public final class ExitAction implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (Instalador != null) {
-            Instalador.WriteConfiguration();
-        }
         int ntf = AcceptInformation("¿Está seguro de que quiere salir del programa?");
         if (ntf == mconfyes) {
-
+            if (Instalador == null) {
+            } else {
+                Instalador.WriteConfiguration();
+            }
+//>            DBMSAP.Close();
             LifecycleManager.getDefault().exit();
         }
     }
