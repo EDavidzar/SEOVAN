@@ -3028,13 +3028,13 @@ public class FDBMan {
         try {
             stsSQL_Statement.close();
         } catch (SQLException ex) {
-            ShowSQLExceptionError(ex, " Error al cerrar base de datos :" + sTmpDBTable + " " + ex.getLocalizedMessage());
+            ShowSQLExceptionError(ex, " Error al cerrar base de datos : " + ex.getLocalizedMessage());
             Exceptions.printStackTrace(ex);
         }
         try {
             cnConn.close();
         } catch (SQLException ex) {
-            ShowSQLExceptionError(ex, " Error al cerrar base de datos :" + sTmpDBTable + " " + ex.getLocalizedMessage());
+            ShowSQLExceptionError(ex, " Error al cerrar base de datos : " + ex.getLocalizedMessage());
         }
     }
 
