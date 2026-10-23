@@ -428,7 +428,7 @@ public class FDBMan {
      */
     public void PostgreSQL_CreateDB(String stmpDBTable) {
 
-        String sProgressSQLPrePStatement = "CREATE DATABASE  IF NOT EXISTS `" + stmpDBTable + "`;";
+        String sProgressSQLPrePStatement = "CREATE DATABASE \"" + stmpDBTable + "\"";
 
         boolean bRes = false;
         setbError(false);
@@ -452,7 +452,7 @@ public class FDBMan {
      * @param sTmpDBTable
      */
     public void SQLite_CreateDB(String sTmpDBTable) {
-/*
+        /*
         String sMySQL_PrePStatement = "CREATE DATABASE  IF NOT EXISTS `" + sTmpDBTable + "`;";
 
         boolean bRes = false;
@@ -489,8 +489,8 @@ public class FDBMan {
      */
     public void SQLlite_CreateTableWithFields(String sTmpDBTable, CLAllObjectList<CL_DBCV> FieldList) {
         try {
-            var sSQLite_Statement = "CREATE TABLE IF NOT EXISTS " + sTmpDBTable + "("
-                    + "	id " + sTmpDBTable + " INTEGER PRIMARY KEY,";
+            var sSQLite_Statement = "CREATE TABLE IF NOT EXISTS " + sTmpDBTable
+                    + " (id INTEGER PRIMARY KEY";
             int iindex = 0;
             int itotalsize = FieldList.size();
             while (iindex < itotalsize) {
@@ -563,8 +563,8 @@ public class FDBMan {
      */
     public void PostgreSQL_CreateTableWithFields(String sTmpDBTable, CLAllObjectList<CL_DBCV> FieldList) {
 
-        var sMySQL_Statement = "CREATE TABLE IF NOT EXISTS " + sTmpDBTable + "("
-                + "	id " + sTmpDBTable + " INTEGER PRIMARY KEY,";
+        var sMySQL_Statement = "CREATE DATABASE \"" + sTmpDBTable + "\" " + "("
+                + "	id " + sTmpDBTable + " SERIAL PRIMARY KEY,";
         int iindex = 0;
         int itotalsize = FieldList.size();
         while (iindex < itotalsize) {
@@ -818,19 +818,19 @@ public class FDBMan {
 
         String sMySQL_Statement = "DELETE FROM " + sTempDBTable + " WHERE " + Campo.getsTableDBField() + " = ?;";
         //idfi_lista_control_acceso = ?";
-        int iRes = 0;
+
         setbError(false);
         try {
             stsSQL_Statement = cnConn.prepareStatement(sMySQL_Statement);
             stsSQL_Statement.setString(1, Campo.getsValue());
 
-            iRes = stsSQL_Statement.executeUpdate();
+            stsSQL_Statement.executeUpdate();
             // setiInsertedLastRow(iRes);
 
         } catch (SQLException ex) { // ignore }
             ShowSQLExceptionError(ex, " Error al borrar datos de la tabla:" + sTempDBTable);
         } finally {
-            iRes = 0;
+
             MySQL_CloseConn();
 
         }
@@ -918,8 +918,8 @@ public class FDBMan {
             var sSQLite_Statement = "DELETE FROM " + this.sDBName + "." + sTempDBTable + ";";
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
             var stmt = cnConn.createStatement();
-            // create a new table
-            stmt.executeQuery(sSQLite_Statement);
+            // create a new table            
+            stmt.executeUpdate(sSQLite_Statement);
         } catch (SQLException ex) {
             ShowSQLExceptionError(ex, " Error al borrar datos de la tabla:" + sTempDBTable);
         }
@@ -1476,7 +1476,7 @@ public class FDBMan {
     public void SQLite_InsertDatainDB(String sTmpDBTable, ArrayList<String> ColumnsName, CLAllObjectList<CL_DBCV> InsertFields) {
         ListIterator<CL_DBCV> mlIterador = null;
         ListIterator<String> mlColIterador = ColumnsName.listIterator();
-        String sSQLite_Statement = "INSERT INTO " + sDBName + "." + sTmpDBTable + "  (";
+        String sSQLite_Statement = "INSERT INTO " + sTmpDBTable + "  (";
 
         while (mlColIterador.hasNext()) {
             String sElemento = mlColIterador.next();
@@ -1595,16 +1595,15 @@ public class FDBMan {
      */
     public void SQLite_TruncateTable(String sTmpDBTable) {
         try {
-            var sSQLite_Statement = "DELETE TABLE IF EXISTS "+ sTmpDBTable + ";";
+            var sSQLite_Statement = "DELETE FROM " + sTmpDBTable;
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
-            var stmt = cnConn.createStatement();
+            var stmt = cnConn.prepareStatement(sDBUser);
             // create a new table
             stmt.executeQuery(sSQLite_Statement);
         } catch (SQLException ex) {
             ShowSQLExceptionError(ex, " Error al borrar los datos de la tabla:" + sTmpDBTable);
         }
 
-       
     }
 
     /**
@@ -1637,11 +1636,11 @@ public class FDBMan {
      */
     public void SQLite_DropTable(String sTmpDBTable) {
         try {
-            var sSQLite_Statement = "DROP TABLE IF EXISTS " + this.sDBName + "." + sTmpDBTable + ";";
+            var sSQLite_Statement = "DROP TABLE IF EXISTS " + sTmpDBTable + ";";
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
             var stmt = cnConn.createStatement();
             // create a new table
-            stmt.executeQuery(sSQLite_Statement);
+            stmt.executeUpdate(sSQLite_Statement);
         } catch (SQLException ex) {
             ShowSQLExceptionError(ex, " Error al borrar los datos de la tabla:" + sTmpDBTable);
         }
@@ -1920,18 +1919,31 @@ public class FDBMan {
 
         int iresult = 0;
 
+        String Statement = "select count(*) from " + sDBName + "." + sTmpDBTable + ";";
+
         try {
-
-            String Statement = "select count(*) from " + sDBName + "." + sTmpDBTable + ";";
-
             stsSQL_Statement = cnConn.prepareStatement(Statement);
-            ResultSet rs = stsSQL_Statement.executeQuery();
-            while (rs.next()) {
-                iresult = rs.getInt("count(*)");
-            }
         } catch (SQLException ex) {
             ShowSQLExceptionError(ex, " Error al obtener la úĺtima fila:" + sTmpDBTable);
+            Exceptions.printStackTrace(ex);
         }
+        ResultSet rs = null;
+        try {
+            rs = stsSQL_Statement.executeQuery();
+        } catch (SQLException ex) {
+            ShowSQLExceptionError(ex, " Error al obtener la úĺtima fila:" + sTmpDBTable);
+            Exceptions.printStackTrace(ex);
+        }
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    iresult = rs.getInt("count(*)");
+                }
+            } catch (SQLException ex) {
+                ShowSQLExceptionError(ex, " Error al obtener la úĺtima fila:" + sTmpDBTable);
+            }
+        }
+
         //return iresult;
         /*
         try {
@@ -2067,7 +2079,6 @@ public class FDBMan {
             MySQL_CloseConn();
 
         }*/
-
         return iresult;
 
     }
@@ -2473,7 +2484,7 @@ public class FDBMan {
      * @param sTable
      */
     public void SQLite_SelectAllRecords(String sTable) {
-        String sSQLite_Statement = "SELECT * FROM " + sDBName + "." + sTable + ";";
+        String sSQLite_Statement = "SELECT * FROM " + sTable + ";";
         SQLite_SelectManyResults(sSQLite_Statement, null);
     }
 
@@ -2969,14 +2980,16 @@ public class FDBMan {
         }
         ShowDError(sError + "." + serrSQLMessage);
     }
+
     private void MySQL_CreateTable(String sTmpDBTable) {
         try {
-            var sSQLite_Statement = "CREATE TABLE IF NOT EXISTS " + sTmpDBTable + "("
+            var sMySQL_Statement = "CREATE TABLE IF NOT EXISTS " + sTmpDBTable + "("
                     + "	id" + sTmpDBTable + ") INTEGER PRIMARY KEY;";
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
-            var stmt = cnConn.createStatement();
+            var stmt = cnConn.prepareStatement(sMySQL_Statement);
             // create a new table
-            stmt.execute(sSQLite_Statement);
+
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             ShowSQLExceptionError(ex, " Error al crear tabla sin campos:" + sTmpDBTable);
         }
@@ -2984,12 +2997,13 @@ public class FDBMan {
 
     private void PostgreSQL_CreateTable(String sTmpDBTable) {
         try {
-            var PostgreSQL_Statement = "CREATE TABLE IF NOT EXISTS (" + sTmpDBTable + ")"
-                    + "	id" + sTmpDBTable + ") INTEGER PRIMARY KEY;";
+            var PostgreSQL_Statement = "CREATE DATABASE \"" + sTmpDBTable + "\""
+                    + "	id" + sTmpDBTable + ") SERIAL PRIMARY KEY;";
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
-            var stmt = cnConn.createStatement();
+            var stmt = cnConn.prepareStatement(PostgreSQL_Statement);
             // create a new table
-            stmt.execute(PostgreSQL_Statement);
+
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             ShowSQLExceptionError(ex, " Error al crear tabla sin campos:" + sTmpDBTable);
         }
@@ -2997,13 +3011,13 @@ public class FDBMan {
 
     private void SQLite_CreateTable(String sTmpDBTable) {
         try {
-            var sSQLite_Statement = "CREATE TABLE IF NOT EXISTS (" + sTmpDBTable + ")"
-                    + "	id" + sTmpDBTable + " INTEGER PRIMARY KEY;";
+            var sSQLite_Statement = "CREATE TABLE IF NOT EXISTS " + sTmpDBTable
+                    + " (id INTEGER PRIMARY KEY)";
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
-            var stmt = cnConn.createStatement();
+            var stmt = cnConn.prepareStatement(sSQLite_Statement);
             // create a new table
-            
-            stmt.execute(sSQLite_Statement);
+
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             ShowSQLExceptionError(ex, " Error al crear tabla sin campos:" + sTmpDBTable);
         }
@@ -3014,12 +3028,13 @@ public class FDBMan {
         try {
             stsSQL_Statement.close();
         } catch (SQLException ex) {
+            ShowSQLExceptionError(ex, " Error al cerrar base de datos :" + sTmpDBTable + " " + ex.getLocalizedMessage());
             Exceptions.printStackTrace(ex);
         }
         try {
             cnConn.close();
         } catch (SQLException ex) {
-            Exceptions.printStackTrace(ex);
+            ShowSQLExceptionError(ex, " Error al cerrar base de datos :" + sTmpDBTable + " " + ex.getLocalizedMessage());
         }
     }
 
