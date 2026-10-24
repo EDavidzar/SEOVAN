@@ -88,8 +88,9 @@ public final class ProgramInstaller {
         if (dbPass != null) {
             PConfig.setConfPassDB(dbPass);
         }
+      /*/
         DBMSEP = new FDBMan(PConfig.DataBaseEvalUrlConn, PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
-        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
+        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());*/
         //FMG.WriteString(Integer.toString(PConfig.getDatabaseManagerinUse()));
         FMG.CloseAll();
     }

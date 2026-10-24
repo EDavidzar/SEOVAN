@@ -1,0 +1,16 @@
+oct 24, 2026 9:03:37 A. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Unknown database 'desidaniespsources'. Estado 42000
+oct 24, 2026 9:03:47 A. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Unknown database 'desidaniespsources'
+oct 24, 2026 9:03:47 A. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
+oct 24, 2026 9:03:48 A. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:
+oct 24, 2026 9:03:52 A. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Unknown database 'desidaniespsources'. Estado 42000
+oct 24, 2026 9:03:54 A. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al configurar la la conexión de MySQL:.Unknown database 'desidaniespsources'
+oct 24, 2026 9:03:54 A. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: Error de base de datos:. Estado  Error al cerrar la conexión de MySQL:
+oct 24, 2026 9:03:55 A. M. beleris.es.finalinformationmanager.MainErrorManager ShowDError
+ADVERTENCIA:  Error al cerrar la conexión de MySQL:. Error al cerrar la conexión de MySQL:

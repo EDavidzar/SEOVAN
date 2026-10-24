@@ -14,14 +14,17 @@ import static beleris.es.finalinformationmanager.MainErrorManager.ShowDInfo;
 import static beleris.es.finalinformationmanager.MainErrorManager.mconfyes;
 import static seovan.es.generalmods.ProgramInstaller.Instalador;
 import beleris.es.finalutils.FileManagerGenerator;
+import com.sun.tools.javac.Main;
 import java.awt.Dimension;
 import java.awt.Frame;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.OPEN_DIALOG;
 import static javax.swing.JFileChooser.SAVE_DIALOG;
@@ -565,7 +568,8 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     private XMLDataImport XMLDI = null;
     String XMLTemplate = "";
     String ProgramPath = "";
-    String sTheTitle = "SEOVAN 5.0.2b beta (c) Emilio David Diaus Lopez 2023-2026";
+    String Version=GetProgramVersion();
+    String sTheTitle = "SEOVAN "+Version+"b beta (c) Emilio David Diaus Lopez 2023-2026";
     String XMLHeader = """
                        <?xml version='1.0' encoding='UTF-8' ?>
                        <!-- was: <?xml version="1.0" encoding="ISO-8859-1"?> -->
@@ -582,6 +586,18 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         DBToUse = PConfig.getDatabaseManagerinUse();
         Instalador = new ProgramInstaller();
         ShowDataItem(IndexItemSource);
+    }
+
+    String GetProgramVersion() {
+       
+        Properties p = new Properties();
+        try (InputStream in = Main.class.getResourceAsStream("/version.properties")) {
+            p.load(in);
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        String version = p.getProperty("version");
+        return version;
     }
 
     /**
