@@ -4,7 +4,6 @@ import beleris.es.finaldbmanager.FDBMan;
 import static beleris.es.finaldbmanager.FDBMan.DB_MYSQL_Selected;
 import static beleris.es.finaldbmanager.FDBMan.DB_PostgreSQL_Selected;
 import static beleris.es.finaldbmanager.FDBMan.DB_SQLite_Selected;
-import static beleris.es.finaldbmanager.FDBMan.SQLLitDBExists;
 import beleris.es.finalutils.FileManagerGenerator;
 import java.awt.Frame;
 import java.io.File;
@@ -14,6 +13,7 @@ import org.openide.windows.WindowManager;
 import static org.openide.windows.WindowManager.getDefault;
 import static seovan.es.programconfig.PConfigManager.PConfig;
 import seovan.es.programconfig.ProgramOptions;
+import static beleris.es.finaldbmanager.FDBMan.SQLLiteDBExists;
 
 /**
  *
@@ -106,7 +106,7 @@ public final class ProgramInstaller {
     }
 
     void CreateAnalDBTablesSQLIte() {
-        
+
         String CreateTablesAnalStat = "DROP TABLE IF EXISTS `authorities`;"
                 + "CREATE TABLE authorities ("
                 + "  id_authorities INTEGER PRIMARY KEY,"
@@ -155,7 +155,7 @@ public final class ProgramInstaller {
                 + "CREATE TABLE `list_access_table` (\n"
                 + "  `idlist_access_table` int NOT NULL AUTO_INCREMENT,\n"
                 + "  `access_item` varchar(45) NOT NULL,\n"
-           + "  PRIMARY KEY (`idlist_access_table`)\n"
+                + "  PRIMARY KEY (`idlist_access_table`)\n"
                 + ") ;\n"
                 + "\n"
                 + "LOCK TABLES `list_access_table` WRITE;\n"
@@ -274,7 +274,7 @@ public final class ProgramInstaller {
     }
 
     void CreateEvalDBTablesSQLIte() {
-       
+
         String CreateTablesEvalStat = "DROP TABLE IF EXISTS `actuality`;\n"
                 + "CREATE TABLE `actuality` (\n"
                 + "  `id_actuality` int NOT NULL,\n"
@@ -827,16 +827,31 @@ public final class ProgramInstaller {
     public void CreateProgramDataDBTables() {
         boolean dbexists = false;
         String DBAnal = "desidaniespsources";
+        String DBEval = "sourcesevalprotocol";
         switch (PConfig.getDatabaseManagerinUse()) {
             case DB_MYSQL_Selected -> {
-
+                CreateProgramDataDBTablesMySQL();
             }
             case DB_PostgreSQL_Selected -> {
-                dbexists = SQLLitDBExists(DBAnal + ".db");
-                CreateProgramDataDBTablesSQLIte();
+                CreateProgramDataDBTablesPostgreSQL();
             }
             case DB_SQLite_Selected -> {
-                CreateProgramDataDBTablesSQLIte();
+                dbexists = SQLLiteDBExists(DBAnal + ".db");
+                if (!dbexists) {
+                    DBMSAP = new FDBMan(DBAnal, PConfig.getConfUserDB(), PConfig.getConfPassDB(), PConfig.getDatabaseManagerinUse());
+                    CreateAnalDBTablesSQLIte();
+                } else {
+                    // CreateAnalDBTablesSQLIte();
+                }
+
+                dbexists = SQLLiteDBExists(DBEval + ".db");
+                if (!dbexists) {
+                    DBMSEP = new FDBMan(DBAnal, PConfig.getConfUserDB(), PConfig.getConfPassDB(), PConfig.getDatabaseManagerinUse());
+                    CreateEvalDBTablesSQLIte();
+                } else {
+                    //  CreateEvalDBTablesSQLIte();
+                }
+
             }
             default -> {
                 CreateProgramDataDBTablesMySQL();
@@ -870,7 +885,7 @@ public final class ProgramInstaller {
     }
 
     private void CreateDBs() {
-
+        /*
         switch (PConfig.getDatabaseManagerinUse()) {
             case DB_MYSQL_Selected -> {
                 CreateProgramDataDBTablesMySQL();
@@ -885,7 +900,7 @@ public final class ProgramInstaller {
                 CreateProgramDataDBTablesMySQL();
             }
 
-        }
+        }*/
         CreateProgramDataDBTables();
     }
 

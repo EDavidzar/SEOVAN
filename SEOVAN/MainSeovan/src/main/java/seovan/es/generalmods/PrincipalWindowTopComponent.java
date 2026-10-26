@@ -114,7 +114,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         if (PConfig.ProgramConfigured()) {
             Instalador.ReadConfiguration();
         }*/
-        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
+        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources", PConfig.getConfUserDB(), PConfig.getConfPassDB(), PConfig.getDatabaseManagerinUse());
 
         IndexDataTotal = getRecordsCount();
         JSAP = new JSourceAnalisysPanel(IndexItemSource, IndexDataTotal, getDBSystemToUse());

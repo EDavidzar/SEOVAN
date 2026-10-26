@@ -65,12 +65,12 @@ public class FDBMan {
     /**
      *
      * @param Url
-     * @param sTmpDBPass
      * @param sTmpDBName
      * @param sTmpDBUser
+     * @param sTmpDBPass
      * @param idbtouse
      */
-    public FDBMan(String Url, String sTmpDBPass, String sTmpDBName, String sTmpDBUser, int idbtouse) {
+    public FDBMan(String Url, String sTmpDBName, String sTmpDBUser, String sTmpDBPass, int idbtouse) {
         this.sDBPass = sTmpDBPass;
         this.sDBUser = sTmpDBUser;
         this.sDBName = sTmpDBName;
@@ -89,11 +89,12 @@ public class FDBMan {
             default -> {
                 MySql_DSPoolInitSimple(Url, this.sDBName, this.sDBUser, this.sDBPass);
             }
+
         }
 
     }
 
-    static public boolean SQLLitDBExists(String DBPath) {
+    static public boolean SQLLiteDBExists(String DBPath) {
 
         boolean result = false;
 
@@ -159,7 +160,7 @@ public class FDBMan {
         return result;
     }
 
-    public void FDBMan(String sTmpDBPass, String sTmpDBName, String sTmpDBUser, int idbtouse) {
+    public FDBMan(String sTmpDBName, String sTmpDBUser, String sTmpDBPass, int idbtouse) {
         this.sDBPass = sTmpDBPass;
         this.sDBUser = sTmpDBUser;
         this.sDBName = sTmpDBName;
@@ -181,7 +182,7 @@ public class FDBMan {
                 }
             }
             case DB_SQLite_Selected -> {
-                if (SQLLitDBExists(this.sDBName)) {
+                if (SQLLiteDBExists(this.sDBName)) {
                     SQLite_DriverInit(this.sDBName);
                 } else {
                     SQLite_DriverInit(this.sDBName);
@@ -194,6 +195,7 @@ public class FDBMan {
                     CreateDB(this.sDBName, sTmpDBUser, sTmpDBPass);
                 }
             }
+
         }
 
     }

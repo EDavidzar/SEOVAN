@@ -599,7 +599,7 @@ public class SearchingDlg extends javax.swing.JDialog {
     }
 
     int GetIndexDataTotal() {
-        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
+        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources", PConfig.getConfUserDB(), PConfig.getConfPassDB(), PConfigManager.PConfig.getDatabaseManagerinUse());
         CLAllObjectList<String> ColumnsName = DBMSAP.GetColumnsName("elements_record");
         CLAllObjectList<CLAllObjectList<String>> Records_List = DBMSAP.LoadList_Table("desidaniespsources", "elements_record", ColumnsName);
         int IndexDataTotal = Records_List.get(0).size();
