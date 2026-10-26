@@ -5,6 +5,7 @@
 package beleris.es.finaldbmanager;
 
 import beleris.es.finalinformationmanager.LoggingManagerGenerator;
+import beleris.es.finalinformationmanager.MainErrorManager;
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
 import beleris.es.finalprimaryclasses.CLAllObjectList;
 import beleris.es.finalprimaryclasses.CLDBColumnsList;
@@ -16,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.DriverManager;
 import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Properties;
@@ -86,6 +88,111 @@ public class FDBMan {
             }
             default -> {
                 MySql_DSPoolInitSimple(Url, this.sDBName, this.sDBUser, this.sDBPass);
+            }
+        }
+
+    }
+
+    static public boolean SQLLitDBExists(String DBPath) {
+
+        boolean result = false;
+
+        File archivoDb = new File(DBPath);
+
+        if (archivoDb.exists()) {
+            System.out.println("La base de datos SQLite existe.");
+            result = true;
+        } else {
+            result = false;
+            System.out.println("La base de datos SQLite no existe.");
+        }
+        return result;
+    }
+
+    static public boolean My0SQLDBExists(String sTMPDBName, String sDBUser, String sDBPass) {
+        boolean result = false;
+        String url = "jdbc:mysql://localhost:3306/"; // Sin nombre de BD
+
+        String sql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, sDBUser, sDBPass); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, sTMPDBName);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                System.out.println("La base de datos MySQL existe.");
+                result = true;
+            } else {
+                System.out.println("La base de datos MySQL no existe.");
+                result = false;
+            }
+        } catch (SQLException ex) {
+            MainErrorManager.ShowDError(" Error al buscar la base de datos:" + sTMPDBName+" "+ex.getLocalizedMessage());
+        }
+        return result;
+    }
+
+    static public boolean PostgreSQLDBExists(String sTMPDBName, String sDBUser, String sDBPass) {
+        boolean result = false;
+        String url = "jdbc:postgresql://localhost:5432/postgres"; // Conectarse a la BD por defecto 'postgres'
+        String user = "tu_usuario";
+        String pass = "tu_contrasena";
+        String dbName = "nombre_de_tu_bd";
+
+        String sql = "SELECT 1 FROM pg_database WHERE datname = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, dbName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                System.out.println("La base de datos PostgreSQL existe.");
+                result = true;
+            } else {
+                System.out.println("La base de datos PostgreSQL no existe.");
+                result = false;
+            }
+        } catch (SQLException ex) {
+            MainErrorManager.ShowDError(" Error al buscar la base de datos:" + sTMPDBName+" "+ex.getLocalizedMessage());
+        }
+        return result;
+    }
+
+    public void FDBMan(String sTmpDBPass, String sTmpDBName, String sTmpDBUser, int idbtouse) {
+        this.sDBPass = sTmpDBPass;
+        this.sDBUser = sTmpDBUser;
+        this.sDBName = sTmpDBName;
+        idbtouseselected = idbtouse;
+        switch (idbtouseselected) {
+
+            case DB_MYSQL_Selected -> {
+                if (My0SQLDBExists(this.sDBName, this.sDBUser, this.sDBPass)) {
+                    // MySql_DSPoolInitSimple(Url, this.sDBName, this.sDBUser, this.sDBPass);
+                } else {
+                    CreateDB(this.sDBName, sTmpDBUser, sTmpDBPass);
+                }
+            }
+            case DB_PostgreSQL_Selected -> {
+                if (PostgreSQLDBExists(this.sDBName, this.sDBUser, this.sDBPass)) {
+
+                } else {
+                    CreateDB(this.sDBName, sTmpDBUser, sTmpDBPass);
+                }
+            }
+            case DB_SQLite_Selected -> {
+                if (SQLLitDBExists(this.sDBName)) {
+                    SQLite_DriverInit(this.sDBName);
+                } else {
+                    SQLite_DriverInit(this.sDBName);
+                }
+            }
+            default -> {
+                if (My0SQLDBExists(this.sDBName, this.sDBUser, this.sDBPass)) {
+                    // MySql_DSPoolInitSimple(Url, this.sDBName, this.sDBUser, this.sDBPass);
+                } else {
+                    CreateDB(this.sDBName, sTmpDBUser, sTmpDBPass);
+                }
             }
         }
 
@@ -316,7 +423,7 @@ public class FDBMan {
             }
 
         } catch (SQLException ex) { // ignore }
-            ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable);
+            ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable + " " + ex.getLocalizedMessage());
         } finally {
             PostgreSQL_CloseConn();
 
@@ -376,22 +483,24 @@ public class FDBMan {
     /**
      *
      * @param sTmpDBTable
+     * @param user
+     * @param password
      */
-    public void CreateDB(String sTmpDBTable) {
+    public void CreateDB(String sTmpDBTable, String user, String password) {
 
         switch (getDbusingpar()) {
 
             case DB_MYSQL_Selected -> {
-                MySQL_CreateDB(sTmpDBTable);
+                MySQL_CreateDB(sTmpDBTable, user, password);
             }
             case DB_PostgreSQL_Selected -> {
-                PostgreSQL_CreateDB(sTmpDBTable);
+                PostgreSQL_CreateDB(sTmpDBTable, user, password);
             }
             case DB_SQLite_Selected -> {
                 SQLite_CreateDB(sTmpDBTable);
             }
             default -> {
-                MySQL_CreateDB(sTmpDBTable);
+                MySQL_CreateDB(sTmpDBTable, user, password);
             }
 
         }
@@ -399,51 +508,68 @@ public class FDBMan {
 
     /**
      *
-     * @param stmpDBTable
+     * @param stmpDBName
+     * @param usuario
+     * @param password
      */
-    public void MySQL_CreateDB(String stmpDBTable) {
-
-        String sMySQL_PrePStatement = "CREATE DATABASE  IF NOT EXISTS `" + stmpDBTable + "`;";
+    public void MySQL_CreateDB(String stmpDBName, String usuario, String password) {
+        String url = "jdbc:mysql://localhost:3306/mysql"; // Conexión general
+        String sMySQL_PrePStatement = "CREATE DATABASE  IF NOT EXISTS `" + stmpDBName + "`;";
 
         boolean bRes = false;
         setbError(false);
-
+        Connection cnConn = null;
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sMySQL_PrePStatement);
+            cnConn = DriverManager.getConnection(url, usuario, password);
+        } catch (SQLException ex) {
+            ShowSQLExceptionError(ex, " Error al inicializar la conexión con el gestor de datos:" + stmpDBName + " " + ex.getLocalizedMessage());
+        }
+        if (cnConn != null) {
+            try {
+                stsSQL_Statement = cnConn.prepareStatement(sMySQL_PrePStatement);
 
-            bRes = stsSQL_Statement.execute();
+                bRes = stsSQL_Statement.execute();
 
-        } catch (SQLException ex) { // ignore }
-            ShowSQLExceptionError(ex, " Error al crear tabla:" + stmpDBTable);
-        } finally {
-            bRes = false;
-            MySQL_CloseConn();
+            } catch (SQLException ex) { // ignore }
+                ShowSQLExceptionError(ex, " Error al crear base de datos:" + stmpDBName + " " + ex.getLocalizedMessage());
+            } finally {
+                bRes = false;
+                MySQL_CloseConn();
 
+            }
         }
     }
 
     /**
      *
-     * @param stmpDBTable
+     * @param stmpDBName
      */
-    public void PostgreSQL_CreateDB(String stmpDBTable) {
+    public void PostgreSQL_CreateDB(String stmpDBName, String usuario, String password) {
+        String url = "jdbc:postgresql://localhost:5432/postgres"; // Conexión general
 
-        String sProgressSQLPrePStatement = "CREATE DATABASE \"" + stmpDBTable + "\"";
+        String sProgressSQLPrePStatement = "CREATE DATABASE \"" + stmpDBName + "\"";
 
         boolean bRes = false;
+        Connection cnConn = null;
         setbError(false);
-
         try {
-            stsSQL_Statement = cnConn.prepareStatement(sProgressSQLPrePStatement);
+            cnConn = DriverManager.getConnection(url, usuario, password);
+        } catch (SQLException ex) {
+            ShowSQLExceptionError(ex, " Error al crear base de datos:" + stmpDBName + " " + ex.getLocalizedMessage());
+        }
+        if (cnConn != null) {
+            try {
+                stsSQL_Statement = cnConn.prepareStatement(sProgressSQLPrePStatement);
 
-            bRes = stsSQL_Statement.execute();
+                bRes = stsSQL_Statement.execute();
 
-        } catch (SQLException ex) { // ignore }
-            ShowSQLExceptionError(ex, " Error al crear tabla:" + stmpDBTable);
-        } finally {
-            bRes = false;
-            PostgreSQL_CloseConn();
+            } catch (SQLException ex) { // ignore }
+                ShowSQLExceptionError(ex, " Error al crear base de datos:" + stmpDBName + " " + ex.getLocalizedMessage());
+            } finally {
+                bRes = false;
+                PostgreSQL_CloseConn();
 
+            }
         }
     }
 

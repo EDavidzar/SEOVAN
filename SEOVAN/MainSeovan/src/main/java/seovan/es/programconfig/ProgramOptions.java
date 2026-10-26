@@ -6,6 +6,7 @@ package seovan.es.programconfig;
 
 import beleris.es.finaldbmanager.FDBMan;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import static seovan.es.programconfig.PConfigManager.PConfig;
 
 /**
@@ -258,10 +259,10 @@ public class ProgramOptions extends javax.swing.JDialog {
         } else {
             setDatabasemanager(FDBMan.DB_SQLite_Selected);
         }
-        if ((JTFUserDB.getText() == null ? PConfig.getConfUserDB() != null : !JTFUserDB.getText().equals(PConfig.getConfUserDB())) || (JTFDBPass.getPassword().toString() != PConfig.getConfPassDB())) {
+        if ((JTFUserDB.getText() == null ? PConfig.getConfUserDB() != null : !JTFUserDB.getText().equals(PConfig.getConfUserDB())) || (Arrays.toString(JTFDBPass.getPassword()) == null ? PConfig.getConfPassDB() != null : !Arrays.toString(JTFDBPass.getPassword()).equals(PConfig.getConfPassDB()))) {
             String dbUser = JTFUserDB.getText();
             PConfig.setConfUserDB(dbUser);
-            String dbPass = JTFDBPass.getPassword().toString();
+            String dbPass = Arrays.toString(JTFDBPass.getPassword());
             PConfig.setConfPassDB(dbPass);
         }
         dispose();

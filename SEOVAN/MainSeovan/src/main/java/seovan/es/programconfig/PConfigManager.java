@@ -4,7 +4,7 @@
  */
 package seovan.es.programconfig;
 
-import static beleris.es.finaldbmanager.FDBMan.DB_MYSQL_Selected;
+import static beleris.es.finaldbmanager.FDBMan.DB_SQLite_Selected;
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
 import java.io.File;
 import java.io.IOException;

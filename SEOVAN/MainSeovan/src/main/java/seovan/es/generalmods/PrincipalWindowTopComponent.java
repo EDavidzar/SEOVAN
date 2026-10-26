@@ -105,8 +105,8 @@ public final class PrincipalWindowTopComponent extends TopComponent {
             PConfig = new PConfigManager();
         }
 
-        PConfig.setDatabaseManagerinUse(FDBMan.DB_MYSQL_Selected);
-        setDBToUse(FDBMan.DB_MYSQL_Selected);
+        PConfig.setDatabaseManagerinUse(FDBMan.DB_SQLite_Selected);
+        setDBToUse(FDBMan.DB_SQLite_Selected);
         /*   if (!PConfig.ProgramConfigured()) {
             Instalador.CreateProgramDatabases();
             PConfig.InstalationComplete();
