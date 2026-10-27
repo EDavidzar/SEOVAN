@@ -106,7 +106,8 @@ public final class ProgramInstaller {
     }
 
     void CreateAnalDBTablesSQLIte() {
-
+        String SQLOptions = "PRAGMA foreign_keys = ON";
+        DBMSAP.ExecuteQueryTableDBWithOptions(SQLOptions);
         String CreateTablesAnalStat = "DROP TABLE IF EXISTS `authorities`;"
                 + "CREATE TABLE authorities ("
                 + "  id_authorities INTEGER PRIMARY KEY,"
@@ -248,8 +249,8 @@ public final class ProgramInstaller {
     }
 
     void CreateEvalDBTablesSQLIte() {
-        String SQLOptions="PRAGMA foreign_keys = ON";
-        DBMSAP.
+        String SQLOptions = "PRAGMA foreign_keys = ON";
+        DBMSAP.ExecuteQueryTableDBWithOptions(SQLOptions);
         String CreateTablesEvalStat = """
                                       DROP TABLE IF EXISTS `actuality`;
                                       CREATE TABLE `actuality` (
