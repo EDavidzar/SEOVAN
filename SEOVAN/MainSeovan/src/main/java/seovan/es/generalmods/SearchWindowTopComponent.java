@@ -10,10 +10,8 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
-import org.openide.windows.WindowManager;
 import seovan.es.panels.JSourceAnalisysPanel;
 import seovan.es.programconfig.PConfigManager;
-import static seovan.es.programconfig.PConfigManager.PConfig;
 
 /**
  * Top component which displays something.

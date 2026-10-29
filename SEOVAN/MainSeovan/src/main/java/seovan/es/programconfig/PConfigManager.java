@@ -4,6 +4,7 @@
  */
 package seovan.es.programconfig;
 
+import beleris.es.finaldbmanager.FDBMan;
 import static beleris.es.finaldbmanager.FDBMan.DB_SQLite_Selected;
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
 import java.io.File;
@@ -21,7 +22,7 @@ public class PConfigManager implements Serializable {
     private String ProgramPath = "";
     private String ProgramXMLTemplatePath = "";
     private boolean installed = false;
-    private int DatabaseManagerinUse = DB_MYSQL_Selected;
+    private int DatabaseManagerinUse = FDBMan.DB_MYSQL_Selected;
     public String DataBaseAnalysisUrlConn="jdbc:mysql://127.0.0.1:3306/desidaniespsources?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     public String DataBaseEvalUrlConn="jdbc:mysql://127.0.0.1:3306/sourcesevalprotocol?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     /**

@@ -1,0 +1,2 @@
+oct 29, 2026 4:58:44 P. M. beleris.es.finaldbmanager.FDBMan ShowSQLExceptionError
+GRAVE: [SQLITE_ERROR] SQL error or missing database (no such table: desidaniespsources.elements_record). Estado null

@@ -5,7 +5,6 @@
 package seovan.es.actions;
 
 import static beleris.es.finalinformationmanager.MainErrorManager.AcceptInformation;
-import static beleris.es.finalinformationmanager.MainErrorManager.mconfyes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.openide.LifecycleManager;
@@ -14,7 +13,6 @@ import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
-import static seovan.es.generalmods.ProgramInstaller.Instalador;
 
 /**
  *
@@ -43,13 +41,6 @@ public final class ExitAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int ntf = AcceptInformation("¿Está seguro de que quiere salir del programa?");
-        if (ntf == mconfyes) {
-            if (Instalador == null) {
-            } else {
-                Instalador.WriteConfiguration();
-            }
-//>            DBMSAP.Close();
-            LifecycleManager.getDefault().exit();
-        }
+        LifecycleManager.getDefault().exit();
     }
 }

@@ -1,42 +1,46 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/NetBeansModuleDevelopment-files/moduleInstall.java to edit this template
+ */
 package seovan.es.generalmods;
 
 import beleris.es.finaldbmanager.FDBMan;
 import static beleris.es.finaldbmanager.FDBMan.DB_MYSQL_Selected;
 import static beleris.es.finaldbmanager.FDBMan.DB_PostgreSQL_Selected;
 import static beleris.es.finaldbmanager.FDBMan.DB_SQLite_Selected;
+import static beleris.es.finaldbmanager.FDBMan.SQLLiteDBExists;
 import beleris.es.finalutils.FileManagerGenerator;
 import java.awt.Frame;
 import java.io.File;
 import java.util.Set;
+import org.openide.modules.ModuleInstall;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import static org.openide.windows.WindowManager.getDefault;
 import static seovan.es.programconfig.PConfigManager.PConfig;
 import seovan.es.programconfig.ProgramOptions;
-import static beleris.es.finaldbmanager.FDBMan.SQLLiteDBExists;
 
 /**
  *
- * @author Emilio David Diaus López 2023-2026
+ * @author edavid
  */
-public final class ProgramInstaller {
+final public class Instalador extends ModuleInstall {
 
-    private final String ProgramHomePath = System.getProperty("user.home");
+    private static final long serialVersionUID = 197856352L;
+
+    String ProgramHomePath = System.getProperty("user.home");
     final String ConfigPath = ProgramHomePath;
-    private FileManagerGenerator FMG = null;
+    FileManagerGenerator FMG = null;
 
     FDBMan DBMSEP = null;
     FDBMan DBMSAP = null;
 
-    /**
-     *
-     */
-    static public ProgramInstaller Instalador = null;
+    @Override
+    public void restored() {
 
-    /**
-     *
-     */
-    public ProgramInstaller() {
+        /**
+         *
+         */
         if (FMG == null) {
             FMG = new FileManagerGenerator();
         }
@@ -48,6 +52,11 @@ public final class ProgramInstaller {
         }
         PConfig.setDatabaseManagerinUse(FDBMan.DB_SQLite_Selected);
         InstallProdedures();
+    }
+
+    @Override
+    public void close() {
+        WriteConfiguration();
     }
 
     /**

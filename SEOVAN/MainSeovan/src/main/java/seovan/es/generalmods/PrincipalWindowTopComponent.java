@@ -12,19 +12,15 @@ import static beleris.es.finalinformationmanager.MainErrorManager.AcceptInformat
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDInfo;
 import static beleris.es.finalinformationmanager.MainErrorManager.mconfyes;
-import static seovan.es.generalmods.ProgramInstaller.Instalador;
 import beleris.es.finalutils.FileManagerGenerator;
-import com.sun.tools.javac.Main;
 import java.awt.Dimension;
 import java.awt.Frame;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.OPEN_DIALOG;
 import static javax.swing.JFileChooser.SAVE_DIALOG;
@@ -465,15 +461,10 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     }//GEN-LAST:event_jExitProgramActionPerformed
     public void ExitProgram() {
         int ntf = AcceptInformation("¿Está seguro de que quiere salir del programa?");
-        if (ntf == mconfyes) {
-            if (Instalador == null) {
-            } else {
-                Instalador.WriteConfiguration();
-            }
-            DBMSAP.Close();
-            LifecycleManager.getDefault().exit();
-        }
+        DBMSAP.Close();
+        LifecycleManager.getDefault().exit();
     }
+
     private void jAnalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAnalButtonActionPerformed
         SelectAnalisysPanel();
     }//GEN-LAST:event_jAnalButtonActionPerformed
@@ -568,8 +559,8 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     private XMLDataImport XMLDI = null;
     String XMLTemplate = "";
     String ProgramPath = "";
-    String Version=GetProgramVersion();
-    String sTheTitle = "SEOVAN "+Version+"b beta (c) Emilio David Diaus Lopez 2023-2026";
+    String Version = "5.0.1";
+    String sTheTitle = "SEOVAN " + Version + "b beta (c) Emilio David Diaus Lopez 2023-2026";
     String XMLHeader = """
                        <?xml version='1.0' encoding='UTF-8' ?>
                        <!-- was: <?xml version="1.0" encoding="ISO-8859-1"?> -->
@@ -584,10 +575,10 @@ public final class PrincipalWindowTopComponent extends TopComponent {
 
         LoggingManagerGenerator.getGlobalLogger().info(sTheTitle);
         DBToUse = PConfig.getDatabaseManagerinUse();
-        Instalador = new ProgramInstaller();
         ShowDataItem(IndexItemSource);
     }
 
+    /*
     String GetProgramVersion() {
        
         Properties p = new Properties();
@@ -598,8 +589,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         }
         String version = p.getProperty("version");
         return version;
-    }
-
+    }*/
     /**
      *
      */

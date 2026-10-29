@@ -2044,10 +2044,13 @@ public class FDBMan {
      * @return
      */
     public int getLastRow(String sTmpDBTable) {
-
+        String Statement="";
         int iresult = 0;
-
-        String Statement = "select count(*) from " + sDBName + "." + sTmpDBTable + ";";
+        if (getDbusingpar()==FDBMan.DB_SQLite_Selected){
+            Statement = "select count(*) from " + sDBName +";";
+        } else{
+            Statement = "select count(*) from " + sDBName + "." + sTmpDBTable + ";";
+        }   
 
         try {
             stsSQL_Statement = cnConn.prepareStatement(Statement);

@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+OpenIDE-Module-Install: seovan/es/generalmods/Instalador.class
 OpenIDE-Module-Localizing-Bundle: seovan/es/mainsoevan/Bundle.properties
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
 
