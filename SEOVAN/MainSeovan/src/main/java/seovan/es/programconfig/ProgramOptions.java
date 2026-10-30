@@ -52,6 +52,7 @@ public class ProgramOptions extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jRBMySQLsel = new javax.swing.JRadioButton();
         jRBSQLLiteSel = new javax.swing.JRadioButton();
+        jRBPostSQL = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -67,9 +68,12 @@ public class ProgramOptions extends javax.swing.JDialog {
         setTitle(org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.title")); // NOI18N
         setAlwaysOnTop(true);
         setBounds(new java.awt.Rectangle(0, 0, 510, 700));
-        setMinimumSize(new java.awt.Dimension(510, 700));
+        setMaximumSize(new java.awt.Dimension(510, 650));
+        setMinimumSize(new java.awt.Dimension(510, 650));
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        setPreferredSize(new java.awt.Dimension(510, 650));
+        setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jPanel1.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION)); // NOI18N
@@ -90,7 +94,6 @@ public class ProgramOptions extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(jRBMySQLsel, gridBagConstraints);
 
@@ -100,9 +103,16 @@ public class ProgramOptions extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(jRBSQLLiteSel, gridBagConstraints);
+
+        buttonGroup1.add(jRBPostSQL);
+        org.openide.awt.Mnemonics.setLocalizedText(jRBPostSQL, org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jRBPostSQL.text")); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel2.add(jRBPostSQL, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -244,8 +254,8 @@ public class ProgramOptions extends javax.swing.JDialog {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(JBAccept, gridBagConstraints);
 
@@ -256,8 +266,12 @@ public class ProgramOptions extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (jRBMySQLsel.isSelected() == true) {
             setDatabasemanager(FDBMan.DB_MYSQL_Selected);
-        } else {
+        }
+        if (jRBSQLLiteSel.isSelected() == true) {
             setDatabasemanager(FDBMan.DB_SQLite_Selected);
+        }
+        if (jRBPostSQL.isSelected() == true) {
+            setDatabasemanager(FDBMan.DB_PostgreSQL_Selected);
         }
         if ((JTFUserDB.getText() == null ? PConfig.getConfUserDB() != null : !JTFUserDB.getText().equals(PConfig.getConfUserDB())) || (Arrays.toString(JTFDBPass.getPassword()) == null ? PConfig.getConfPassDB() != null : !Arrays.toString(JTFDBPass.getPassword()).equals(PConfig.getConfPassDB()))) {
             String dbUser = JTFUserDB.getText();
@@ -297,17 +311,17 @@ public class ProgramOptions extends javax.swing.JDialog {
         int tkc = evt.getKeyCode();
 
         switch (tkc) {
-            case CV: {
+            case CV -> {
                 pasteuser();
-
+                break;
             }
-            case CC: {
+            case CC -> {
                 copyuser();
-
+                break;
             }
-            case CX: {
+            case CX -> {
                 cutuser();
-
+                break;
             }
 
         }
@@ -319,14 +333,17 @@ public class ProgramOptions extends javax.swing.JDialog {
         final int CX = KeyEvent.VK_X + KeyEvent.CTRL_DOWN_MASK;
         int tkc = evt.getKeyCode();
         switch (tkc) {
-            case CV ->  {
+            case CV -> {
                 pastepass();
+                break;
             }
-            case CC ->  {
+            case CC -> {
                 copypass();
+                break;
             }
-            case CX ->  {
+            case CX -> {
                 cutpass();
+                break;
             }
 
         }
@@ -389,6 +406,7 @@ public class ProgramOptions extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton jRBMySQLsel;
+    private javax.swing.JRadioButton jRBPostSQL;
     private javax.swing.JRadioButton jRBSQLLiteSel;
     // End of variables declaration//GEN-END:variables
     private int databasemanager = 0;

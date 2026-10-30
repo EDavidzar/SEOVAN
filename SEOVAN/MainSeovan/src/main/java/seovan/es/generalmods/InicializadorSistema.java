@@ -1,32 +1,32 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/NetBeansModuleDevelopment-files/moduleInstall.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package seovan.es.generalmods;
+
+import java.awt.GraphicsEnvironment;
+import org.openide.modules.OnStart;
 
 import beleris.es.finaldbmanager.FDBMan;
 import static beleris.es.finaldbmanager.FDBMan.DB_MYSQL_Selected;
 import static beleris.es.finaldbmanager.FDBMan.DB_PostgreSQL_Selected;
 import static beleris.es.finaldbmanager.FDBMan.DB_SQLite_Selected;
 import static beleris.es.finaldbmanager.FDBMan.SQLLiteDBExists;
+import static beleris.es.finalinformationmanager.MainErrorManager.ShowInfo;
 import beleris.es.finalutils.FileManagerGenerator;
 import java.awt.Frame;
 import java.io.File;
 import java.util.Set;
-import org.openide.modules.ModuleInstall;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import static org.openide.windows.WindowManager.getDefault;
 import static seovan.es.programconfig.PConfigManager.PConfig;
 import seovan.es.programconfig.ProgramOptions;
 
-/**
- *
- * @author edavid
- */
-final public class Instalador extends ModuleInstall {
+@OnStart
+public class InicializadorSistema implements Runnable {
 
-    private static final long serialVersionUID = 197856352L;
+    private static final long serialVersionUID = 1978356352L;
 
     String ProgramHomePath = System.getProperty("user.home");
     final String ConfigPath = ProgramHomePath;
@@ -36,7 +36,22 @@ final public class Instalador extends ModuleInstall {
     FDBMan DBMSAP = null;
 
     @Override
-    public void restored() {
+    public void run() {
+        // Salvaguarda: Evita la ejecución si se levanta en un servidor de compilación sin interfaz
+        if (GraphicsEnvironment.isHeadless()) {
+            ShowInfo("Entorno sin gráficos detectado (Build/Test). Saltando inicialización.");
+            return;
+        }
+        if (System.getProperty("netbeans.full.hack") != null
+                || System.getProperty("netbeans.user") != null
+                || System.getProperty("nb.branding") == null) {
+
+            // Si detecta que corre bajo el entorno del IDE compilando, se detiene aquí
+            ShowInfo("[BUILD] Ignorando autoinstalación durante la compilación.");
+            return;
+        }
+
+        ShowInfo("Iniciando verificación del sistema...");
 
         /**
          *
@@ -44,25 +59,25 @@ final public class Instalador extends ModuleInstall {
         if (FMG == null) {
             FMG = new FileManagerGenerator();
         }
-        CheckConfiguration();
+        ShowInfo("comprobación de la configuración...");
+        CheckConfigurationFileExistence();
         if (FMG.FileSize(ConfigPath + File.separator + "seovan.cfg") > 0) {
+            ShowInfo("Leyendo configuración del programa...");
             ReadConfiguration();
         } else {
 
         }
+        ShowInfo("Procedimiento de autoinstalación...");
         PConfig.setDatabaseManagerinUse(FDBMan.DB_SQLite_Selected);
         InstallProdedures();
-    }
-
-    @Override
-    public void close() {
+        CloseDatabases();
         WriteConfiguration();
     }
 
     /**
      *
      */
-    public void CheckConfiguration() {
+    public void CheckConfigurationFileExistence() {
 
         FMG = new FileManagerGenerator(ConfigPath + File.separator + "seovan.cfg");
         if (FMG.isError() && FMG.getErrorcode() == FMG.getIerrCodeFileNotExist()) {
@@ -855,6 +870,7 @@ final public class Instalador extends ModuleInstall {
         ProgramOptions OptionsDLG = new ProgramOptions(f, true);
         OptionsDLG.setLocationRelativeTo(f);
         OptionsDLG.setVisible(true);
+        PConfig.setDatabaseManagerinUse(OptionsDLG.getDatabasemanager());
         Set<TopComponent> openTopComponents = getDefault().getRegistry().getOpened();
         PrincipalWindowTopComponent ptc = null;
         for (TopComponent stc : openTopComponents) {
@@ -863,6 +879,7 @@ final public class Instalador extends ModuleInstall {
             }
             if (ptc != null) {
                 ptc.setDBToUse(OptionsDLG.getDatabasemanager());
+
             }
         }
     }
@@ -896,4 +913,8 @@ final public class Instalador extends ModuleInstall {
         Configure_DBInfo();
     }
 
+    private void CloseDatabases() {
+        DBMSEP.Close();
+        DBMSAP.Close();
+    }
 }
