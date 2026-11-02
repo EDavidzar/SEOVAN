@@ -4,6 +4,7 @@
  */
 package seovan.es.actions;
 
+import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
@@ -44,16 +45,20 @@ public final class ExpòrtPDFile implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-          Set<TopComponent> openTopComponents = getDefault().getRegistry().getOpened();
+        Set<TopComponent> openTopComponents = getDefault().getRegistry().getOpened();
         PrincipalWindowTopComponent ptc = null;
         for (TopComponent stc : openTopComponents) {
             if ("Ventana Principal".equals(stc.getName())) {
                 ptc = (PrincipalWindowTopComponent) stc;
             }
             if (ptc != null) {
-                ptc.ExportPDFDocument();
+                if (ptc.getIndexDataTotal() > 0) {
+                    ptc.ExportPDFDocument();
+                } else {
+                    ShowDError("No hay ningun registro para expoprtacion en PDF");
+                }
             }
         }
     }
-    
+
 }

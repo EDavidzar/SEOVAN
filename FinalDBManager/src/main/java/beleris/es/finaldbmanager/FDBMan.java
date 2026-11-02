@@ -30,20 +30,10 @@ import org.openide.util.Exceptions;
  */
 public class FDBMan {
 
-    /**
-     *
-     */
     public static final int DB_MYSQL_Selected = 0;
-
-    /**
-     *
-     */
     public static final int DB_SQLite_Selected = 1;
-
-    /**
-     *
-     */
     public static final int DB_PostgreSQL_Selected = 2;
+    public static final int NoRecords_ErrorCode = 2078;
     private int idbtouseselected = DB_SQLite_Selected;
     private Connection cnConn;
     private int ierrCode;
@@ -129,7 +119,7 @@ public class FDBMan {
                 result = false;
             }
         } catch (SQLException ex) {
-            MainErrorManager.ShowDError(" Error al buscar la base de datos:" + sTMPDBName+" "+ex.getLocalizedMessage());
+            MainErrorManager.ShowDError(" Error al buscar la base de datos:" + sTMPDBName + " " + ex.getLocalizedMessage());
         }
         return result;
     }
@@ -155,7 +145,7 @@ public class FDBMan {
                 result = false;
             }
         } catch (SQLException ex) {
-            MainErrorManager.ShowDError(" Error al buscar la base de datos:" + sTMPDBName+" "+ex.getLocalizedMessage());
+            MainErrorManager.ShowDError(" Error al buscar la base de datos:" + sTMPDBName + " " + ex.getLocalizedMessage());
         }
         return result;
     }
@@ -2044,172 +2034,43 @@ public class FDBMan {
      * @return
      */
     public int getLastRow(String sTmpDBTable) {
-        String Statement="";
+        String Statement = "";
         int iresult = 0;
-        if (getDbusingpar()==FDBMan.DB_SQLite_Selected){
-            Statement = "select count(*) from " + sDBName +";";
-        } else{
+        if (getDbusingpar() == FDBMan.DB_SQLite_Selected) {
+            Statement = "select count(*) from " + sDBName + ";";
+        } else {
             Statement = "select count(*) from " + sDBName + "." + sTmpDBTable + ";";
-        }   
+        }
 
         try {
             stsSQL_Statement = cnConn.prepareStatement(Statement);
         } catch (SQLException ex) {
-            ShowSQLExceptionError(ex, " Error al obtener la úĺtima fila:" + sTmpDBTable);
-            Exceptions.printStackTrace(ex);
+            //   ShowSQLExceptionError(ex, " Error al obtener la úĺtima fila:" + sTmpDBTable+" "+ex.getLocalizedMessage());
+            //  Exceptions.printStackTrace(ex);
         }
-        ResultSet rs = null;
-        try {
-            rs = stsSQL_Statement.executeQuery();
-        } catch (SQLException ex) {
-            ShowSQLExceptionError(ex, " Error al obtener la úĺtima fila:" + sTmpDBTable);
-            Exceptions.printStackTrace(ex);
-        }
-        if (rs != null) {
+        if (cnConn != null) {
+
+            ResultSet rs = null;
             try {
-                while (rs.next()) {
-                    iresult = rs.getInt("count(*)");
-                }
+                rs = stsSQL_Statement.executeQuery();
             } catch (SQLException ex) {
                 ShowSQLExceptionError(ex, " Error al obtener la úĺtima fila:" + sTmpDBTable);
+                Exceptions.printStackTrace(ex);
             }
+            if (rs != null) {
+                try {
+                    while (rs.next()) {
+                        iresult = rs.getInt("count(*)");
+                    }
+                } catch (SQLException ex) {
+                    ShowSQLExceptionError(ex, " Error al obtener la úĺtima fila:" + sTmpDBTable);
+                }
+            }
+        } else{
+            iresult=0;
+            bError=true;
+            setIerrCode(FDBMan.NoRecords_ErrorCode);
         }
-
-        //return iresult;
-        /*
-        try {
-            isokrow=rsCResSet.last(); //go to last row;
-        }
-        catch (SQLException ex) {
-            setbError(true);
-            ierrCode = ex.getErrorCode();
-            serrSQLMessage = ex.getLocalizedMessage();
-            serrSQLState = ex.getSQLState();
-            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{serrSQLMessage, serrSQLState});
-            // ShowDError(" Error al desplazarme al último registro , conjunto de datos  " + rsCResSet.toString() + "." + serrSQLMessage);
-            //  MySQL_CloseDSPoolConn();
-        }
-        try {
-            iresult = rsCResSet.getRow();
-        }
-
-        catch (SQLException ex) {
-            setbError(true);
-            ierrCode = ex.getErrorCode();
-            serrSQLMessage = ex.getLocalizedMessage();
-            serrSQLState = ex.getSQLState();
-            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{serrSQLMessage, serrSQLState});
-            // ShowDError(" Error al desplazarme al último registro , conjunto de datos  " + rsCResSet.toString() + "." + serrSQLMessage);
-            //  MySQL_CloseDSPoolConn();
-        }
-         try {
-            isokrow=rsCResSet.first(); //go to forst row;
-        }
-        catch (SQLException ex) {
-            setbError(true);
-            ierrCode = ex.getErrorCode();
-            serrSQLMessage = ex.getLocalizedMessage();
-            serrSQLState = ex.getSQLState();
-            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{serrSQLMessage, serrSQLState});
-            // ShowDError(" Error al desplazarme al último registro , conjunto de datos  " + rsCResSet.toString() + "." + serrSQLMessage);
-            //  MySQL_CloseDSPoolConn();
-        }
-        return iresult;
-    }
-
-    public int getActualRow() {
-
-        int iresult = 0;
-
-        setbError(false);
-
-        try {
-            iresult = rsCResSet.getRow();
-
-        }
-        catch (SQLException ex) { // ignore }
-            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{this.getClass()
-                .getName(), ex.getLocalizedMessage()});
-            setbError(true);
-            ierrCode = ex.getErrorCode();
-            serrSQLMessage = ex.getLocalizedMessage();
-            serrSQLState = ex.getSQLState();
-            iresult = 0;
-            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{serrSQLMessage, serrSQLState});
-            // ShowDError(" Error al obtener registro actual, conjunto de datos  " + rsCResSet.toString() + "." + serrSQLMessage);
-            //  MySQL_CloseDSPoolConn();
-        }
-        finally {
-            MySQL_CloseConn();
-
-        //return iresult;
-        /*
-        try {
-            isokrow=rsCResSet.last(); //go to last row;
-        }
-        catch (SQLException ex) {
-            setbError(true);
-            ierrCode = ex.getErrorCode();
-            serrSQLMessage = ex.getLocalizedMessage();
-            serrSQLState = ex.getSQLState();
-            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{serrSQLMessage, serrSQLState});
-            // ShowDError(" Error al desplazarme al último registro , conjunto de datos  " + rsCResSet.toString() + "." + serrSQLMessage);
-            //  MySQL_CloseDSPoolConn();
-        }
-        try {
-            iresult = rsCResSet.getRow();
-        }
-
-        catch (SQLException ex) {
-            setbError(true);
-            ierrCode = ex.getErrorCode();
-            serrSQLMessage = ex.getLocalizedMessage();
-            serrSQLState = ex.getSQLState();
-            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{serrSQLMessage, serrSQLState});
-            // ShowDError(" Error al desplazarme al último registro , conjunto de datos  " + rsCResSet.toString() + "." + serrSQLMessage);
-            //  MySQL_CloseDSPoolConn();
-        }
-         try {
-            isokrow=rsCResSet.first(); //go to forst row;
-        }
-        catch (SQLException ex) {
-            setbError(true);
-            ierrCode = ex.getErrorCode();
-            serrSQLMessage = ex.getLocalizedMessage();
-            serrSQLState = ex.getSQLState();
-            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{serrSQLMessage, serrSQLState});
-            // ShowDError(" Error al desplazarme al último registro , conjunto de datos  " + rsCResSet.toString() + "." + serrSQLMessage);
-            //  MySQL_CloseDSPoolConn();
-        }
-        return iresult;
-    }
-
-    public int getActualRow() {
-
-        int iresult = 0;
-
-        setbError(false);
-
-        try {
-            iresult = rsCResSet.getRow();
-
-        }
-        catch (SQLException ex) { // ignore }
-            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{this.getClass()
-                .getName(), ex.getLocalizedMessage()});
-            setbError(true);
-            ierrCode = ex.getErrorCode();
-            serrSQLMessage = ex.getLocalizedMessage();
-            serrSQLState = ex.getSQLState();
-            iresult = 0;
-            LoggingManagerGenerator.getGlobalLogger().log(Level.SEVERE, "{0}. Estado {1}", new Object[]{serrSQLMessage, serrSQLState});
-            // ShowDError(" Error al obtener registro actual, conjunto de datos  " + rsCResSet.toString() + "." + serrSQLMessage);
-            //  MySQL_CloseDSPoolConn();
-        }
-        finally {
-            MySQL_CloseConn();
-
-        }*/
         return iresult;
 
     }

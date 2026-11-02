@@ -4,6 +4,7 @@
  */
 package seovan.es.actions;
 
+import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
@@ -16,15 +17,10 @@ import org.openide.windows.TopComponent;
 import static org.openide.windows.WindowManager.getDefault;
 import seovan.es.generalmods.PrincipalWindowTopComponent;
 
-
-
 /**
  *
  * @author Emilio David Diaus López 2023-2026
  */
-
-
-
 @ActionID(
         category = "File",
         id = "seovan.es.actions.ExportAction"
@@ -50,15 +46,21 @@ public final class ExportAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Set<TopComponent> openTopComponents = getDefault().getRegistry().getOpened();
         PrincipalWindowTopComponent ptc = null;
+
         for (TopComponent stc : openTopComponents) {
             if ("Ventana Principal".equals(stc.getName())) {
                 ptc = (PrincipalWindowTopComponent) stc;
             }
             if (ptc != null) {
-                ptc.LoadXMLTemplate();
-                ptc.UpdateXMLTemplate();
-                ptc.ExportXMLDocument();
+                if (ptc.getIndexDataTotal() > 0) {
+                    ptc.LoadXMLTemplate();
+                    ptc.UpdateXMLTemplate();
+                    ptc.ExportXMLDocument();
+                } else {
+                    ShowDError("No hay ningun registro para expoprtacion en XML");
+                }
             }
+
         }
     }
 }

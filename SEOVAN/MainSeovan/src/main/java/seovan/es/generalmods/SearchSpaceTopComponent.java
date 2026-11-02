@@ -39,6 +39,8 @@ import seovan.es.programconfig.PConfigManager;
 })
 public final class SearchSpaceTopComponent extends TopComponent {
 
+    private static final long serialVersionUID = 1602230211L;
+
     private int IndexDataTotal = 0;
 
     public SearchSpaceTopComponent() {

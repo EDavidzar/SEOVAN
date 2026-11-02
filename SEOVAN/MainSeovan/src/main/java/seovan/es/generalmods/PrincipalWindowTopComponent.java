@@ -35,7 +35,6 @@ import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import seovan.es.dialogs.SearchingDlg;
-
 import seovan.es.importation.XMLDataImport;
 import seovan.es.panels.JSourceAnalisysPanel;
 import seovan.es.panels.JSourceEvaluationPanel;
@@ -113,8 +112,12 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources", PConfig.getConfUserDB(), PConfig.getConfPassDB(), PConfig.getDatabaseManagerinUse());
 
         IndexDataTotal = getRecordsCount();
-        JSAP = new JSourceAnalisysPanel(IndexItemSource, IndexDataTotal, getDBSystemToUse());
-        JSEP = new JSourceEvaluationPanel(IndexItemSource, IndexDataTotal, getDBSystemToUse());
+        if (IndexDataTotal == 0 && DBMSAP.isbError() && DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
+            IndexDataTotal = 1;
+        }
+
+        JSAP = new JSourceAnalisysPanel(IndexItemSource, getIndexDataTotal(), getDBSystemToUse());
+        JSEP = new JSourceEvaluationPanel(IndexItemSource, getIndexDataTotal(), getDBSystemToUse());
 
         //   UIManager.put("ScrollBar.width", 40);
         InnerScrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(
@@ -510,7 +513,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     }//GEN-LAST:event_jPreviousRegActionPerformed
 
     private void jNextRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNextRegActionPerformed
-        if (IndexItemSource < IndexDataTotal) {
+        if (IndexItemSource < getIndexDataTotal()) {
             //DBMSAP.goNext();
             IndexItemSource++;
             ShowDataItem(IndexItemSource);
@@ -520,7 +523,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
 
     private void jLastRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLastRegActionPerformed
         //DBMSAP.goLast();
-        IndexItemSource = IndexDataTotal;
+        IndexItemSource = getIndexDataTotal();
         ShowDataItem(IndexItemSource);
     }//GEN-LAST:event_jLastRegActionPerformed
 
@@ -553,7 +556,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
 //   JPanel AnalisisPanel;
     //   JPanel EvalPanel;
     int IndexItemSource = 1;
-    int IndexDataTotal = 1;
+    private int IndexDataTotal = 1;
     private int DBToUse = 1;
 
     private XMLDataImport XMLDI = null;
@@ -618,15 +621,18 @@ public final class PrincipalWindowTopComponent extends TopComponent {
      *
      */
     public void ImportAnalisysData() {
-        IndexDataTotal = getRecordsCount();
-        JSAP.ImportAnalisysPanelData(XMLDI, IndexDataTotal, getDBSystemToUse());
+        setIndexDataTotal(getRecordsCount());
+        if (getIndexDataTotal() == 0 && DBMSAP.isbError() && DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
+            setIndexDataTotal(1);
+        }
+        JSAP.ImportAnalisysPanelData(XMLDI, getIndexDataTotal(), getDBSystemToUse());
     }
 
     /**
      *
      */
     public void ImportEvalData() {
-        JSEP.ImportEvalPanelData(XMLDI, IndexDataTotal, getDBSystemToUse());
+        JSEP.ImportEvalPanelData(XMLDI, getIndexDataTotal(), getDBSystemToUse());
     }
 
     /**
@@ -725,7 +731,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     }
 
     private void ShowDataItem(int itmpIndexItemSource) {
-        String RegStr = String.format(" Registro %d / %d ", itmpIndexItemSource, IndexDataTotal);
+        String RegStr = String.format(" Registro %d / %d ", itmpIndexItemSource, getIndexDataTotal());
         ShowAnalReg.setText(RegStr);
         //   RegStr = String.format(" Registro %d / %d ", itmpIndexItemSource, IndexDataTotal);
         //  ShowAnalReg.setText(RegStr);
@@ -763,9 +769,12 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         String XMLEvalPart = "";
         String XMLIndexHeaderChanged = "";
         String FullDoc = "";
-        IndexDataTotal = getRecordsCount();
-
-        for (int tmpitem = 1; tmpitem <= IndexDataTotal; tmpitem++) {
+        setIndexDataTotal(getRecordsCount());
+        
+        if (getIndexDataTotal() == 0 && DBMSAP.isbError() && DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
+            setIndexDataTotal(0);
+        }
+        for (int tmpitem = 1; tmpitem <= getIndexDataTotal(); tmpitem++) {
             JSAP.LoadDBDatatoPanel(tmpitem);
             JSEP.LoadDBDatatoPanel(tmpitem);
             String fieldtochange = String.format("%04d", tmpitem);
@@ -844,7 +853,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
      *
      */
     public void ReloadData() {
-        IndexDataTotal = getRecordsCount();
+        setIndexDataTotal(getRecordsCount());
         ShowDataItem(IndexItemSource);
     }
 
@@ -892,6 +901,20 @@ public final class PrincipalWindowTopComponent extends TopComponent {
      */
     public void setjInnerSurfacePanel(javax.swing.JPanel jInnerSurfacePanel) {
         this.jInnerSurfacePanel = jInnerSurfacePanel;
+    }
+
+    /**
+     * @return the IndexDataTotal
+     */
+    public int getIndexDataTotal() {
+        return IndexDataTotal;
+    }
+
+    /**
+     * @param IndexDataTotal the IndexDataTotal to set
+     */
+    public void setIndexDataTotal(int IndexDataTotal) {
+        this.IndexDataTotal = IndexDataTotal;
     }
 
 }
