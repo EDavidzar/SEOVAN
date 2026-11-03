@@ -310,30 +310,32 @@ public class FDBMan {
      * @param FieldList
      */
     public void SQLite_SelectManyResults(String sTmpDBTable, CLAllObjectList<CL_DBCV> FieldList) {
-        try {
-            var sSQLite_Statement = "SELECT ";
-            int iindex = 0;
-            int itotalsize = FieldList.size();
-            while (iindex < itotalsize) {
-                CL_DBCV Field = FieldList.get(iindex);
-                String sField = Field.getsTableDBField();
-                sSQLite_Statement = sSQLite_Statement + "" + sField;
-                iindex++;
-                if (iindex < itotalsize) {
-                    sSQLite_Statement = sSQLite_Statement + ",";
+
+        var sSQLite_Statement = "SELECT ";
+        int iindex = 0;
+        if (FieldList != null) {
+            try {
+                int itotalsize = FieldList.size();
+                while (iindex < itotalsize) {
+                    CL_DBCV Field = FieldList.get(iindex);
+                    String sField = Field.getsTableDBField();
+                    sSQLite_Statement = sSQLite_Statement + "" + sField;
+                    iindex++;
+                    if (iindex < itotalsize) {
+                        sSQLite_Statement = sSQLite_Statement + ",";
+                    }
                 }
+
+                sSQLite_Statement = sSQLite_Statement + " FROM" + sTmpDBTable + ";";
+
+                //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
+                var stmntStatement = cnConn.createStatement();
+                // create a new table
+                stmntStatement.executeQuery(sSQLite_Statement);
+            } catch (SQLException ex) {
+                ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable);
             }
-
-            sSQLite_Statement = sSQLite_Statement + " FROM" + sTmpDBTable + ";";
-
-            //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
-            var stmntStatement = cnConn.createStatement();
-            // create a new table
-            stmntStatement.executeQuery(sSQLite_Statement);
-        } catch (SQLException ex) {
-            ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable);
         }
-
     }
 
     /**
@@ -2048,7 +2050,7 @@ public class FDBMan {
             //   ShowSQLExceptionError(ex, " Error al obtener la úĺtima fila:" + sTmpDBTable+" "+ex.getLocalizedMessage());
             //  Exceptions.printStackTrace(ex);
         }
-        if (cnConn != null) {
+        if (stsSQL_Statement != null) {
 
             ResultSet rs = null;
             try {
@@ -2066,9 +2068,9 @@ public class FDBMan {
                     ShowSQLExceptionError(ex, " Error al obtener la úĺtima fila:" + sTmpDBTable);
                 }
             }
-        } else{
-            iresult=0;
-            bError=true;
+        } else {
+            iresult = 0;
+            bError = true;
             setIerrCode(FDBMan.NoRecords_ErrorCode);
         }
         return iresult;
@@ -2591,7 +2593,7 @@ public class FDBMan {
     public CLAllObjectList<String> SQLite_LoadList(String sTable, String Scolumnname) {
         CLAllObjectList<String> LCA = new CLAllObjectList<>(1);
         int Count = getLastRow(sTable);
-        MySQL_SelectAllRecords(sTable);
+        SQLite_SelectAllRecords(sTable);
         try {
             getRsCResSet().first();
         } catch (SQLException ex) {

@@ -20,21 +20,30 @@ import static seovan.es.programconfig.PConfigManager.PConfig;
  * @author Emilio David Diaus López 2023-2026
  */
 public class JSourceEvaluationPanel extends javax.swing.JPanel {
- private static final long serialVersionUID = 1629L;
+
+    private static final long serialVersionUID = 1629L;
     int iIndexItemSource = 1;
     private FDBMan DBMSEP;
 
     /**
      * Creates new form jEvalPanel
+     *
      * @param tmpiIndexItemSource
      * @param tmpiIndexDataTotal
      * @param tmpiDabataasetoUse
      */
-    public JSourceEvaluationPanel(int tmpiIndexItemSource, int tmpiIndexDataTotal,int tmpiDabataasetoUse) {
-        DBMSEP = new FDBMan(PConfig.DataBaseEvalUrlConn, "sourcesevalprotocol", PConfig.getConfUserDB(), PConfig.getConfPassDB(),tmpiDabataasetoUse);
-        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources",PConfig.getConfUserDB(), PConfig.getConfPassDB(),tmpiDabataasetoUse);
+    public JSourceEvaluationPanel(int tmpiIndexItemSource, int tmpiIndexDataTotal, int tmpiDabataasetoUse) {
+        DBMSEP = new FDBMan(PConfig.DataBaseEvalUrlConn, "sourcesevalprotocol", PConfig.getConfUserDB(), PConfig.getConfPassDB(), tmpiDabataasetoUse);
+        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources", PConfig.getConfUserDB(), PConfig.getConfPassDB(), tmpiDabataasetoUse);
         initComponents();
-        LoadEvaluationData(tmpiIndexItemSource);
+
+        int TotalRecords = DBMSAP.getLastRow("elements_record");
+        if (TotalRecords == 0 && DBMSAP.isbError() && DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
+            TotalRecords = 1;
+        } else {
+            LoadEvaluationData(tmpiIndexItemSource);
+        }
+
     }
 
     /**
@@ -1943,7 +1952,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
 
         //String sElement = String.valueOf(itmpIndexItemSource);
         //LoadAnalisisData(itmpIndexItemSource);
-       LoadEvaluationData(itmpIndexItemSource);
+        LoadEvaluationData(itmpIndexItemSource);
 
     }
 

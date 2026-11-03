@@ -49,8 +49,14 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
         initComponents();
         IndexItemSource = iIndexItemSource;
         IndexDataTotal = iIndexDataTotal;
-        LoadingLists();
-        LoadAnalisisData(IndexItemSource);
+
+        int TotalRecords = DBMSAP.getLastRow("elements_record");
+        if (TotalRecords == 0 && DBMSAP.isbError() && DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
+            TotalRecords = 1;
+        } else {
+            LoadingLists();
+            LoadAnalisisData(IndexItemSource);
+        }
     }
 
     /**
@@ -1298,7 +1304,7 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
     private void LoadingLists() {
 // SELECT * FROM desidaniespsources.list_sourcelevel;
         CLAllObjectList<String> ListSourcelevel_ent = new CLAllObjectList<>();
-        ListSourcelevel_ent = DBMSAP.LoadList("list_sourcelevel","sourcelevelitem");
+        ListSourcelevel_ent = DBMSAP.LoadList("list_sourcelevel", "sourcelevelitem");
         InsertDataListToPanel(ListSourcelevel_ent, getjFromLevelTip());
         CLAllObjectList<String> ListSourceOriginTable_ent = new CLAllObjectList<>();
         ListSourceOriginTable_ent = DBMSAP.LoadList("list_source_origin_table", "originitem");
