@@ -42,13 +42,16 @@ public class InicializadorSistema implements Runnable {
             ShowInfo("Entorno sin gráficos detectado (Build/Test). Saltando inicialización.");
             return;
         }
-        if (System.getProperty("netbeans.full.hack") != null
-                || System.getProperty("netbeans.user") != null
-                || System.getProperty("nb.branding") == null) {
+        // 2. FILTRO DEFINITIVO: Detecta si está corriendo dentro del motor de pruebas/desarrollo de NetBeans
+        // La propiedad "org.netbeans.atest.launcher" o la comprobación de JUnit aíslan el entorno de compilación
+        boolean esEntornoDeCompilacion
+                = System.getProperty("org.netbeans.atest.launcher") != null
+                || System.getProperty("netbeans.full.hack") != null
+                || isCorriendoEnTest();
 
-            // Si detecta que corre bajo el entorno del IDE compilando, se detiene aquí
-            ShowInfo("[BUILD] Ignorando autoinstalación durante la compilación.");
-            return;
+        if (esEntornoDeCompilacion) {
+            ShowInfo("[BUILD/TEST] Ignorando autoinstalación durante la compilación automática.");
+            return; // Bloquea la ejecución en el build
         }
 
         ShowInfo("Iniciando verificación del sistema...");
@@ -65,13 +68,30 @@ public class InicializadorSistema implements Runnable {
             ShowInfo("Leyendo configuración del programa...");
             ReadConfiguration();
         } else {
-
+            PConfig.setInstalled(false);
         }
-        ShowInfo("Procedimiento de autoinstalación...");
-        PConfig.setDatabaseManagerinUse(FDBMan.DB_SQLite_Selected);
-        InstallProdedures();
-        CloseDatabases();
-        WriteConfiguration();
+        if (PConfig.isInstalled()) {
+            ShowInfo("Procedimiento de autoinstalación...");
+            PConfig.setDatabaseManagerinUse(FDBMan.DB_SQLite_Selected);
+            InstallProdedures();
+            CloseDatabases();
+            WriteConfiguration();
+        }
+    }
+
+    /**
+     * Comprueba si el hilo actual fue iniciado por herramientas de testing
+     * durante el build
+     */
+    private boolean isCorriendoEnTest() {
+        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+            if (element.getClassName().contains("org.junit.")
+                    || element.getClassName().contains("org.testng.")
+                    || element.getClassName().contains("org.netbeans.modules.nbtest")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -95,6 +115,9 @@ public class InicializadorSistema implements Runnable {
         FMG.WriteInt(PConfig.getDatabaseManagerinUse());
         FMG.WriteString(PConfig.getConfUserDB());
         FMG.WriteString(PConfig.getConfPassDB());
+        if (PConfig.isInstalled()) {
+            FMG.WriteString("programinstalled");
+        }
         FMG.CloseAll();
 
     }
@@ -115,6 +138,15 @@ public class InicializadorSistema implements Runnable {
         }
         if (dbPass != null) {
             PConfig.setConfPassDB(dbPass);
+        }
+        String instsrt = FMG.ReadString();
+        if (!FMG.isError()) {
+            if ("programinstalled".equals(instsrt)) {
+                PConfig.setInstalled(true);
+
+            }
+        } else {
+            PConfig.setInstalled(true);
         }
         /*/
         DBMSEP = new FDBMan(PConfig.DataBaseEvalUrlConn, PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());

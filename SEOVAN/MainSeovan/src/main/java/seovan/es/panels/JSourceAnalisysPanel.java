@@ -44,9 +44,9 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
      * @param iIndexDataTotal
      * @param iDabataasetoUse
      */
-    public JSourceAnalisysPanel(int iIndexItemSource, int iIndexDataTotal, int iDabataasetoUse) {
-        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources", PConfig.getConfUserDB(), PConfig.getConfPassDB(), iDabataasetoUse);
+    public JSourceAnalisysPanel(int iIndexItemSource, int iIndexDataTotal, int iDabataasetoUse) {        
         initComponents();
+        DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources", PConfig.getConfUserDB(), PConfig.getConfPassDB(), iDabataasetoUse);
         IndexItemSource = iIndexItemSource;
         IndexDataTotal = iIndexDataTotal;
 

@@ -33,9 +33,9 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
      * @param tmpiDabataasetoUse
      */
     public JSourceEvaluationPanel(int tmpiIndexItemSource, int tmpiIndexDataTotal, int tmpiDabataasetoUse) {
+        initComponents();
         DBMSEP = new FDBMan(PConfig.DataBaseEvalUrlConn, "sourcesevalprotocol", PConfig.getConfUserDB(), PConfig.getConfPassDB(), tmpiDabataasetoUse);
         DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources", PConfig.getConfUserDB(), PConfig.getConfPassDB(), tmpiDabataasetoUse);
-        initComponents();
 
         int TotalRecords = DBMSAP.getLastRow("elements_record");
         if (TotalRecords == 0 && DBMSAP.isbError() && DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {

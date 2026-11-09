@@ -24,9 +24,6 @@ public class PConfigManager implements Serializable {
     private int DatabaseManagerinUse = FDBMan.DB_SQLite_Selected;
     public String DataBaseAnalysisUrlConn="jdbc:mysql://127.0.0.1:3306/desidaniespsources?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     public String DataBaseEvalUrlConn="jdbc:mysql://127.0.0.1:3306/sourcesevalprotocol?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    /**
-     *
-     */
     public static PConfigManager PConfig = new PConfigManager();
     private static final long serialVersionUID = 1621L;
     final String ConfigPath = ProgramHomePath;
