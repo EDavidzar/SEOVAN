@@ -24,13 +24,16 @@ import static seovan.es.programconfig.PConfigManager.PConfig;
 import seovan.es.programconfig.ProgramOptions;
 
 @OnStart
-public class InicializadorSistema implements Runnable {
+public class ProgramInstaller implements Runnable {
 
     private static final long serialVersionUID = 1978356352L;
 
     String ProgramHomePath = System.getProperty("user.home");
     final String ConfigPath = ProgramHomePath;
     FileManagerGenerator FMG = null;
+
+    String cfgpathlocal = ConfigPath + File.separator + "seovan.cfg";
+    boolean configexist = false;
 
     FDBMan DBMSEP = null;
     FDBMan DBMSAP = null;
@@ -63,14 +66,16 @@ public class InicializadorSistema implements Runnable {
             FMG = new FileManagerGenerator();
         }
         ShowInfo("comprobación de la configuración...");
-        CheckConfigurationFileExistence();
-        if (FMG.FileSize(ConfigPath + File.separator + "seovan.cfg") > 0) {
+
+        configexist = CheckConfigurationFileExistence();
+        if (configexist) {
             ShowInfo("Leyendo configuración del programa...");
             ReadConfiguration();
         } else {
+            ShowInfo("No existe archivo de configuración...");
             PConfig.setInstalled(false);
         }
-        if (PConfig.isInstalled()) {
+        if (!PConfig.isInstalled()) {
             ShowInfo("Procedimiento de autoinstalación...");
             PConfig.setDatabaseManagerinUse(FDBMan.DB_SQLite_Selected);
             InstallProdedures();
@@ -97,13 +102,10 @@ public class InicializadorSistema implements Runnable {
     /**
      *
      */
-    public void CheckConfigurationFileExistence() {
-
-        FMG = new FileManagerGenerator(ConfigPath + File.separator + "seovan.cfg");
-        if (FMG.isError() && FMG.getErrorcode() == FMG.getIerrCodeFileNotExist()) {
-            WriteConfiguration();
-        }
-        //   Configure_DBInfo();
+    boolean CheckConfigurationFileExistence() {
+        boolean value = false;
+        value = FMG.FileExists(cfgpathlocal);
+        return value;
     }
 
     /**
@@ -126,38 +128,42 @@ public class InicializadorSistema implements Runnable {
      *
      */
     public void ReadConfiguration() {
-        FMG = new FileManagerGenerator(FMG.getIfmRead(), ConfigPath + File.separator + "seovan.cfg");
-        int itmpDBConf = FMG.ReadInt();
+        FMG = new FileManagerGenerator(FMG.getIfmRead(), cfgpathlocal);
         if (!FMG.isError()) {
-            PConfig.setDatabaseManagerinUse(itmpDBConf);
-        }
-        String dbUser = FMG.ReadString();
-        String dbPass = FMG.ReadString();
-        if (dbUser != null) {
-            PConfig.setConfUserDB(dbUser);
-        }
-        if (dbPass != null) {
-            PConfig.setConfPassDB(dbPass);
-        }
-        String instsrt = FMG.ReadString();
-        if (!FMG.isError()) {
-            if ("programinstalled".equals(instsrt)) {
-                PConfig.setInstalled(true);
-
+            int itmpDBConf = FMG.ReadInt();
+            if (!FMG.isError()) {
+                PConfig.setDatabaseManagerinUse(itmpDBConf);
             }
-        } else {
-            PConfig.setInstalled(true);
-        }
-        /*/
+            String dbUser = FMG.ReadString();
+            String dbPass = FMG.ReadString();
+            if (dbUser != null) {
+                PConfig.setConfUserDB(dbUser);
+            }
+            if (dbPass != null) {
+                PConfig.setConfPassDB(dbPass);
+            }
+            String instsrt = FMG.ReadString();
+            if (!FMG.isError()) {
+                if ("programinstalled".equals(instsrt)) {
+                    PConfig.setInstalled(true);
+
+                }
+            } else {
+                PConfig.setInstalled(false);
+            }
+            /*/
         DBMSEP = new FDBMan(PConfig.DataBaseEvalUrlConn, PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
         DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());*/
-        //FMG.WriteString(Integer.toString(PConfig.getDatabaseManagerinUse()));
-        FMG.CloseAll();
+            //FMG.WriteString(Integer.toString(PConfig.getDatabaseManagerinUse()));
+            FMG.CloseAll();
+        } else {
+            PConfig.setInstalled(false);
+        }
     }
 
     void InstallProdedures() {
         ConfigureDB();
-        CreateDBs();
+        CreateDBTables();
         ExitandClose();
     }
 
@@ -881,7 +887,7 @@ public class InicializadorSistema implements Runnable {
 
                 dbexists = SQLLiteDBExists(DBEval + ".db");
                 if (!dbexists) {
-                    DBMSEP = new FDBMan(DBAnal, PConfig.getConfUserDB(), PConfig.getConfPassDB(), PConfig.getDatabaseManagerinUse());
+                    DBMSEP = new FDBMan(DBEval, PConfig.getConfUserDB(), PConfig.getConfPassDB(), PConfig.getDatabaseManagerinUse());
                     CreateEvalDBTablesSQLIte();
                 } else {
                     //  CreateEvalDBTablesSQLIte();
@@ -896,7 +902,7 @@ public class InicializadorSistema implements Runnable {
 
     }
 
-    private void Configure_DBInfo() {
+    private void DUserEnterConfig() {
         Frame f = WindowManager.getDefault().getMainWindow();
         //FHelpPresenter DHelp = new FHelpPresenter("Registro de control de Seguridad", "help/NewGeneralDataIntroPanels-PSRC.html");
         ProgramOptions OptionsDLG = new ProgramOptions(f, true);
@@ -921,32 +927,17 @@ public class InicializadorSistema implements Runnable {
         DBMSEP.Close();
     }
 
-    private void CreateDBs() {
-        /*
-        switch (PConfig.getDatabaseManagerinUse()) {
-            case DB_MYSQL_Selected -> {
-                CreateProgramDataDBTablesMySQL();
-            }
-            case DB_SQLite_Selected -> {
-                CreateProgramDataDBTablesSQLIte();
-            }
-            case DB_PostgreSQL_Selected -> {
-                CreateProgramDataDBTablesPostgreSQL();
-            }
-            default -> {
-                CreateProgramDataDBTablesMySQL();
-            }
-
-        }*/
+    private void CreateDBTables() {
         CreateProgramDataDBTables();
     }
 
     private void ConfigureDB() {
-        Configure_DBInfo();
+        DUserEnterConfig();
     }
 
     private void CloseDatabases() {
         DBMSEP.Close();
         DBMSAP.Close();
     }
-}
+
+    }
