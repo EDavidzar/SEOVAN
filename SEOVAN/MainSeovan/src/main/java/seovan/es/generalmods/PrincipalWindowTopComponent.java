@@ -562,12 +562,13 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     private XMLDataImport XMLDI = null;
     String XMLTemplate = "";
     String ProgramPath = "";
-    String Version = "5.0.1";
+    String Version = "5.0.3";
     String sTheTitle = "SEOVAN " + Version + "b beta (c) Emilio David Diaus Lopez 2023-2026";
     String XMLHeader = """
                        <?xml version='1.0' encoding='UTF-8' ?>
                        <!-- was: <?xml version="1.0" encoding="ISO-8859-1"?> -->
-                       <import_schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="importxmlschema.xsd">>""";
+                       <import_schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="importxmlschema.xsd">>
+                       """;
     String XMLEnd = "</import_schema>";
 
     /**
@@ -784,7 +785,8 @@ public final class PrincipalWindowTopComponent extends TopComponent {
             FullDoc += XMLEvalPart;
         }
         String tmpXMLTemplate = XMLHeader + FullDoc + XMLEnd;
-        XMLTemplate = tmpXMLTemplate;
+        String xmlCorregido = tmpXMLTemplate.replaceAll("&(?!(amp|lt|gt|quot|apos);)", "&amp;");
+        XMLTemplate = xmlCorregido;
     }
 
     String CheckandCorrectExtension(String tmpPath, String tmpExtension) {
