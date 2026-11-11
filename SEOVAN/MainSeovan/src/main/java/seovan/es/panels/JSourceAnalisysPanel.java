@@ -44,7 +44,7 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
      * @param iIndexDataTotal
      * @param iDabataasetoUse
      */
-    public JSourceAnalisysPanel(int iIndexItemSource, int iIndexDataTotal, int iDabataasetoUse) {        
+    public JSourceAnalisysPanel(int iIndexItemSource, int iIndexDataTotal, int iDabataasetoUse) {
         initComponents();
         DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources", PConfig.getConfUserDB(), PConfig.getConfPassDB(), iDabataasetoUse);
         IndexItemSource = iIndexItemSource;
@@ -1372,6 +1372,18 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
 
     }
 
+    public static String RewriteToGUICopy(String urlConEntidades) {
+        if (urlConEntidades == null) {
+            return "";
+        }
+        return urlConEntidades
+                .replace("&amp;", "&")
+                .replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&quot;", "\"")
+                .replace("&apos;", "'");
+    }
+
     /**
      *
      * @param iIndexItem
@@ -1414,9 +1426,12 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
         DBParameters.add(new CL_DBCV("ad_parrareloralternatetitle", getOdAlternateSubtitleorparalel().getText()));
         DBParameters.add(new CL_DBCV("ad_otheracceptedname", getOdjAnotheracceptedname().getText()));
 
-        DBParameters.add(new CL_DBCV("url_dnsdomain", getUrljIdentDNSDomain().getText()));
-        DBParameters.add(new CL_DBCV("url_completeurl", getUrljIdentCompleteUrl().getText()));
-        DBParameters.add(new CL_DBCV("url_permalink", getUrljIdentPermalinkUrL().getText()));
+        String url_dnsdomain = RewriteToGUICopy(getUrljIdentDNSDomain().getText());
+        DBParameters.add(new CL_DBCV("url_dnsdomain", url_dnsdomain));
+        String url_completeurl = RewriteToGUICopy(getUrljIdentCompleteUrl().getText());
+        DBParameters.add(new CL_DBCV("url_completeurl", url_completeurl));
+        String url_permalink = RewriteToGUICopy(getUrljIdentPermalinkUrL().getText());
+        DBParameters.add(new CL_DBCV("url_permalink", url_permalink));
 
         DBParameters.add(new CL_DBCV("sindchann", getjIdentjSyndChannel().getText()));
         DBParameters.add(new CL_DBCV("pubdate", getjIdentPublishDate().getText()));
