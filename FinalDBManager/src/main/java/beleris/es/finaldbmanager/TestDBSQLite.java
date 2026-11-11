@@ -59,10 +59,12 @@ public class TestDBSQLite {
         } catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
         }
-        String CreateTablesAnalStat = "CREATE TABLE IF NOT EXISTS authorities ("
+        String CreateTablesAnalStat = "DROP TABLE IF EXISTS `authorities`;";
+        ExecuteQueryTableDBWithOptions(CreateTablesAnalStat, cnConn);
+        CreateTablesAnalStat = "CREATE TABLE authorities ("
                 + "  id_authorities INTEGER PRIMARY KEY,"
-                + "  pricauthor text NOT NULL,"
-                + "  otherauthor text NOT NULL"
+                + "  pricauthor TEXT NOT NULL,"
+                + "  otherauthor TEXT NOT NULL"
                 + ");";
         ExecuteQueryTableDBWithOptions(CreateTablesAnalStat, cnConn);
         try {

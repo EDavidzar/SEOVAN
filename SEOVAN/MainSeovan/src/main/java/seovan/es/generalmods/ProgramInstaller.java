@@ -170,16 +170,18 @@ public class ProgramInstaller implements Runnable {
     void CreateAnalDBTablesSQLIte() {
         String SQLOptions = "PRAGMA foreign_keys = ON";
         DBMSAP.ExecuteQueryTableDBWithOptions(SQLOptions);
-        String CreateTablesAnalStat = "DROP TABLE IF EXISTS `authorities`;"
-                + "CREATE TABLE authorities ("
+        String CreateTablesAnalStat = "DROP TABLE IF EXISTS `authorities`;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "CREATE TABLE authorities ("
                 + "  id_authorities INTEGER PRIMARY KEY,"
                 + "  pricauthor TEXT NOT NULL,"
                 + "  otherauthor TEXT NOT NULL"
                 + ");";
         DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
 
+        CreateTablesAnalStat = "DROP TABLE IF EXISTS `contents`;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
         CreateTablesAnalStat = """
-                               DROP TABLE IF EXISTS `contents`;
                                CREATE TABLE `contents` (
                                  `id_contents` INTEGER PRIMARY KEY AUTOINCREMENT,
                                  `gendescript` TEXT NOT NULL,
@@ -196,8 +198,9 @@ public class ProgramInstaller implements Runnable {
                                );
                                """;
         DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "DROP TABLE IF EXISTS `identification`;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
         CreateTablesAnalStat = """
-                               DROP TABLE IF EXISTS `identification`;
                                CREATE TABLE `identification` (
                                  `id_identification` INTEGER PRIMARY KEY AUTOINCREMENT,
                                  `dp_title` TEXT NOT NULL,
@@ -216,48 +219,204 @@ public class ProgramInstaller implements Runnable {
                                  `language` TEXT NOT NULL DEFAULT 'espa\u00f1ol'
                                );""";
         DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "DROP TABLE IF EXISTS `list_access_table`;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
         CreateTablesAnalStat = """
-                               DROP TABLE IF EXISTS `list_access_table`;
                                CREATE TABLE `list_access_table` (
                                  `idlist_access_table` INTEGER PRIMARY KEY AUTOINCREMENT,
                                  `access_item` TEXT NOT NULL
-                               ) ;
-                               
-                               INSERT INTO `list_access_table` VALUES (1,'libre'),(2,'suscripci\u00f3n'),(3,'mixto');
-                               DROP TABLE IF EXISTS `list_format_medium_table`;
-                               CREATE TABLE `list_format_medium_table` (
-                                 `idlist_format_medium_table` INTEGER PRIMARY KEY AUTOINCREMENT,
-                                 `format_mediumitem` TEXT NOT NULL
-                               );
-                               INSERT INTO `list_format_medium_table` VALUES (1,'en l\u00ednea'),(2,'impresa');
-                               DROP TABLE IF EXISTS `list_geo_cover_table`;
-                               CREATE TABLE `list_geo_cover_table` (
-                                 `idlist_geo_cover_table` INTEGER PRIMARY KEY AUTOINCREMENT,
-                                 `geographicvoveritem` TEXT NOT NULL
-                               ) ;
-                               INSERT INTO `list_geo_cover_table` VALUES (1,'local'),(2,'regional'),(3,'nacional'),(4,'internacional');
-                               DROP TABLE IF EXISTS `list_source_origin_table`;
-                               CREATE TABLE `list_source_origin_table` (
-                                 `idlist_source_origin_table` INTEGER PRIMARY KEY AUTOINCREMENT,
-                                 `originitem` TEXT DEFAULT NULL
-                               ) ;
-                               INSERT INTO `list_source_origin_table` VALUES (1,'Institucional'),(2,'Documental'),(3,'Personal');
-                               DROP TABLE IF EXISTS `list_sourcecontents`;
-                               CREATE TABLE `list_sourcecontents` (
-                                 `id_sourcecontents` INTEGER PRIMARY KEY AUTOINCREMENT,
-                                 `sourcecontentsitem` TEXT NOT NULL
-                               );
-                               INSERT INTO `list_sourcecontents` VALUES (1,'actas de congresos'),(44,'aplicaciones web'),(2,'art\u00edculos cient\u00edficos'),(3,'art\u00edculos de divulgaci\u00f3n'),(4,'bases de datos de tesis'),(10,'bases de datos referenciales'),(5,'bibliograf\u00edas'),(6,'bibliograf\u00edas de bibliograf\u00edas'),(8,'boletines de res\u00famenes'),(7,'boletines de sumarios'),(9,'cat\u00e1logos bibliogr\u00e1ficos'),(11,'c\u00f3digo fuente'),(31,'diccionarios de referencia'),(12,'directorios cient\u00edficos'),(13,'directorios de bases de datos'),(16,'directorios de editoriales'),(14,'directorios de revistas'),(15,'directorios de unidades de informaci\u00f3n y documentaci\u00f3n'),(17,'directorios institucionales'),(18,'ensayos cient\u00edficos'),(19,'eprints'),(21,'gu\u00edas de obras de referencia'),(20,'gu\u00edas tem\u00e1ticas'),(22,'\u00edndices bibliogr\u00e1ficos'),(23,'\u00edndices de citas'),(24,'\u00edndices de impacto'),(25,'informes t\u00e9cnicos'),(26,'investigaciones acad\u00e9micas'),(33,'modelos de utilidad'),(27,'monograf\u00edas cient\u00edficas'),(47,'monograf\u00edas de ciencias sociales'),(46,'monograf\u00edas de humanidades'),(28,'nomenclaturas y especificaciones'),(29,'normas y est\u00e1ndares'),(30,'obras enciclop\u00e9dicas'),(32,'patentes'),(34,'ponencias'),(35,'preprints'),(36,'proyectos de investigaci\u00f3n'),(37,'repertorios de cat\u00e1logos'),(38,'repertorios de \u00edndices'),(39,'reviews cient\u00edficos'),(40,'revistas cient\u00edficas'),(41,'separatas'),(42,'simposios'),(43,'software'),(45,'tesis doctorales. ');
-                               DROP TABLE IF EXISTS `list_sourcelevel`;
-                               CREATE TABLE `list_sourcelevel` (
-                                 `id_sourcelevel` INTEGER PRIMARY KEY AUTOINCREMENT,
-                                 `sourcelevelitem` TEXT NOT NULL
-                               ) ;
-                               INSERT INTO `list_sourcelevel` VALUES (1,'primaria'),(2,'secundaria'),(3,'terciaria'),(4,'complementaria');
-                               """;
+                               ) ;""";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = """
+                               INSERT INTO `list_access_table` VALUES (1,'libre'),(2,'suscripci\u00f3n'),(3,'mixto');""";
         DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
 
         CreateTablesAnalStat = """
+                               DROP TABLE IF EXISTS `list_format_medium_table`;""";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "CREATE TABLE `list_format_medium_table` (`idlist_format_medium_table` INTEGER PRIMARY KEY AUTOINCREMENT,`format_mediumitem` TEXT NOT NULL);";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = """                     
+                               INSERT INTO `list_format_medium_table` VALUES(1,'en l\u00ednea'),(2,'impresa'
+        );""";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "DROP TABLE IF EXISTS `list_geo_cover_table`;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "CREATE TABLE `list_geo_cover_table` (`idlist_geo_cover_table` INTEGER PRIMARY KEY AUTOINCREMENT,`geographicvoveritem` TEXT NOT NULL) ;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "INSERT INTO `list_geo_cover_table` VALUES(1,'local'),(2,'regional'),(3,'nacional'),(4,'internacional');";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "DROP TABLE IF EXISTS `list_source_origin_table`;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "CREATE TABLE `list_source_origin_table` (`idlist_source_origin_table` INTEGER PRIMARY KEY AUTOINCREMENT,    `originitem` TEXT DEFAULT NULL) ;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "INSERT INTO `list_source_origin_table` VALUES(1,'Institucional'),(2,'Documental'),(3,'Personal');";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "DROP TABLE IF EXISTS `list_sourcecontents`;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "CREATE TABLE `list_sourcecontents` (`id_sourcecontents` INTEGER PRIMARY KEY AUTOINCREMENT,`sourcecontentsitem` TEXT NOT NULL);";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "INSERT INTO `list_sourcecontents` "
+                + "VALUES(1,'actas de congresos')," + "(44,'aplicaciones web'),(2,'art\u00edculos cient\u00edficos'),(3,'art\u00edculos de divulgaci\u00f3n'"
+                + " ),(4,'bases de datos de tesis'),(10,'bases de datos referenciales'),(5,'bibliograf\u00edas'"
+                + " ),(6,      'bibliograf\u00edas de bibliograf\u00edas'"
+                + " ),(8,      'boletines de res\u00famenes'"
+                + " ),(7,      'boletines de sumarios'"
+                + " ),(9,        'cat\u00e1logos bibliogr\u00e1ficos'),(11, "
+                + "'c\u00f3digo fuente'),(31,      'diccionarios de referencia'),(12, "
+                + "'directorios cient\u00edficos'),(13, " + "'directorios de bases de datos'),"
+                + "(16,'directorios de editoriales'),(14,'directorios de revistas'),(15, "
+                + "'directorios de unidades de informaci\u00f3n y documentaci\u00f3n),(17, "
+                + "'directorios institucionales'),(18,          'ensayos cient\u00edficos'),(19,'eprints'),(21,"
+                + "'gu\u00edas de obras de referencia'),(20,'gu\u00edas tem\u00e1ticas'),(22, "
+                + "'\u00edndices bibliogr\u00e1ficos'),(23,          '\u00edndices de citas'"
+                + "),(24,          '\u00edndices de impacto'"
+                + "),(25,'informes t\u00e9cnicos'),(26, 'investigaciones acad\u00e9micas'),(33,          'modelos de utilidad'"
+                + "),(27," + "monograf\u00edas cient\u00edficas'),(47,'monograf\u00edas de ciencias sociales'),(46,          'monograf\u00edas de humanidades'"
+                + "),(28,          'nomenclaturas y especificaciones'"
+                + "),(29,          'normas y est\u00e1ndares'"
+                + "),(30,          'obras enciclop\u00e9dicas'),(32,'patentes'),(34,'ponencias'),(35,'preprints'"
+                + "),(36,          'proyectos de investigaci\u00f3n'"
+                + "),(37,          'repertorios de cat\u00e1logos'"
+                + "),(38,          'repertorios de \u00edndices'"
+                + "),(39,'reviews cient\u00edficos'),(40,          'revistas cient\u00edficas'),(41,'separatas'),(42,'simposios'),(43,'software'"
+                + "),(45, 'tesis doctorales. ');";
+        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "
+    DROP TABLE IF EXISTS `list_sourcelevel
+
+        `;
+    DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "
+    CREATE TABLE `list_sourcelevel
+    ` (
+                                 `id_sourcelevel
+        ` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `sourcelevelitem
+        ` TEXT NOT NULL
+
+        ) ;
+    DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        CreateTablesAnalStat = "
+    INSERT INTO `list_sourcelevel
+
+        ` VALUES(
+                1,'primaria'),(2,'secundaria'),(3,'terciaria'),(4,'complementaria'
+        );
+                               """;
+        DBMSAP.ExecuteQueryTableDBWithOptions (CreateTablesAnalStat);
+
+    CreateTablesAnalStat  =  
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+
+      
+
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+
+      
+
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+
+      
+
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+
+      
+
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+
+      
+
+    """
                                DROP TABLE IF EXISTS `sourceapplication`;
                                CREATE TABLE `sourceapplication` (
                                  `id_sourceapplication` INTEGER PRIMARY KEY,
@@ -305,12 +464,14 @@ public class ProgramInstaller implements Runnable {
                                  CONSTRAINT `fk_elements_record_7` FOREIGN KEY (`elements_tipification`) REFERENCES `tipification` (`id_tipification`)
                                ) ;
                                """ // Agregado DROP para consistencia antes de su CREATE
-                ;
-        DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
 
-    }
+    ;
 
-    void CreateEvalDBTablesSQLIte() {
+    DBMSAP.ExecuteQueryTableDBWithOptions (CreateTablesAnalStat);
+
+}
+
+void CreateEvalDBTablesSQLIte() {
         String SQLOptions = "PRAGMA foreign_keys = ON";
         DBMSAP.ExecuteQueryTableDBWithOptions(SQLOptions);
         String CreateTablesEvalStat = """
@@ -940,4 +1101,4 @@ public class ProgramInstaller implements Runnable {
         DBMSAP.Close();
     }
 
-    }
+}
