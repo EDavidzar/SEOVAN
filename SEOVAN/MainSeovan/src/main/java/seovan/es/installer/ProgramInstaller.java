@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package seovan.es.generalmods;
+package seovan.es.installer;
 
 import java.awt.GraphicsEnvironment;
 import org.openide.modules.OnStart;
@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.Set;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
+import seovan.es.generalmods.PrincipalWindowTopComponent;
 import static org.openide.windows.WindowManager.getDefault;
 import static seovan.es.programconfig.PConfigManager.PConfig;
 import seovan.es.programconfig.ProgramOptions;

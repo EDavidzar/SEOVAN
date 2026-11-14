@@ -17,6 +17,9 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 
 /**
@@ -46,7 +49,7 @@ public final class FileManagerGenerator {
     private final int ierrCanRead = 0x0004;
     private boolean berror = false;
     private int ierrorcode = 0;
-  
+
     /**
      *
      */
@@ -302,6 +305,12 @@ public final class FileManagerGenerator {
         }
 
         return iTmp;
+    }
+
+    public String readFile(String path, Charset encoding)
+            throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return new String(encoded, encoding);
     }
 
     /**

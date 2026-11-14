@@ -18,9 +18,18 @@ import java.awt.Frame;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.OPEN_DIALOG;
 import static javax.swing.JFileChooser.SAVE_DIALOG;
@@ -558,6 +567,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     int IndexItemSource = 1;
     private int IndexDataTotal = 1;
     private int DBToUse = 1;
+    int XNLItemstoImport=0;
 
     private XMLDataImport XMLDI = null;
     String XMLTemplate = "";
@@ -594,6 +604,31 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         String version = p.getProperty("version");
         return version;
     }*/
+    String SearchNumberofItems(String texto) {
+        String result = "";
+        // Cambia "_doc" por la cadena fija que estés buscando
+        String regex = "<recordId>\\b(?!0000)\\d{4}";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(texto);
+
+        // Lista para guardar todas las coincidencias
+        List<String> encontrados = new ArrayList<>();
+
+        while (matcher.find()) {
+            String coincidencia = matcher.group();
+            coincidencia=coincidencia.replaceAll("<recordId>","");
+            encontrados.add(coincidencia);
+        }
+
+        // Comprobar si hay resultados antes de sacar el mayor
+        if (!encontrados.isEmpty()) {
+            String masAlto = Collections.max(encontrados);
+            result = masAlto;
+        }
+        return result;
+    }
+
     /**
      *
      */
@@ -611,8 +646,17 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         JFileChooser FCH = SelectFileDlg.GetFileChooser();
         ImportDocumentPath = FCH.getSelectedFile().getAbsolutePath();
         FileManagerGenerator FMG = new FileManagerGenerator();
+        String RCA = "";
         if (FMG.FileExists(ImportDocumentPath)) {
+            try {
+                RCA = FMG.readFile(ImportDocumentPath, StandardCharsets.UTF_8);
+                String itemstoimport=SearchNumberofItems(RCA);
+                XNLItemstoImport=Integer.parseInt(itemstoimport);
+            } catch (IOException ex) {
+                ShowDError(" No puedo acceder al fichero, error al cargar fichero XML");
+            }
             XMLDI = new XMLDataImport(ImportDocumentPath);
+            
         } else {
             ShowDError(" No puedo acceder al fichero, error al cargar fichero XML");
         }
@@ -771,7 +815,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         String XMLIndexHeaderChanged = "";
         String FullDoc = "";
         setIndexDataTotal(getRecordsCount());
-        
+
         if (getIndexDataTotal() == 0 && DBMSAP.isbError() && DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
             setIndexDataTotal(0);
         }

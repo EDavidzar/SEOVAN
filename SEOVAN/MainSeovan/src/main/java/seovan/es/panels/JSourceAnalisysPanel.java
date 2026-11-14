@@ -1797,7 +1797,6 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
             boolean error = false;
             for (int i = 0; i < n; i++) {
                 current = nodeList.item(i);
-
                 if (current.getNodeType() == Node.ELEMENT_NODE) {
                     //Get contol nodes ------------------------------------------------------
                     if ("control".equals(current.getNodeName())) {
