@@ -5,6 +5,8 @@
 package seovan.es.importation;
 
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
+import beleris.es.finalprimaryclasses.CLAllObjectList;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -30,6 +32,7 @@ public class XMLDataImport implements Serializable {
     private static final long serialVersionUID = -3899963182363586461L;
 
     private Document doc = null;
+    CLAllObjectList<Document> ListofElements = new CLAllObjectList<>();
 
     /**
      *
@@ -43,28 +46,52 @@ public class XMLDataImport implements Serializable {
      * @param filepath
      */
     public XMLDataImport(String filepath) {
-        ImportFile(filepath);
+
+        doc = ImportFile(reaDXml(filepath));
     }
+
+    public XMLDataImport(String filepath, int elements) {
+        if (elements == 1) {
+            doc = ImportFile(reaDXml(filepath));
+        } else {
+            ListofElements = ImportFiles(filepath, elements);
+        }
+    }
+
+    InputSource reaDXml(String filepath) {
+        File myfile = null;
+        myfile = new File(filepath);
+        String contenidoXml = null;
+        try {
+            contenidoXml = new String(Files.readAllBytes(Paths.get(filepath)), "UTF-8");
+        } catch (IOException ex) {
+            ShowDError("Error al cargar XML : " + ex.getLocalizedMessage());
+        }
+        String xmlCorregido = contenidoXml.replaceAll("&(?!(amp|lt|gt|quot|apos);)", "&amp;");
+        InputSource is = new InputSource(new StringReader(xmlCorregido));
+        return is;
+    }
+
+  
 
     /**
      *
-     * @param filepath
+     * @param is
+     * @return
      */
-    public void ImportFile(String filepath) {
+    public Document ImportFile(InputSource is) {
+        Document doc = null;
         DocumentBuilder builder = null;
         try {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         } catch (ParserConfigurationException ex) {
             Exceptions.printStackTrace(ex);
+            ShowDError("Error al parsear XML : " + ex.getLocalizedMessage());
         }
 
         if (builder != null) {
             try {
-                File myfile = null;
-                myfile = new File(filepath);
-                String contenidoXml = new String(Files.readAllBytes(Paths.get(filepath)), "UTF-8");
-                String xmlCorregido = contenidoXml.replaceAll("&(?!(amp|lt|gt|quot|apos);)", "&amp;");
-                InputSource is = new InputSource(new StringReader(xmlCorregido));
+
                 doc = builder.parse(is);
                 doc.getDocumentElement().normalize();
 
@@ -76,7 +103,7 @@ public class XMLDataImport implements Serializable {
         }
         if (doc != null) {
         }
-
+        return doc;
     }
 
     /**
@@ -151,6 +178,28 @@ public class XMLDataImport implements Serializable {
      */
     public void setDoc(Document doc) {
         this.doc = doc;
+    }
+
+    private CLAllObjectList<Document> ImportFiles(String filepath, int elements) {
+        CLAllObjectList<Document> ListofElements = new CLAllObjectList<>();
+        InputSource tmpis = reaDXml(filepath);
+        for (int ile = 1; ile <= elements; ile++) {
+            ListofElements.add(ImportFile(tmpis));
+            tmpis = Refine(tmpis);
+        }
+        return ListofElements;
+    }
+
+    InputSource Refine(InputSource tmpis) {
+        InputSource rtmpis = null;
+        try {
+            String XMLbyte = new String(tmpis.getByteStream().readAllBytes());
+            rtmpis.setByteStream(new ByteArrayInputStream(XMLbyte.getBytes()));
+            ////rtmpis.
+        } catch (IOException ex) {
+            ShowDError("Error al procesar-refinar XML : " + ex.getLocalizedMessage());
+        }
+        return rtmpis;
     }
 
 }

@@ -51,10 +51,7 @@ import seovan.es.programconfig.PConfigManager;
 import seovan.es.pdfutils.SoevanPDFManager;
 import static seovan.es.programconfig.PConfigManager.PConfig;
 
-/**
- *
- * @author Emilio David Diaus López 2023-2026
- */
+
 /**
  * Top component which displays something.
  */
@@ -82,7 +79,7 @@ import static seovan.es.programconfig.PConfigManager.PConfig;
 
 /**
  *
- * @author edavid
+ * @author Emilio David Diaus López 2023-2026
  */
 public final class PrincipalWindowTopComponent extends TopComponent {
 
@@ -567,7 +564,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     int IndexItemSource = 1;
     private int IndexDataTotal = 1;
     private int DBToUse = 1;
-    int XNLItemstoImport=0;
+    int XMLItemstoImport=0;
 
     private XMLDataImport XMLDI = null;
     String XMLTemplate = "";
@@ -651,7 +648,7 @@ public final class PrincipalWindowTopComponent extends TopComponent {
             try {
                 RCA = FMG.readFile(ImportDocumentPath, StandardCharsets.UTF_8);
                 String itemstoimport=SearchNumberofItems(RCA);
-                XNLItemstoImport=Integer.parseInt(itemstoimport);
+                XMLItemstoImport=Integer.parseInt(itemstoimport);
             } catch (IOException ex) {
                 ShowDError(" No puedo acceder al fichero, error al cargar fichero XML");
             }
