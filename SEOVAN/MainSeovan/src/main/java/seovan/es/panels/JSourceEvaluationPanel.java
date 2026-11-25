@@ -9,6 +9,7 @@ import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDInfo;
 import beleris.es.finalprimaryclasses.CLAllObjectList;
 import beleris.es.finalprimaryclasses.CL_DBCV;
+import java.util.ListIterator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -38,7 +39,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
         DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources", PConfig.getConfUserDB(), PConfig.getConfPassDB(), tmpiDabataasetoUse);
 
         int TotalRecords = DBMSAP.getLastRow("elements_record");
-        if (TotalRecords == 0 && DBMSAP.isbError() && DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
+        if (TotalRecords == 0 || DBMSAP.isbError() || DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
             TotalRecords = 1;
         } else {
             LoadEvaluationData(tmpiIndexItemSource);
@@ -1956,6 +1957,21 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
 
     }
 
+    CLAllObjectList<CL_DBCV> ChangeDBParametersEmpty(CLAllObjectList<CL_DBCV> tmnpDBParameters) {
+        CLAllObjectList<CL_DBCV> result = new CLAllObjectList<>();
+
+        int index = tmnpDBParameters.size();
+        for (int i = 0; i < index; i++) {
+            if ("".equals(tmnpDBParameters.get(i).getsValue())) {
+                tmnpDBParameters.get(i).setsValue("0.0");
+            }
+        }
+        result=tmnpDBParameters;
+        return result;
+    }
+
+    ;
+
     /**
      *
      * @param IndexItemSource
@@ -1963,6 +1979,8 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
     public void CreateEvaluationDataItem(int IndexItemSource) {
 
         CLAllObjectList<CL_DBCV> DBParameters = new CLAllObjectList<>();
+        String SQLOptions = "PRAGMA foreign_keys = OFF;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(SQLOptions);
 
         String sElement = String.valueOf(IndexItemSource);
 
@@ -1970,6 +1988,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
         DBParameters.add(new CL_DBCV("authorsaffiliation", jEvalFilAutAuthor.getText()));
         DBParameters.add(new CL_DBCV("author", jEvalAutAuthor.getText()));
         DBParameters.add(new CL_DBCV("id_authority", sElement));
+        DBParameters=ChangeDBParametersEmpty(DBParameters);
         DBMSEP.InsertDatainDB("authority", DBParameters);
         if (DBMSEP.isbError()) {
             ShowDError("Error al introducir datos en la tabla : " + "authority");
@@ -1978,6 +1997,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
         DBParameters.add(new CL_DBCV("publisher", jEvalPubRecEditor.getText()));
         DBParameters.add(new CL_DBCV("publications_quality", jEvalPubPubQuality.getText()));
         DBParameters.add(new CL_DBCV("id_publication", sElement));
+        DBParameters=ChangeDBParametersEmpty(DBParameters);
         DBMSEP.InsertDatainDB("publication", DBParameters);
         if (DBMSEP.isbError()) {
             ShowDError("Error al introducir datos en la tabla : " + "publication");
@@ -1988,6 +2008,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
         DBParameters.add(new CL_DBCV("withsesg", jEvalObjNotSesg.getText()));
         DBParameters.add(new CL_DBCV("validatedinfo", jEvalObjValInfo.getText()));
         DBParameters.add(new CL_DBCV("id_objetivity", sElement));
+        DBParameters=ChangeDBParametersEmpty(DBParameters);
         DBMSEP.InsertDatainDB("objetivity", DBParameters);
         if (DBMSEP.isbError()) {
             ShowDError("Error al introducir datos en la tabla : )" + "objetivity");
@@ -1997,7 +2018,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
         DBParameters.add(new CL_DBCV("tablesgraphics", jEvalQualityGraphValue.getText()));
         DBParameters.add(new CL_DBCV("indexandrankings", jIEvalQiualIndexEvalValue.getText()));
         DBParameters.add(new CL_DBCV("id_quality", sElement));
-
+        DBParameters=ChangeDBParametersEmpty(DBParameters);
         DBMSEP.InsertDatainDB("quality", DBParameters);
         if (DBMSEP.isbError()) {
             ShowDError("Error al introducir datos en la tabla : " + "quality");
@@ -2007,7 +2028,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
         DBParameters.add(new CL_DBCV("typeaware", jEvalTipifcationValue.getText()));
         DBParameters.add(new CL_DBCV("newandaddedvalue", jEvalValueAddedValue.getText()));
         DBParameters.add(new CL_DBCV("id_relevance", sElement));
-
+        DBParameters=ChangeDBParametersEmpty(DBParameters);
         DBMSEP.InsertDatainDB("relevance", DBParameters);
         if (DBMSEP.isbError()) {
             ShowDError("Error al introducir datos en la tabla: " + "relevance");
@@ -2016,7 +2037,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
         DBParameters.add(new CL_DBCV("institutiionalandcientificresources", jEvalRelAcdemSourceValue.getText()));
         DBParameters.add(new CL_DBCV("accesibilityandusability", jEvalWebDominionValue.getText()));
         DBParameters.add(new CL_DBCV("id_theweb", sElement));
-
+        DBParameters=ChangeDBParametersEmpty(DBParameters);
         DBMSEP.InsertDatainDB("theweb", DBParameters);
         if (DBMSEP.isbError()) {
             ShowDError("Error al introducir datos en la tabla : " + "theweb");
@@ -2025,13 +2046,17 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
         DBParameters.add(new CL_DBCV("publicationdate", jEvalActualPublicDateVAlue.getText()));
         DBParameters.add(new CL_DBCV("updated", jEvalActualUpdateVCalue.getText()));
         DBParameters.add(new CL_DBCV("id_actuality", sElement));
+        DBParameters=ChangeDBParametersEmpty(DBParameters);
         DBMSEP.InsertDatainDB("actuality", DBParameters);
         if (DBMSEP.isbError()) {
             ShowDError("Error al introducir datos en la tabla : " + "actuality");
         }
-        if (!DBMSAP.isbError()) {
+        SQLOptions = "PRAGMA foreign_keys = ON;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(SQLOptions);
+
+        /* if (!DBMSAP.isbError()) {
             ShowDInfo("Datos de evaluación de la fuente introducidos correctamente.");
-        }
+        }*/
     }
 
     /**
@@ -2173,8 +2198,8 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
      * @param itmpIndexItemSource
      * @param dbToUse
      */
-    public void ImportEvalPanelData(XMLDataImport tmpXMLDI, int itmpIndexItemSource, int dbToUse) {
-        Document tmpDoc = tmpXMLDI.getDoc();
+    public void ImportEvalPanelData(XMLDataImport tmpXMLDI, Document tmpDoc, int itmpIndexItemSource, int dbToUse) {
+
         if (tmpDoc != null) {
             Node first = tmpDoc.getElementsByTagName("import_schema").item(0);
             NodeList nodeList = first.getChildNodes();
@@ -2200,6 +2225,7 @@ public class JSourceEvaluationPanel extends javax.swing.JPanel {
                     }
                 }
             }
+            iIndexItemSource = itmpIndexItemSource;
             if (!error) {
                 //Get sourceinformation nodes ---------analisys and evaluation---------------------------------------------
                 NodeList NLSI = tmpXMLDI.GetChilDNodeRecursed(nodeList, "sourceinformation");

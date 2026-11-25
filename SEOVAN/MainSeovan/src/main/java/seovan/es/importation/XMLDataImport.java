@@ -6,13 +6,17 @@ package seovan.es.importation;
 
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowDError;
 import beleris.es.finalprimaryclasses.CLAllObjectList;
+import beleris.es.finalutils.FileManagerGenerator;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
-import java.io.StringReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -32,7 +36,10 @@ public class XMLDataImport implements Serializable {
     private static final long serialVersionUID = -3899963182363586461L;
 
     private Document doc = null;
-    CLAllObjectList<Document> ListofElements = new CLAllObjectList<>();
+    private int XMLItemstoImport = 0;
+    String RCA = "";
+    private CLAllObjectList<Document> ListofElements = new CLAllObjectList<>();
+    FileManagerGenerator FMG = new FileManagerGenerator();
 
     /**
      *
@@ -46,33 +53,50 @@ public class XMLDataImport implements Serializable {
      * @param filepath
      */
     public XMLDataImport(String filepath) {
-
-        doc = ImportFile(reaDXml(filepath));
-    }
-
-    public XMLDataImport(String filepath, int elements) {
-        if (elements == 1) {
-            doc = ImportFile(reaDXml(filepath));
-        } else {
-            ListofElements = ImportFiles(filepath, elements);
-        }
-    }
-
-    InputSource reaDXml(String filepath) {
-        File myfile = null;
-        myfile = new File(filepath);
-        String contenidoXml = null;
         try {
-            contenidoXml = new String(Files.readAllBytes(Paths.get(filepath)), "UTF-8");
+            RCA = FMG.readFile(filepath, StandardCharsets.UTF_8);
+            String itemstoimport = SearchNumberofItems(RCA);
+            XMLItemstoImport = Integer.parseInt(itemstoimport);
         } catch (IOException ex) {
-            ShowDError("Error al cargar XML : " + ex.getLocalizedMessage());
+            ShowDError(" No puedo acceder al fichero, error al cargar fichero XML");
         }
-        String xmlCorregido = contenidoXml.replaceAll("&(?!(amp|lt|gt|quot|apos);)", "&amp;");
-        InputSource is = new InputSource(new StringReader(xmlCorregido));
+        if (XMLItemstoImport == 1) {
+            doc = ImportFile(repairXML());
+        } else {
+            ListofElements = ImportFiles(filepath, XMLItemstoImport);
+        }
+    }
+
+    String SearchNumberofItems(String texto) {
+        String result = "";
+        // Cambia "_doc" por la cadena fija que estés buscando
+        String regex = "<recordId>\\b(?!0000)\\d{4}";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(texto);
+
+        // Lista para guardar todas las coincidencias
+        List<String> encontrados = new ArrayList<>();
+
+        while (matcher.find()) {
+            String coincidencia = matcher.group();
+            coincidencia = coincidencia.replaceAll("<recordId>", "");
+            encontrados.add(coincidencia);
+        }
+
+        // Comprobar si hay resultados antes de sacar el mayor
+        if (!encontrados.isEmpty()) {
+            String masAlto = Collections.max(encontrados);
+            result = masAlto;
+        }
+        return result;
+    }
+
+    InputSource repairXML() {
+        String xmlCorregido = RCA.replaceAll("&(?!(amp|lt|gt|quot|apos);)", "&amp;");
+        InputSource is = new InputSource(new ByteArrayInputStream(xmlCorregido.getBytes()));
         return is;
     }
-
-  
 
     /**
      *
@@ -182,9 +206,10 @@ public class XMLDataImport implements Serializable {
 
     private CLAllObjectList<Document> ImportFiles(String filepath, int elements) {
         CLAllObjectList<Document> ListofElements = new CLAllObjectList<>();
-        InputSource tmpis = reaDXml(filepath);
+        InputSource tmpis = repairXML();
         for (int ile = 1; ile <= elements; ile++) {
-            ListofElements.add(ImportFile(tmpis));
+            Document tmpDoc = ImportFile(tmpis);
+            ListofElements.add(tmpDoc);
             tmpis = Refine(tmpis);
         }
         return ListofElements;
@@ -192,14 +217,53 @@ public class XMLDataImport implements Serializable {
 
     InputSource Refine(InputSource tmpis) {
         InputSource rtmpis = null;
+        String XMLBytefinal = "";
+        rtmpis = tmpis;
         try {
-            String XMLbyte = new String(tmpis.getByteStream().readAllBytes());
-            rtmpis.setByteStream(new ByteArrayInputStream(XMLbyte.getBytes()));
-            ////rtmpis.
+            InputStream byteStream = tmpis.getByteStream();
+            byteStream.reset();
+            byte[] tmpreadAllBytes = byteStream.readAllBytes();
+            String XMLbyte = new String(tmpreadAllBytes, "UTF-8");
+            int iposition = XMLbyte.indexOf("<control>");
+            int fposition = XMLbyte.indexOf("</sourceinformation>") + "</sourceinformation>".length();
+            if (iposition != -1) {
+                String Header = XMLbyte.substring(0, iposition - 1);
+                String RestofString = XMLbyte.substring(fposition, XMLbyte.length());
+                XMLBytefinal = Header + RestofString;
+            }
+            rtmpis.setByteStream(new ByteArrayInputStream(XMLBytefinal.getBytes()));
         } catch (IOException ex) {
             ShowDError("Error al procesar-refinar XML : " + ex.getLocalizedMessage());
         }
         return rtmpis;
+    }
+
+    /**
+     * @return the ListofElements
+     */
+    public CLAllObjectList<Document> getListofElements() {
+        return ListofElements;
+    }
+
+    /**
+     * @param ListofElements the ListofElements to set
+     */
+    public void setListofElements(CLAllObjectList<Document> ListofElements) {
+        this.ListofElements = ListofElements;
+    }
+
+    /**
+     * @return the XMLItemstoImport
+     */
+    public int getXMLItemstoImport() {
+        return XMLItemstoImport;
+    }
+
+    /**
+     * @param XMLItemstoImport the XMLItemstoImport to set
+     */
+    public void setXMLItemstoImport(int XMLItemstoImport) {
+        this.XMLItemstoImport = XMLItemstoImport;
     }
 
 }

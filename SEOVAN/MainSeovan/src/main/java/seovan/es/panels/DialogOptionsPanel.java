@@ -1,30 +1,22 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package seovan.es.programconfig;
+package seovan.es.panels;
 
-import beleris.es.finaldbmanager.FDBMan;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 import static seovan.es.programconfig.PConfigManager.PConfig;
 
 /**
  *
- * @author Emilio David Diaus López 2023-2026
+ * @author edavid
  */
-public class ProgramOptions extends javax.swing.JDialog {
-
-    private static final long serialVersionUID = 1627L;
+public class DialogOptionsPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form ProgramOptions
-     *
-     * @param parent
-     * @param modal
+     * Creates new form DialogOptionsPanel
      */
-    public ProgramOptions(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DialogOptionsPanel() {
         initComponents();
         setDatabasemanager(PConfig.getDatabaseManagerinUse());
 
@@ -47,7 +39,6 @@ public class ProgramOptions extends javax.swing.JDialog {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jRBMySQLsel = new javax.swing.JRadioButton();
@@ -61,22 +52,10 @@ public class ProgramOptions extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         JTFDBPass = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
-        jBCancel = new javax.swing.JButton();
-        JBAccept = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle(org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.title")); // NOI18N
-        setAlwaysOnTop(true);
-        setBounds(new java.awt.Rectangle(0, 0, 510, 700));
-        setMaximumSize(new java.awt.Dimension(510, 650));
-        setMinimumSize(new java.awt.Dimension(510, 650));
-        setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-        setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        setPreferredSize(new java.awt.Dimension(510, 650));
-        setResizable(false);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jPanel1.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION)); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.jPanel1.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION)); // NOI18N
         jPanel1.setMaximumSize(new java.awt.Dimension(400, 250));
         jPanel1.setMinimumSize(new java.awt.Dimension(400, 250));
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 250));
@@ -88,8 +67,7 @@ public class ProgramOptions extends javax.swing.JDialog {
         jPanel2.setPreferredSize(new java.awt.Dimension(250, 150));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        buttonGroup1.add(jRBMySQLsel);
-        org.openide.awt.Mnemonics.setLocalizedText(jRBMySQLsel, org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jRBMySQLsel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jRBMySQLsel, org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.jRBMySQLsel.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -97,8 +75,8 @@ public class ProgramOptions extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(jRBMySQLsel, gridBagConstraints);
 
-        buttonGroup1.add(jRBSQLLiteSel);
-        org.openide.awt.Mnemonics.setLocalizedText(jRBSQLLiteSel, org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jRBSQLLiteSel.text")); // NOI18N
+        jRBSQLLiteSel.setSelected(true);
+        org.openide.awt.Mnemonics.setLocalizedText(jRBSQLLiteSel, org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.jRBSQLLiteSel.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -106,8 +84,7 @@ public class ProgramOptions extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(jRBSQLLiteSel, gridBagConstraints);
 
-        buttonGroup1.add(jRBPostSQL);
-        org.openide.awt.Mnemonics.setLocalizedText(jRBPostSQL, org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jRBPostSQL.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jRBPostSQL, org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.jRBPostSQL.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -119,7 +96,7 @@ public class ProgramOptions extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         jPanel1.add(jPanel2, gridBagConstraints);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jLabel1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.jLabel1.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -132,9 +109,9 @@ public class ProgramOptions extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        getContentPane().add(jPanel1, gridBagConstraints);
+        add(jPanel1, gridBagConstraints);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jPanel3.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION)); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.jPanel3.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION)); // NOI18N
         jPanel3.setMaximumSize(new java.awt.Dimension(500, 300));
         jPanel3.setMinimumSize(new java.awt.Dimension(500, 300));
         jPanel3.setPreferredSize(new java.awt.Dimension(500, 300));
@@ -148,7 +125,7 @@ public class ProgramOptions extends javax.swing.JDialog {
 
         jLabel3.setBackground(new java.awt.Color(204, 204, 204));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jLabel3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.jLabel3.text")); // NOI18N
         jLabel3.setMaximumSize(new java.awt.Dimension(275, 40));
         jLabel3.setMinimumSize(new java.awt.Dimension(275, 40));
         jLabel3.setOpaque(true);
@@ -159,14 +136,14 @@ public class ProgramOptions extends javax.swing.JDialog {
         jPanel4.add(jLabel3, gridBagConstraints);
 
         JTFUserDB.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        JTFUserDB.setText(org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.JTFUserDB.text")); // NOI18N
+        JTFUserDB.setText(org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.JTFUserDB.text")); // NOI18N
         JTFUserDB.setMaximumSize(new java.awt.Dimension(275, 40));
         JTFUserDB.setMinimumSize(new java.awt.Dimension(275, 40));
         JTFUserDB.setPreferredSize(new java.awt.Dimension(275, 40));
         JTFUserDB.setSelectionEnd(0);
         JTFUserDB.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                AcciondeTeclas(evt);
+                JTFUserDBAcciondeTeclas(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -178,7 +155,7 @@ public class ProgramOptions extends javax.swing.JDialog {
 
         jLabel4.setBackground(new java.awt.Color(204, 204, 204));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jLabel4.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.jLabel4.text")); // NOI18N
         jLabel4.setMaximumSize(new java.awt.Dimension(275, 40));
         jLabel4.setMinimumSize(new java.awt.Dimension(275, 40));
         jLabel4.setOpaque(true);
@@ -191,7 +168,7 @@ public class ProgramOptions extends javax.swing.JDialog {
         jPanel4.add(jLabel4, gridBagConstraints);
 
         JTFDBPass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        JTFDBPass.setText(org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.JTFDBPass.text")); // NOI18N
+        JTFDBPass.setText(org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.JTFDBPass.text")); // NOI18N
         JTFDBPass.setMaximumSize(new java.awt.Dimension(275, 40));
         JTFDBPass.setMinimumSize(new java.awt.Dimension(275, 40));
         JTFDBPass.setPreferredSize(new java.awt.Dimension(275, 40));
@@ -202,7 +179,7 @@ public class ProgramOptions extends javax.swing.JDialog {
         });
         JTFDBPass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                PassPressed(evt);
+                JTFDBPassPassPressed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -219,7 +196,7 @@ public class ProgramOptions extends javax.swing.JDialog {
         jPanel3.add(jPanel4, gridBagConstraints);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jLabel2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(DialogOptionsPanel.class, "DialogOptionsPanel.jLabel2.text")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -233,72 +210,21 @@ public class ProgramOptions extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        getContentPane().add(jPanel3, gridBagConstraints);
-
-        org.openide.awt.Mnemonics.setLocalizedText(jBCancel, org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.jBCancel.text")); // NOI18N
-        jBCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBCancelActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        getContentPane().add(jBCancel, gridBagConstraints);
-
-        org.openide.awt.Mnemonics.setLocalizedText(JBAccept, org.openide.util.NbBundle.getMessage(ProgramOptions.class, "ProgramOptions.JBAccept.text")); // NOI18N
-        JBAccept.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBAcceptActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        getContentPane().add(JBAccept, gridBagConstraints);
-
-        pack();
+        add(jPanel3, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JBAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAcceptActionPerformed
-        // TODO add your handling code here:
-        if (jRBMySQLsel.isSelected() == true) {
-            setDatabasemanager(FDBMan.DB_MYSQL_Selected);
-        }
-        if (jRBSQLLiteSel.isSelected() == true) {
-            setDatabasemanager(FDBMan.DB_SQLite_Selected);
-        }
-        if (jRBPostSQL.isSelected() == true) {
-            setDatabasemanager(FDBMan.DB_PostgreSQL_Selected);
-        }
-        if ((JTFUserDB.getText() == null ? PConfig.getConfUserDB() != null : !JTFUserDB.getText().equals(PConfig.getConfUserDB())) || (Arrays.toString(JTFDBPass.getPassword()) == null ? PConfig.getConfPassDB() != null : !Arrays.toString(JTFDBPass.getPassword()).equals(PConfig.getConfPassDB()))) {
-            String dbUser = JTFUserDB.getText();
-            PConfig.setConfUserDB(dbUser);
-            String dbPass = Arrays.toString(JTFDBPass.getPassword());
-            PConfig.setConfPassDB(dbPass);
-        }
-        dispose();
-    }//GEN-LAST:event_JBAcceptActionPerformed
-
-    private void jBCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelActionPerformed
-        // TODO add your handling code here:
-        dispose();
-    }//GEN-LAST:event_jBCancelActionPerformed
+    private void JTFUserDBAcciondeTeclas(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTFUserDBAcciondeTeclas
+        TeclasUser(evt);
+    }//GEN-LAST:event_JTFUserDBAcciondeTeclas
 
     private void JTFDBPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFDBPassActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTFDBPassActionPerformed
 
-    private void AcciondeTeclas(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AcciondeTeclas
-        TeclasUser(evt);
-    }//GEN-LAST:event_AcciondeTeclas
-
-    private void PassPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PassPressed
+    private void JTFDBPassPassPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTFDBPassPassPressed
         // TODO add your handling code here:
         TeclasPasswd(evt);
-    }//GEN-LAST:event_PassPressed
+    }//GEN-LAST:event_JTFDBPassPassPressed
 
     void TeclasUser(java.awt.event.KeyEvent evt) {
         final int CV = KeyEvent.VK_V + KeyEvent.CTRL_DOWN_MASK;
@@ -350,107 +276,46 @@ public class ProgramOptions extends javax.swing.JDialog {
     }
 
     /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProgramOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProgramOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProgramOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProgramOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ProgramOptions dialog = new ProgramOptions(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBAccept;
-    private javax.swing.JPasswordField JTFDBPass;
-    private javax.swing.JTextField JTFUserDB;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jBCancel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRBMySQLsel;
-    private javax.swing.JRadioButton jRBPostSQL;
-    private javax.swing.JRadioButton jRBSQLLiteSel;
-    // End of variables declaration//GEN-END:variables
-    private int databasemanager = 0;
-
-    /**
      *
      */
     public void cutuser() {
-        JTFUserDB.cut();
+        getJTFUserDB().cut();
     }
 
     /**
      *
      */
     public void copyuser() {
-        JTFUserDB.copy();
+        getJTFUserDB().copy();
     }
 
     /**
      *
      */
     public void pasteuser() {
-        JTFUserDB.paste();
+        getJTFUserDB().paste();
     }
 
     /**
      *
      */
     public void cutpass() {
-        JTFDBPass.cut();
+        getJTFDBPass().cut();
     }
 
     /**
      *
      */
     public void copypass() {
-        JTFDBPass.copy();
+        getJTFDBPass().copy();
     }
+    private int databasemanager = 0;
 
     /**
      *
      */
     public void pastepass() {
-        JTFDBPass.paste();
+        getJTFDBPass().paste();
     }
 
     /**
@@ -465,5 +330,90 @@ public class ProgramOptions extends javax.swing.JDialog {
      */
     public void setDatabasemanager(int databasemanager) {
         this.databasemanager = databasemanager;
+    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField JTFDBPass;
+    private javax.swing.JTextField JTFUserDB;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JRadioButton jRBMySQLsel;
+    private javax.swing.JRadioButton jRBPostSQL;
+    private javax.swing.JRadioButton jRBSQLLiteSel;
+    // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the JTFDBPass
+     */
+    public javax.swing.JPasswordField getJTFDBPass() {
+        return JTFDBPass;
+    }
+
+    /**
+     * @param JTFDBPass the JTFDBPass to set
+     */
+    public void setJTFDBPass(javax.swing.JPasswordField JTFDBPass) {
+        this.JTFDBPass = JTFDBPass;
+    }
+
+    /**
+     * @return the JTFUserDB
+     */
+    public javax.swing.JTextField getJTFUserDB() {
+        return JTFUserDB;
+    }
+
+    /**
+     * @param JTFUserDB the JTFUserDB to set
+     */
+    public void setJTFUserDB(javax.swing.JTextField JTFUserDB) {
+        this.JTFUserDB = JTFUserDB;
+    }
+
+    /**
+     * @return the jRBMySQLsel
+     */
+    public javax.swing.JRadioButton getjRBMySQLsel() {
+        return jRBMySQLsel;
+    }
+
+    /**
+     * @param jRBMySQLsel the jRBMySQLsel to set
+     */
+    public void setjRBMySQLsel(javax.swing.JRadioButton jRBMySQLsel) {
+        this.jRBMySQLsel = jRBMySQLsel;
+    }
+
+    /**
+     * @return the jRBPostSQL
+     */
+    public javax.swing.JRadioButton getjRBPostSQL() {
+        return jRBPostSQL;
+    }
+
+    /**
+     * @param jRBPostSQL the jRBPostSQL to set
+     */
+    public void setjRBPostSQL(javax.swing.JRadioButton jRBPostSQL) {
+        this.jRBPostSQL = jRBPostSQL;
+    }
+
+    /**
+     * @return the jRBSQLLiteSel
+     */
+    public javax.swing.JRadioButton getjRBSQLLiteSel() {
+        return jRBSQLLiteSel;
+    }
+
+    /**
+     * @param jRBSQLLiteSel the jRBSQLLiteSel to set
+     */
+    public void setjRBSQLLiteSel(javax.swing.JRadioButton jRBSQLLiteSel) {
+        this.jRBSQLLiteSel = jRBSQLLiteSel;
     }
 }

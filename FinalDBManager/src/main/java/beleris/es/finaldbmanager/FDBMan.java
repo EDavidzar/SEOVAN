@@ -331,7 +331,16 @@ public class FDBMan {
                 //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
                 var stmntStatement = cnConn.createStatement();
                 // create a new table
-                stmntStatement.executeQuery(sSQLite_Statement);
+                rsCResSet = stmntStatement.executeQuery(sSQLite_Statement);
+            } catch (SQLException ex) {
+                ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable);
+            }
+        } else {
+            try {
+                sSQLite_Statement = sSQLite_Statement + "* FROM " + sTmpDBTable + ";";
+                var stmntStatement = cnConn.createStatement();
+                // create a new table
+                rsCResSet = stmntStatement.executeQuery(sSQLite_Statement);
             } catch (SQLException ex) {
                 ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable);
             }
@@ -1544,6 +1553,36 @@ public class FDBMan {
 
     }
 
+    public static String GetFieldType(String valor) {
+
+        if (valor == null) {
+            return "string";
+        }
+        if (valor == "") {
+            return "null";
+        }
+        String limpio = valor.trim();
+
+        // 1. Comprobar si es entero (int)
+        try {
+            Integer.parseInt(limpio);
+            return "integer";
+        } catch (NumberFormatException ignored) {
+        }
+
+        // 2. Comprobar si es real (double)
+        try {
+            double real = Double.parseDouble(limpio);
+            if (!Double.isNaN(real) && !Double.isInfinite(real)) {
+                return "real";
+            }
+        } catch (NumberFormatException ignored) {
+        }
+
+        // 3. En cualquier otro caso, es cadena
+        return "string";
+    }
+
     /**
      *
      * @param sTmpDBTable
@@ -1552,17 +1591,22 @@ public class FDBMan {
     public void SQLite_InsertDatainDB(String sTmpDBTable, CLAllObjectList<CL_DBCV> InsertFields) {
 
         ListIterator<CL_DBCV> mlIterador = InsertFields.listIterator();
-        String sSQLite_Statement = "INSERT INTO " + sDBName + "." + sTmpDBTable + "  ";
-        sSQLite_Statement += "VALUES (";
+
+        String sSQLite_Statement = "INSERT OR REPLACE INTO " + sTmpDBTable + " (";
+        String sValues = " VALUES (";
+
         mlIterador = InsertFields.listIterator();
         while (mlIterador.hasNext()) {
             CL_DBCV Elemento = mlIterador.next();
-            sSQLite_Statement += "?,?)";
+            sSQLite_Statement += Elemento.getsTableDBField();
+            sValues += "?";
             if (mlIterador.hasNext()) {
-                sSQLite_Statement += ",(";
+                sSQLite_Statement += ",";
+                sValues += ",";
             }
         }
-        sSQLite_Statement += ";";
+        sSQLite_Statement += ")" + sValues + ");";
+
         setbError(false);
         int iRes;
         try {
@@ -1572,16 +1616,29 @@ public class FDBMan {
             mlIterador = InsertFields.listIterator();
             while (mlIterador.hasNext()) {
                 CL_DBCV Elemento = mlIterador.next();
-                stsSQL_Statement.setInt(itindex, Integer.parseInt(Elemento.getsValue()));
-                stsSQL_Statement.setString(itindex + 1, Elemento.getsTableDBField());
-                itindex = itindex + 2;
+                String ftype = GetFieldType(Elemento.getsValue());
+                if ("integer".equals(ftype)) {
+                    int rvalue = Integer.parseInt(Elemento.getsValue());
+                    stsSQL_Statement.setInt(itindex, rvalue);
+                }
+                if ("real".equals(ftype)) {
+                    double realrvalue = Double.parseDouble(Elemento.getsValue());
+                    if (!Double.isNaN(realrvalue) && !Double.isInfinite(realrvalue)) {
+                        stsSQL_Statement.setDouble(itindex, realrvalue);
+                    }
+                }
+                if ("string".equals(ftype)) {
+                    stsSQL_Statement.setString(itindex, Elemento.getsValue());
+                }
+                //System.out.printf("%d %s %s %s \n", itindex, Elemento.getsValue(), Elemento.getsTableDBField(), ftype);
+                itindex++;
             }
             iRes = stsSQL_Statement.executeUpdate();
 
         } catch (SQLException ex) { // ignore }
             ShowSQLExceptionError(ex, " Error al insertar datos en la base de datos desde el panel:" + sTmpDBTable);
         } finally {
-            SQLite_CloseConn();
+            // SQLite_CloseConn();
 
         }
 
@@ -2039,7 +2096,7 @@ public class FDBMan {
         String Statement = "";
         int iresult = 0;
         if (getDbusingpar() == FDBMan.DB_SQLite_Selected) {
-            Statement = "select count(*) from " + sDBName + ";";
+            Statement = "select count(*) from " + sTmpDBTable + ";";
         } else {
             Statement = "select count(*) from " + sDBName + "." + sTmpDBTable + ";";
         }
@@ -2478,8 +2535,8 @@ public class FDBMan {
      * @param sTable
      */
     public void SQLite_SelectAllRecords(String sTable) {
-        String sSQLite_Statement = "SELECT * FROM " + sTable + ";";
-        SQLite_SelectManyResults(sSQLite_Statement, null);
+        // String sSQLite_Statement = "SELECT * FROM " + sTable + ";";
+        SQLite_SelectManyResults(sTable, null);
     }
 
     /**
@@ -2592,14 +2649,15 @@ public class FDBMan {
      */
     public CLAllObjectList<String> SQLite_LoadList(String sTable, String Scolumnname) {
         CLAllObjectList<String> LCA = new CLAllObjectList<>(1);
-        int Count = getLastRow(sTable);
+        //int Count = getLastRow(sTable);
         SQLite_SelectAllRecords(sTable);
-        try {
+        /*  try {
             getRsCResSet().first();
         } catch (SQLException ex) {
             ShowSQLExceptionError(ex, " Error al cargar datos de la tabla:" + sTable);
         }
-
+         */
+        int Count = getLastRow(sTable);
         for (int it = 0; it < Count; it++) {
             String sTmp_01 = getQueryResult(Scolumnname);
             LCA.add(sTmp_01);
@@ -2629,11 +2687,7 @@ public class FDBMan {
                 sResFieldSearched = PostgreSQL_getQueryResult(sTmpDBField);
             }
             case DB_SQLite_Selected -> {
-                String sFieldValuetoSearch = "";
-                CLAllObjectList<CL_DBCV> FieldList = new CLAllObjectList<>();
-                FieldList.add(new CL_DBCV(sTmpDBField, sFieldValuetoSearch));
-                SQLite_SelectManyResults(sDBName, FieldList);
-                sResFieldSearched = FieldList.get(0).getsValue();
+                sResFieldSearched = SQLite_getQueryResult(sTmpDBField);
             }
             default -> {
                 sResFieldSearched = MySQL_getQueryResult(sTmpDBField);
@@ -3292,6 +3346,30 @@ public class FDBMan {
      */
     public void setRsCResSet(ResultSet rsCResSet) {
         this.rsCResSet = rsCResSet;
+    }
+
+    private String SQLite_getQueryResult(String sTmpDBField) {
+        String sResFieldSearched = "";
+        String sFieldDataRowSearched = "";
+
+        setbError(false);
+
+        try {
+            sFieldDataRowSearched = getRsCResSet().getString(sTmpDBField);
+
+        } catch (SQLException ex) { // ignore }
+            ShowSQLExceptionError(ex, " Error al efectuar la consulta de datos " + sTmpDBField);
+        } finally {
+            MySQL_CloseConn();
+
+        }
+
+        if (CompareDBStr(sFieldDataRowSearched, "") == false) {
+            sResFieldSearched = sFieldDataRowSearched;
+        }
+
+        return sResFieldSearched;
+
     }
 
 }

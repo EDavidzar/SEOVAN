@@ -18,18 +18,9 @@ import java.awt.Frame;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.OPEN_DIALOG;
 import static javax.swing.JFileChooser.SAVE_DIALOG;
@@ -43,6 +34,7 @@ import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
+import org.w3c.dom.Document;
 import seovan.es.dialogs.SearchingDlg;
 import seovan.es.importation.XMLDataImport;
 import seovan.es.panels.JSourceAnalisysPanel;
@@ -50,7 +42,6 @@ import seovan.es.panels.JSourceEvaluationPanel;
 import seovan.es.programconfig.PConfigManager;
 import seovan.es.pdfutils.SoevanPDFManager;
 import static seovan.es.programconfig.PConfigManager.PConfig;
-
 
 /**
  * Top component which displays something.
@@ -564,12 +555,12 @@ public final class PrincipalWindowTopComponent extends TopComponent {
     int IndexItemSource = 1;
     private int IndexDataTotal = 1;
     private int DBToUse = 1;
-    int XMLItemstoImport=0;
+    int XMLItemstoImport = 0;
 
     private XMLDataImport XMLDI = null;
     String XMLTemplate = "";
     String ProgramPath = "";
-    String Version = "5.0.3";
+    String Version = "5.0.4";
     String sTheTitle = "SEOVAN " + Version + "b beta (c) Emilio David Diaus Lopez 2023-2026";
     String XMLHeader = """
                        <?xml version='1.0' encoding='UTF-8' ?>
@@ -601,31 +592,6 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         String version = p.getProperty("version");
         return version;
     }*/
-    String SearchNumberofItems(String texto) {
-        String result = "";
-        // Cambia "_doc" por la cadena fija que estés buscando
-        String regex = "<recordId>\\b(?!0000)\\d{4}";
-
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(texto);
-
-        // Lista para guardar todas las coincidencias
-        List<String> encontrados = new ArrayList<>();
-
-        while (matcher.find()) {
-            String coincidencia = matcher.group();
-            coincidencia=coincidencia.replaceAll("<recordId>","");
-            encontrados.add(coincidencia);
-        }
-
-        // Comprobar si hay resultados antes de sacar el mayor
-        if (!encontrados.isEmpty()) {
-            String masAlto = Collections.max(encontrados);
-            result = masAlto;
-        }
-        return result;
-    }
-
     /**
      *
      */
@@ -643,17 +609,11 @@ public final class PrincipalWindowTopComponent extends TopComponent {
         JFileChooser FCH = SelectFileDlg.GetFileChooser();
         ImportDocumentPath = FCH.getSelectedFile().getAbsolutePath();
         FileManagerGenerator FMG = new FileManagerGenerator();
-        String RCA = "";
+
         if (FMG.FileExists(ImportDocumentPath)) {
-            try {
-                RCA = FMG.readFile(ImportDocumentPath, StandardCharsets.UTF_8);
-                String itemstoimport=SearchNumberofItems(RCA);
-                XMLItemstoImport=Integer.parseInt(itemstoimport);
-            } catch (IOException ex) {
-                ShowDError(" No puedo acceder al fichero, error al cargar fichero XML");
-            }
+
             XMLDI = new XMLDataImport(ImportDocumentPath);
-            
+
         } else {
             ShowDError(" No puedo acceder al fichero, error al cargar fichero XML");
         }
@@ -663,18 +623,29 @@ public final class PrincipalWindowTopComponent extends TopComponent {
      *
      */
     public void ImportAnalisysData() {
-        setIndexDataTotal(getRecordsCount());
+        /* setIndexDataTotal(getRecordsCount());
         if (getIndexDataTotal() == 0 && DBMSAP.isbError() && DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
             setIndexDataTotal(1);
+        }*/
+        for (int i = 0; i < XMLDI.getListofElements().size(); i++) {
+            Document tmpDoc = XMLDI.getListofElements().get(i);
+            if (tmpDoc != null) {
+                JSAP.ImportAnalisysPanelData(XMLDI, tmpDoc, i+IndexItemSource, getDBSystemToUse());
+            }
         }
-        JSAP.ImportAnalisysPanelData(XMLDI, getIndexDataTotal(), getDBSystemToUse());
     }
 
     /**
      *
      */
     public void ImportEvalData() {
-        JSEP.ImportEvalPanelData(XMLDI, getIndexDataTotal(), getDBSystemToUse());
+        
+        for (int i = 0; i < XMLDI.getListofElements().size(); i++) {
+            Document tmpDoc = XMLDI.getListofElements().get(i);
+            if (tmpDoc != null) {
+                JSEP.ImportEvalPanelData(XMLDI, tmpDoc, i+IndexItemSource, getDBSystemToUse());
+            }
+        }
     }
 
     /**

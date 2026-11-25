@@ -14,15 +14,18 @@ import static beleris.es.finaldbmanager.FDBMan.DB_SQLite_Selected;
 import static beleris.es.finaldbmanager.FDBMan.SQLLiteDBExists;
 import static beleris.es.finalinformationmanager.MainErrorManager.ShowInfo;
 import beleris.es.finalutils.FileManagerGenerator;
-import java.awt.Frame;
+import java.awt.Dialog;
 import java.io.File;
+import java.util.Arrays;
 import java.util.Set;
+import javax.swing.SwingUtilities;
+import org.openide.DialogDescriptor;
+import org.openide.DialogDisplayer;
 import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
 import seovan.es.generalmods.PrincipalWindowTopComponent;
 import static org.openide.windows.WindowManager.getDefault;
+import seovan.es.panels.DialogOptionsPanel;
 import static seovan.es.programconfig.PConfigManager.PConfig;
-import seovan.es.programconfig.ProgramOptions;
 
 @OnStart
 public class ProgramInstaller implements Runnable {
@@ -152,6 +155,7 @@ public class ProgramInstaller implements Runnable {
             } else {
                 PConfig.setInstalled(false);
             }
+            PConfig.setDatabaseManagerinUse(FDBMan.DB_SQLite_Selected);
             /*/
         DBMSEP = new FDBMan(PConfig.DataBaseEvalUrlConn, PConfig.getConfPassDB(), "sourcesevalprotocol", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());
         DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, PConfig.getConfPassDB(), "desidaniespsources", PConfig.getConfUserDB(), PConfig.getDatabaseManagerinUse());*/
@@ -169,7 +173,7 @@ public class ProgramInstaller implements Runnable {
     }
 
     void CreateAnalDBTablesSQLIte() {
-        String SQLOptions = "PRAGMA foreign_keys = ON;";
+        String SQLOptions = "PRAGMA foreign_keys = OFF;";
         DBMSAP.ExecuteQueryTableDBWithOptions(SQLOptions);
 
         // --- authorities ---
@@ -398,10 +402,12 @@ CONSTRAINT fk_elements_record_6 FOREIGN KEY (elements_classtem) REFERENCES temcl
 CONSTRAINT fk_elements_record_7 FOREIGN KEY (elements_tipification) REFERENCES tipification (id_tipification)
 );""";
         DBMSAP.ExecuteQueryTableDBWithOptions(CreateTablesAnalStat);
+        SQLOptions = "PRAGMA foreign_keys = ON;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(SQLOptions);
     }
 
     void CreateEvalDBTablesSQLIte() {
-        String SQLOptions = "PRAGMA foreign_keys = ON;";
+        String SQLOptions = "PRAGMA foreign_keys = OFF;";
         DBMSEP.ExecuteQueryTableDBWithOptions(SQLOptions);
 // --- actuality ---
         String CreateTablesEvalStat = "DROP TABLE IF EXISTS actuality;";
@@ -409,8 +415,8 @@ CONSTRAINT fk_elements_record_7 FOREIGN KEY (elements_tipification) REFERENCES t
         CreateTablesEvalStat = """
 CREATE TABLE actuality (
 id_actuality INTEGER PRIMARY KEY,
-publicationdate int NOT NULL DEFAULT '5',
-updated int NOT NULL DEFAULT '10'
+publicationdate REAL NOT NULL DEFAULT '5.0',
+updated REAL NOT NULL DEFAULT '10.0'
 );""";
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
 // --- authority ---
@@ -418,10 +424,10 @@ updated int NOT NULL DEFAULT '10'
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
         CreateTablesEvalStat = """
 CREATE TABLE authority (
-id_authority INTEGER PRIMARY KEY AUTOINCREMENT,
-recognisedauthor int NOT NULL DEFAULT '10',
-authorsaffiliation int NOT NULL DEFAULT '5',
-author int NOT NULL DEFAULT '5'
+id_authority INTEGER PRIMARY KEY ,
+recognisedauthor REAL NOT NULL DEFAULT '10.0',
+authorsaffiliation REAL NOT NULL DEFAULT '5.0',
+author REAL NOT NULL DEFAULT '5.0'
 );""";
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
 // --- objetivity ---
@@ -429,11 +435,11 @@ author int NOT NULL DEFAULT '5'
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
         CreateTablesEvalStat = """
 CREATE TABLE objetivity (
-id_objetivity INTEGER PRIMARY KEY AUTOINCREMENT,
-noncommercial int NOT NULL DEFAULT '10',
-clarityadsprecision int NOT NULL DEFAULT '5',
-withsesg int NOT NULL DEFAULT '5',
-validatedinfo int NOT NULL DEFAULT '10'
+id_objetivity INTEGER PRIMARY KEY ,
+noncommercial REAL NOT NULL DEFAULT '10.0',
+clarityadsprecision REAL NOT NULL DEFAULT '5.0',
+withsesg REAL NOT NULL DEFAULT '5.0',
+validatedinfo REAL NOT NULL DEFAULT '10.0'
 );""";
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
 // --- publication ---
@@ -441,9 +447,9 @@ validatedinfo int NOT NULL DEFAULT '10'
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
         CreateTablesEvalStat = """
 CREATE TABLE publication (
-id_publication INTEGER PRIMARY KEY,
-publisher int NOT NULL DEFAULT '5',
-publications_quality int NOT NULL DEFAULT '5'
+id_publication INTEGER PRIMARY KEY ,
+publisher REAL NOT NULL DEFAULT '5.0',
+publications_quality REAL NOT NULL DEFAULT '5.0'
 );""";
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
 // --- quality ---
@@ -451,10 +457,10 @@ publications_quality int NOT NULL DEFAULT '5'
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
         CreateTablesEvalStat = """
 CREATE TABLE quality (
-id_quality INTEGER PRIMARY KEY AUTOINCREMENT,
-orginfo int NOT NULL DEFAULT '10',
-tablesgraphics int NOT NULL DEFAULT '5',
-indexandrankings int NOT NULL DEFAULT '10'
+id_quality INTEGER PRIMARY KEY ,
+orginfo REAL NOT NULL DEFAULT '10.0',
+tablesgraphics REAL NOT NULL DEFAULT '5.0',
+indexandrankings REAL NOT NULL DEFAULT '10.0'
 );""";
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
 // --- relevance ---
@@ -462,10 +468,10 @@ indexandrankings int NOT NULL DEFAULT '10'
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
         CreateTablesEvalStat = """
 CREATE TABLE relevance (
-id_relevance INTEGER PRIMARY KEY AUTOINCREMENT,
-academic int NOT NULL DEFAULT '5',
-typeaware int NOT NULL DEFAULT '10',
-newandaddedvalue int NOT NULL DEFAULT '5'
+id_relevance INTEGER PRIMARY KEY ,
+academic REAL NOT NULL DEFAULT '5.0',
+typeaware REAL NOT NULL DEFAULT '10.0',
+newandaddedvalue REAL NOT NULL DEFAULT '5.0'
 );""";
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
 // --- theweb ---
@@ -473,11 +479,13 @@ newandaddedvalue int NOT NULL DEFAULT '5'
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
         CreateTablesEvalStat = """
 CREATE TABLE theweb (
-id_theweb INTEGER PRIMARY KEY AUTOINCREMENT,
-institutiionalandcientificresources int NOT NULL DEFAULT '5',
-accesibilityandusability int NOT NULL DEFAULT '5'
+id_theweb INTEGER PRIMARY KEY ,
+institutiionalandcientificresources REAL NOT NULL DEFAULT '5.0',
+accesibilityandusability REAL NOT NULL DEFAULT '5.0'
 );""";
         DBMSEP.ExecuteQueryTableDBWithOptions(CreateTablesEvalStat);
+         SQLOptions = "PRAGMA foreign_keys = ON;";
+        DBMSEP.ExecuteQueryTableDBWithOptions(SQLOptions);
     }
 
     void CreateProgramDataDBTablesSQLIte() {
@@ -929,7 +937,7 @@ accesibilityandusability int NOT NULL DEFAULT '5'
                                         PRIMARY KEY (`id_actuality`)
                                       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
                                       CREATE TABLE `authority` (
-                                        `id_authority` int NOT NULL AUTO_INCREMENT,
+                                        `id_authority` int NOT NULL,
                                         `recognisedauthor` int NOT NULL DEFAULT '10',
                                         `authorsaffiliation` int NOT NULL DEFAULT '5',
                                         `author` int NOT NULL DEFAULT '5',
@@ -937,7 +945,7 @@ accesibilityandusability int NOT NULL DEFAULT '5'
                                       ) ;
                                       DROP TABLE IF EXISTS `objetivity`;
                                       CREATE TABLE `objetivity` (
-                                        `id_objetivity` int NOT NULL AUTO_INCREMENT,
+                                        `id_objetivity` int NOT NULL,
                                         `noncommercial` int NOT NULL DEFAULT '10',
                                         `clarityadsprecision` int NOT NULL DEFAULT '5',
                                         `withsesg` int NOT NULL DEFAULT '5',
@@ -951,21 +959,21 @@ accesibilityandusability int NOT NULL DEFAULT '5'
                                         PRIMARY KEY (`id_publication`)
                                       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
                                       CREATE TABLE `quality` (
-                                        `id_quality` int NOT NULL AUTO_INCREMENT,
+                                        `id_quality` int NOT NULL,
                                         `orginfo` int NOT NULL DEFAULT '10',
                                         `tablesgraphics` int NOT NULL DEFAULT '5',
                                         `indexandrankings` int NOT NULL DEFAULT '10',
                                         PRIMARY KEY (`id_quality`)
                                       ) ;
                                       CREATE TABLE `relevance` (
-                                        `id_relevance` int NOT NULL AUTO_INCREMENT,
+                                        `id_relevance` int NOT NULL,
                                         `academic` int NOT NULL DEFAULT '5',
                                         `typeaware` int NOT NULL DEFAULT '10',
                                         `newandaddedvalue` int NOT NULL DEFAULT '5',
                                         PRIMARY KEY (`id_relevance`)
                                       ) ;
                                       CREATE TABLE `theweb` (
-                                        `id_theweb` int NOT NULL AUTO_INCREMENT,
+                                        `id_theweb` int NOT NULL,
                                         `institutiionalandcientificresources` int NOT NULL DEFAULT '5',
                                         `accesibilityandusability` int NOT NULL DEFAULT '5',
                                         PRIMARY KEY (`id_theweb`)
@@ -1015,12 +1023,35 @@ accesibilityandusability int NOT NULL DEFAULT '5'
     }
 
     private void DUserEnterConfig() {
-        Frame f = WindowManager.getDefault().getMainWindow();
-        //FHelpPresenter DHelp = new FHelpPresenter("Registro de control de Seguridad", "help/NewGeneralDataIntroPanels-PSRC.html");
-        ProgramOptions OptionsDLG = new ProgramOptions(f, true);
-        OptionsDLG.setLocationRelativeTo(f);
-        OptionsDLG.setVisible(true);
-        PConfig.setDatabaseManagerinUse(OptionsDLG.getDatabasemanager());
+        SwingUtilities.invokeLater(() -> {
+            //FHelpPresenter DHelp = new FHelpPresenter("Registro de control de Seguridad", "help/NewGeneralDataIntroPanels-PSRC.html");
+            DialogOptionsPanel OptionsDLG = new DialogOptionsPanel();
+            DialogDescriptor dd = new DialogDescriptor(OptionsDLG, "Título del diálogo");
+            Dialog dlg = DialogDisplayer.getDefault().createDialog(dd);
+            dlg.setAlwaysOnTop(true);
+            dlg.setVisible(true);
+            if (dd.getValue() == DialogDescriptor.OK_OPTION) {
+                PConfig.setDatabaseManagerinUse(OptionsDLG.getDatabasemanager());
+                // TODO add your handling code here:
+                if (OptionsDLG.getjRBMySQLsel().isSelected() == true) {
+                    OptionsDLG.setDatabasemanager(FDBMan.DB_MYSQL_Selected);
+                }
+                if (OptionsDLG.getjRBSQLLiteSel().isSelected() == true) {
+                    OptionsDLG.setDatabasemanager(FDBMan.DB_SQLite_Selected);
+                }
+                if (OptionsDLG.getjRBPostSQL().isSelected() == true) {
+                    OptionsDLG.setDatabasemanager(FDBMan.DB_PostgreSQL_Selected);
+                }
+                if ((OptionsDLG.getJTFUserDB().getText() == null ? PConfig.getConfUserDB() != null : !OptionsDLG.getJTFUserDB().getText().equals(PConfig.getConfUserDB())) || (Arrays.toString(OptionsDLG.getJTFDBPass().getPassword()) == null ? PConfig.getConfPassDB() != null : !Arrays.toString(OptionsDLG.getJTFDBPass().getPassword()).equals(PConfig.getConfPassDB()))) {
+                    String dbUser = OptionsDLG.getJTFUserDB().getText();
+                    PConfig.setConfUserDB(dbUser);
+                    String dbPass = Arrays.toString(OptionsDLG.getJTFDBPass().getPassword());
+                    PConfig.setConfPassDB(dbPass);
+                } // Acción al aceptar
+            }
+        }
+        );
+
         Set<TopComponent> openTopComponents = getDefault().getRegistry().getOpened();
         PrincipalWindowTopComponent ptc = null;
         for (TopComponent stc : openTopComponents) {
@@ -1028,15 +1059,19 @@ accesibilityandusability int NOT NULL DEFAULT '5'
                 ptc = (PrincipalWindowTopComponent) stc;
             }
             if (ptc != null) {
-                ptc.setDBToUse(OptionsDLG.getDatabasemanager());
+                ptc.setDBToUse(PConfig.getDatabaseManagerinUse());
 
             }
         }
     }
 
     private void ExitandClose() {
-        DBMSAP.Close();
-        DBMSEP.Close();
+        if (DBMSAP != null) {
+            DBMSAP.Close();
+        }
+        if (DBMSEP != null) {
+            DBMSEP.Close();
+        }
     }
 
     private void CreateDBTables() {
@@ -1048,8 +1083,12 @@ accesibilityandusability int NOT NULL DEFAULT '5'
     }
 
     private void CloseDatabases() {
-        DBMSEP.Close();
-        DBMSAP.Close();
-    }
+        if (DBMSEP != null) {
+            DBMSEP.Close();
+        }
+        if (DBMSAP != null) {
+            DBMSAP.Close();
+        }
 
+    }
 }

@@ -49,12 +49,11 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
         DBMSAP = new FDBMan(PConfig.DataBaseAnalysisUrlConn, "desidaniespsources", PConfig.getConfUserDB(), PConfig.getConfPassDB(), iDabataasetoUse);
         IndexItemSource = iIndexItemSource;
         IndexDataTotal = iIndexDataTotal;
-
+        LoadingLists();
         int TotalRecords = DBMSAP.getLastRow("elements_record");
-        if (TotalRecords == 0 && DBMSAP.isbError() && DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
+        if (TotalRecords == 0 || DBMSAP.isbError() || DBMSAP.getIerrCode() == FDBMan.NoRecords_ErrorCode) {
             TotalRecords = 1;
         } else {
-            LoadingLists();
             LoadAnalisisData(IndexItemSource);
         }
     }
@@ -1391,6 +1390,8 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
     public void CreateAnalysisDataItem(int iIndexItem) {
         //this.repaint();
         CLAllObjectList<CL_DBCV> DBParameters = new CLAllObjectList<>();
+        String SQLOptions = "PRAGMA foreign_keys = OFF;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(SQLOptions);
 
         DBParameters.add(new CL_DBCV("id_authorities", Integer.toString(iIndexItem)));
         DBParameters.add(new CL_DBCV("pricauthor", getjMainAuthor().getText()));
@@ -1497,9 +1498,12 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
         if (DBMSAP.isbError()) {
             ShowDError("Error al introducir datos en la tabla : " + "elements_record");
         }
-        if (!DBMSAP.isbError()) {
+    /*    if (!DBMSAP.isbError()) {
             ShowDInfo("Datos de análisis de la fuente introducidos correctamente.");
-        }
+        }*/
+        SQLOptions = "PRAGMA foreign_keys = ON;";
+        DBMSAP.ExecuteQueryTableDBWithOptions(SQLOptions);
+   
     }
 
     /**
@@ -1767,8 +1771,8 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
      * @param itmpIndexItemSource
      * @param dbToUse
      */
-    public void ImportAnalisysPanelData(XMLDataImport tmpXMLDI, int itmpIndexItemSource, int dbToUse) {
-        Document tmpDoc = tmpXMLDI.getDoc();
+    public void ImportAnalisysPanelData(XMLDataImport tmpXMLDI, Document tmpDoc, int itmpIndexItemSource, int dbToUse) {
+        //  Document tmpDoc = tmpXMLDI.getDoc();
         if (tmpDoc != null) {
             /*
             NodeList nlNodeList = tmpDoc.getElementsByTagName("import_schema");
@@ -1804,7 +1808,8 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
                         String RecordID = tmpXMLDI.GetResultFromRecurseDeeperNode(childList, "recordId");
                         int newindex = Integer.parseInt(RecordID);
                         if (newindex != 0) {
-                            IndexItemSource = itmpIndexItemSource + newindex;
+                            //IndexItemSource = itmpIndexItemSource + newindex;
+                            IndexItemSource = newindex;
                         } else {
                             ShowDError("Error en parámetro de recordID : debe ser un número mayor que 0");
 //                            error = true;
@@ -1813,6 +1818,7 @@ public class JSourceAnalisysPanel extends javax.swing.JPanel {
                     }
                 }
             }
+            IndexItemSource = itmpIndexItemSource;
             if (!error) {
                 //Get sourceinformation nodes ---------analisys and evaluation---------------------------------------------
                 NodeList NLSI = tmpXMLDI.GetChilDNodeRecursed(nodeList, "sourceinformation");
