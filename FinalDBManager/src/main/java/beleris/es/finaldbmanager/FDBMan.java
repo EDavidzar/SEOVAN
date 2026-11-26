@@ -207,9 +207,8 @@ public class FDBMan {
                 PostgreSQL_SelectSingleResult(sTmpDBTable, sFieldtoSearch, sFieldValuetoSearch);
             }
             case DB_SQLite_Selected -> {
-                CLAllObjectList<CL_DBCV> FieldList = new CLAllObjectList<>();
-                FieldList.add(new CL_DBCV(sFieldtoSearch, sFieldValuetoSearch));
-                SQLite_SelectManyResults(sTmpDBTable, FieldList);
+
+                SQLite_SelectSingleResult(sTmpDBTable, sFieldtoSearch, sFieldValuetoSearch);
             }
             default -> {
                 MySQL_SelectSingleResult(sTmpDBTable, sFieldtoSearch, sFieldValuetoSearch);
@@ -243,6 +242,32 @@ public class FDBMan {
         } finally {
             MySQL_CloseConn();
 
+        }
+    }
+
+    /**
+     *
+     * @param sTmpDBTable
+     * @param sFieldtoSearch
+     * @param sFieldValuetoSearch
+     */
+    public void SQLite_SelectSingleResult(String sTmpDBTable, String sFieldtoSearch, String sFieldValuetoSearch) {
+
+        //  String sSQLQueryStr = "SELECT * FROM `" + AntiSQLInjection(sTmpDBTable) + "` WHERE  " + AntiSQLInjection(sFieldtoSearch)
+        //        + "='" + AntiSQLInjection(sFieldValuetoSearch) + "';";
+        setbError(false);
+        String sMySQL_Statement = "SELECT * FROM " + sTmpDBTable + " WHERE " + sFieldtoSearch + "=?";
+
+        try {
+            stsSQL_Statement = cnConn.prepareStatement(sMySQL_Statement);
+            stsSQL_Statement.setString(1, sFieldValuetoSearch);
+            //  rsCResSet = stsSQL_Statement.executeQuery(sSQLQueryStr);
+            setRsCResSet(stsSQL_Statement.executeQuery());
+//            rsCResSet.next();
+
+        } catch (SQLException ex) { // ignore }
+            ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable);
+            setRsCResSet(null);
         }
     }
 
@@ -294,9 +319,8 @@ public class FDBMan {
                 PostgreSQL_SelectManyResults(sTmpDBTable, sFieldtoSearch, sFieldValuetoSearch, DBParametersEnter, DBParametersReturn);
             }
             case DB_SQLite_Selected -> {
-                CLAllObjectList<CL_DBCV> FieldList = new CLAllObjectList<>();
-                FieldList.add(new CL_DBCV(sFieldtoSearch, sFieldValuetoSearch));
-                SQLite_SelectManyResults(sTmpDBTable, FieldList);
+
+                SQLite_SelectManyResults(sTmpDBTable, sFieldtoSearch, sFieldValuetoSearch, DBParametersEnter, DBParametersReturn);
             }
             default -> {
                 MySQL_SelectManyResults(sTmpDBTable, sFieldtoSearch, sFieldValuetoSearch, DBParametersEnter, DBParametersReturn);
@@ -308,41 +332,60 @@ public class FDBMan {
      *
      * @param sTmpDBTable
      * @param FieldList
+     * @param DBParametersReturn
      */
-    public void SQLite_SelectManyResults(String sTmpDBTable, CLAllObjectList<CL_DBCV> FieldList) {
+    public void SQLite_SelectManyResults(String sTmpDBTable, CLAllObjectList<CL_DBCV> FieldList, CLAllObjectList<CL_DBCV> DBParametersReturn) {
 
         var sSQLite_Statement = "SELECT ";
+        DBParametersReturn = FieldList;
         int iindex = 0;
+        int itotalsize = FieldList.size();
         if (FieldList != null) {
-            try {
-                int itotalsize = FieldList.size();
-                while (iindex < itotalsize) {
-                    CL_DBCV Field = FieldList.get(iindex);
-                    String sField = Field.getsTableDBField();
-                    sSQLite_Statement = sSQLite_Statement + "" + sField;
-                    iindex++;
-                    if (iindex < itotalsize) {
-                        sSQLite_Statement = sSQLite_Statement + ",";
-                    }
+            while (iindex < itotalsize) {
+                CL_DBCV Field = FieldList.get(iindex);
+                String sField = Field.getsTableDBField();
+                sSQLite_Statement = sSQLite_Statement + "" + sField;
+                iindex++;
+                if (iindex < itotalsize) {
+                    sSQLite_Statement = sSQLite_Statement + ",";
                 }
+            }
 
-                sSQLite_Statement = sSQLite_Statement + " FROM" + sTmpDBTable + ";";
+            sSQLite_Statement = sSQLite_Statement + " FROM " + sTmpDBTable + ";";
 
-                //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
-                var stmntStatement = cnConn.createStatement();
-                // create a new table
-                rsCResSet = stmntStatement.executeQuery(sSQLite_Statement);
+            //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
+            try {
+                stsSQL_Statement = cnConn.prepareStatement(sSQLite_Statement);
             } catch (SQLException ex) {
-                ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable);
+                ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable + " " + ex.getLocalizedMessage());
+            }
+
+            try {
+                setRsCResSet(stsSQL_Statement.executeQuery());
+            } catch (SQLException ex) {
+                ShowSQLExceptionError(ex, " Error al crear los conjuntos de datos de la tabla:" + sTmpDBTable + " " + ex.getLocalizedMessage());
+            }
+
+            if (DBParametersReturn != null) {
+                iindex = 1;
+                while (iindex < itotalsize) {
+                    CL_DBCV Field = DBParametersReturn.get(iindex);
+                    try {
+                        Field.setsValue(getRsCResSet().getString(Field.getsTableDBField()));
+                    } catch (SQLException ex) {
+                        ShowSQLExceptionError(ex, " Error al obtener datos de la tabla:" + sTmpDBTable + " " + ex.getLocalizedMessage());
+                    }
+                    DBParametersReturn.set(iindex, Field);
+                    iindex++;
+                }
             }
         } else {
             try {
                 sSQLite_Statement = sSQLite_Statement + "* FROM " + sTmpDBTable + ";";
-                var stmntStatement = cnConn.createStatement();
-                // create a new table
-                rsCResSet = stmntStatement.executeQuery(sSQLite_Statement);
+                stsSQL_Statement = cnConn.prepareStatement(sSQLite_Statement);
+                rsCResSet = stsSQL_Statement.executeQuery();
             } catch (SQLException ex) {
-                ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable);
+                ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable + " " + " " + ex.getLocalizedMessage());
             }
         }
     }
@@ -387,6 +430,38 @@ public class FDBMan {
         } finally {
             MySQL_CloseConn();
 
+        }
+    }
+
+    public void SQLite_SelectManyResults(String sTmpDBTable, String sFieldtoSearch, String sFieldValuetoSearch, CLAllObjectList<String> DBParametersEnter, CLAllObjectList<String> DBParametersReturn) {
+
+        //  String sSQLQueryStr = "SELECT * FROM `" + AntiSQLInjection(sTmpDBTable) + "` WHERE  " + AntiSQLInjection(sFieldtoSearch)
+        //        + "='" + AntiSQLInjection(sFieldValuetoSearch) + "';";
+        setbError(false);
+        String sMySQL_Statement = "SELECT * FROM " + sTmpDBTable + " WHERE " + sFieldtoSearch + "=?";
+
+        try {
+            stsSQL_Statement = cnConn.prepareStatement(sMySQL_Statement);
+            stsSQL_Statement.setString(1, sFieldValuetoSearch);
+            //  rsCResSet = stsSQL_Statement.executeQuery(sSQLQueryStr);
+            setRsCResSet(stsSQL_Statement.executeQuery());
+            if (getRsCResSet().next()) {
+                if (DBParametersEnter != null) {
+                    String DBCampo = null, sDBSetResult = null;
+                    int iindex = 1, iLastpar = 0;
+                    iLastpar = DBParametersEnter.size();
+                    for (iindex = 1; iindex <= iLastpar; iindex++) {
+                        DBCampo = DBParametersEnter.get(iindex - 1);
+                        if (DBCampo != null) {
+                            sDBSetResult = getRsCResSet().getString(DBCampo);
+                            DBParametersReturn.add(sDBSetResult);
+                        }
+                    }
+                }
+            }
+
+        } catch (SQLException ex) { // ignore }
+            ShowSQLExceptionError(ex, " Error al seleccionar datos de la tabla:" + sTmpDBTable);
         }
     }
 
@@ -1044,7 +1119,7 @@ public class FDBMan {
      */
     public void SQLite_DeleteDataTable(String sTempDBTable) {
         try {
-            var sSQLite_Statement = "DELETE FROM " + this.sDBName + "." + sTempDBTable + ";";
+            var sSQLite_Statement = "DELETE FROM " + sTempDBTable + ";";
             //cnConn = DriverManager.getConnection(SQLite_ServerName + sDBName);
             var stmt = cnConn.createStatement();
             // create a new table            
@@ -1264,7 +1339,7 @@ public class FDBMan {
     public void SQLite_InsertDatainDB(String sTmpDBTable, CLDBColumnsList CL) {
 
         //int indextotal=CL.getElements().size();
-        String sSQLite_Statement = "INSERT INTO " + sDBName + "." + sTmpDBTable + "  (";
+        String sSQLite_Statement = "INSERT INTO " +  sTmpDBTable + "  (";
         ListIterator<CL_DBColumns> mlColIterador = CL.getElements().listIterator();
         while (mlColIterador.hasNext()) {
             CL_DBColumns Elemento = mlColIterador.next();
@@ -1592,7 +1667,7 @@ public class FDBMan {
 
         ListIterator<CL_DBCV> mlIterador = InsertFields.listIterator();
 
-        String sSQLite_Statement = "INSERT OR REPLACE INTO " + sTmpDBTable + " (";
+        String sSQLite_Statement = "INSERT INTO " + sTmpDBTable + " (";
         String sValues = " VALUES (";
 
         mlIterador = InsertFields.listIterator();
@@ -2393,15 +2468,48 @@ public class FDBMan {
                 PostgreSQL_SelectAllRecordWithDefinedStatement(sSQLParams, DBParameters);
             }
             case DB_SQLite_Selected -> {
-                CLAllObjectList<CL_DBCV> FieldList = new CLAllObjectList<>();
-                // FieldList.addCol(new CL_DBCV(DBParameters, sFieldValuetoSearch));
-                SQLite_SelectManyResults(sDBName, FieldList);
+                SQLite_SelectAllRecordWithDefinedStatement(sSQLParams, DBParameters);
             }
             default -> {
                 MySQL_SelectAllRecordWithDefinedStatement(sSQLParams, DBParameters);
             }
         }
 
+    }
+
+    public void SQLite_SelectAllRecordWithDefinedStatement(String sSQLParams, CLAllObjectList<String> DBParameters) {
+        setbError(false);
+        String Statement = sSQLParams;
+
+        try {
+            stsSQL_Statement = cnConn.prepareStatement(Statement);
+            if (DBParameters != null) {
+                String dbFieldDB = null;
+                int iindex = 1, lastpar = 0;
+                lastpar = DBParameters.size();
+
+                for (iindex = 1; iindex <= lastpar; iindex++) {
+                    dbFieldDB = DBParameters.get(iindex - 1);
+                    if (dbFieldDB != null) {
+                        stsSQL_Statement.setString(iindex, dbFieldDB);
+                    }
+                }
+            }
+            //    stsSQL_Statement.setString(1, sTable);
+
+            //       stsSQL_Statement = cnConn.createStatement();
+            setRsCResSet(stsSQL_Statement.executeQuery());
+
+            getRsCResSet().next();
+        } catch (SQLException ex) { // ignore }
+            ShowSQLExceptionError(ex, " Error al cargar datos de la tabla:" + sSQLParams);
+        } catch (NullPointerException ex) {
+            ierrCode = 0xF555;
+            serrSQLMessage = ex.getLocalizedMessage();
+            serrSQLState = "error, no puedo conectar al servidor";
+            ShowSQLExceptionError(null, serrSQLState);
+
+        }
     }
 
     /**
@@ -2498,6 +2606,10 @@ public class FDBMan {
         String sMySQL_Statement = "SELECT * FROM " + sDBName + "." + sTmpTable + ";";
         MySQL_SelectAllRecordWithDefinedStatement(sMySQL_Statement, null);
     }
+    public void SQLite_SelectAllRecords(String sTmpTable) {
+        String sSQLite_Statement = "SELECT * FROM " + sTmpTable + ";";
+        MySQL_SelectAllRecordWithDefinedStatement(sSQLite_Statement, null);
+    }
 
     /**
      *
@@ -2530,15 +2642,7 @@ public class FDBMan {
         PostgreSQL_SelectAllRecordWithDefinedStatement(sMySQL_Statement, null);
     }
 
-    /**
-     *
-     * @param sTable
-     */
-    public void SQLite_SelectAllRecords(String sTable) {
-        // String sSQLite_Statement = "SELECT * FROM " + sTable + ";";
-        SQLite_SelectManyResults(sTable, null);
-    }
-
+    
     /**
      *
      * @param sTable
@@ -2546,8 +2650,8 @@ public class FDBMan {
      * @param tmpEnterprise
      */
     public void SQLite_SelectAllRecords(String sTable, String tmpClient, String tmpEnterprise) {
-        String sSQLite_Statement = "SELECT * FROM " + sDBName + "." + sTable + " WHERE idclient='" + tmpClient + " AND identerprise=" + tmpEnterprise + " ;";
-        SQLite_SelectManyResults(sSQLite_Statement, null);
+        String sSQLite_Statement = "SELECT * FROM " + sTable + " WHERE idclient='" + tmpClient + " AND identerprise=" + tmpEnterprise + " ;";
+        SQLite_SelectManyResults(sSQLite_Statement, null, null);
     }
 
     /**
@@ -2941,7 +3045,7 @@ public class FDBMan {
      */
     public void SQLite_UpdateDatainDB(String sTmpDBTable, CLAllObjectList<CL_DBCV> DBParameters, String sIndex, String siIndexItem) {
 
-        String sSQLite_Statement = "UPDATE " + sDBName + "." + sTmpDBTable + " SET ";
+        String sSQLite_Statement = "UPDATE " + sTmpDBTable + " SET ";
         ListIterator<CL_DBCV> mlIterador = DBParameters.listIterator();
         while (mlIterador.hasNext()) {
             CL_DBCV Elemento = mlIterador.next();
@@ -2950,7 +3054,7 @@ public class FDBMan {
                 sSQLite_Statement += ",";
             }
         }
-        sSQLite_Statement += " WHERE " + sDBName + "." + sTmpDBTable + "." + sIndex + " = " + siIndexItem;
+        sSQLite_Statement += " WHERE " + sTmpDBTable + "." + sIndex + " = " + siIndexItem;
         /*   if (DBParameters != null) {
             mlIterador = DBParameters.listIterator();
             while (mlIterador.hasNext()) {

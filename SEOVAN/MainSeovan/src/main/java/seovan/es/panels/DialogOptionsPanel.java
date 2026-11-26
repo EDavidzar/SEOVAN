@@ -4,6 +4,7 @@
  */
 package seovan.es.panels;
 
+import beleris.es.finaldbmanager.FDBMan;
 import java.awt.event.KeyEvent;
 import static seovan.es.programconfig.PConfigManager.PConfig;
 
@@ -19,13 +20,22 @@ public class DialogOptionsPanel extends javax.swing.JPanel {
     public DialogOptionsPanel() {
         initComponents();
         setDatabasemanager(PConfig.getDatabaseManagerinUse());
-
-        if (PConfig.getDatabaseManagerinUse() == PConfig.getDatabaseManagerinUse()) {
-            jRBMySQLsel.setSelected(true);
-            jRBSQLLiteSel.setSelected(false);
-        } else {
-            jRBSQLLiteSel.setSelected(true);
-            jRBMySQLsel.setSelected(false);
+        switch (PConfig.getDatabaseManagerinUse()) {
+            case FDBMan.DB_MYSQL_Selected: {
+                jRBMySQLsel.setSelected(true);
+                jRBSQLLiteSel.setSelected(false);
+                jRBPostSQL.setSelected(false);
+            }
+            case FDBMan.DB_SQLite_Selected: {
+                jRBSQLLiteSel.setSelected(true);
+                jRBMySQLsel.setSelected(false);
+                jRBPostSQL.setSelected(false);
+            }
+            case FDBMan.DB_PostgreSQL_Selected: {
+                jRBPostSQL.setSelected(true);
+                jRBMySQLsel.setSelected(false);
+                jRBSQLLiteSel.setSelected(false);
+            }
         }
     }
 
@@ -172,11 +182,6 @@ public class DialogOptionsPanel extends javax.swing.JPanel {
         JTFDBPass.setMaximumSize(new java.awt.Dimension(275, 40));
         JTFDBPass.setMinimumSize(new java.awt.Dimension(275, 40));
         JTFDBPass.setPreferredSize(new java.awt.Dimension(275, 40));
-        JTFDBPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTFDBPassActionPerformed(evt);
-            }
-        });
         JTFDBPass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 JTFDBPassPassPressed(evt);
@@ -216,10 +221,6 @@ public class DialogOptionsPanel extends javax.swing.JPanel {
     private void JTFUserDBAcciondeTeclas(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTFUserDBAcciondeTeclas
         TeclasUser(evt);
     }//GEN-LAST:event_JTFUserDBAcciondeTeclas
-
-    private void JTFDBPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFDBPassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTFDBPassActionPerformed
 
     private void JTFDBPassPassPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTFDBPassPassPressed
         // TODO add your handling code here:

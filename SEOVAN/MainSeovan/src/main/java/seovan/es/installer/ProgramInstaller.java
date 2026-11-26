@@ -75,6 +75,7 @@ public class ProgramInstaller implements Runnable {
         if (configexist) {
             ShowInfo("Leyendo configuración del programa...");
             ReadConfiguration();
+            PConfig.setInstalled(true);
         } else {
             ShowInfo("No existe archivo de configuración...");
             PConfig.setInstalled(false);
